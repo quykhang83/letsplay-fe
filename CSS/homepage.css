@@ -1,0 +1,159 @@
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'roboto', sans-serif ;
+    /* display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; */
+    height: 100vh;
+    /* overflow: hidden; */
+    margin: 0;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+}
+
+header h3{
+    font-family: 'roboto', sans-serif ;
+    background-color: gray;
+    font-size: 24px;
+    /* padding: 50px; */
+}
+
+.header_box {
+    background-color: #171a21;
+    min-height: 50px;
+    display: block;
+    
+    
+}
+
+.responsive_header_logo {
+    position: relative;
+    background-color: #171a21;
+    height: 36px;
+    text-align: center;
+    top: 7px;
+}
+
+.responsive_header_logo img {
+    height: 36px;
+    vertical-align: middle;
+}
+
+.footer_box {
+    background-color: grey;
+    min-height: 50px;
+}
+
+header nav {
+    background-color: yellowgreen;
+    min-height: 50px;
+}
+
+.item_set {
+    display: flex;
+    flex-direction: row;
+    background-color: #1b2838;
+    min-height: 270px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+.item_ctn {
+    transition: all .2s ease-in-out;
+    cursor: pointer;
+    width: 210px;
+    box-shadow:#171a21;
+}
+
+.item {
+    margin: 20px 10px 0px 10px;
+    min-width: 200px;
+    height: 160px;
+}
+.item_price, .item_name{
+    background-color: black;
+    margin: 0px 10px 0px 10px;
+    min-width: 200px;
+    height: 30px;
+    border: 1px solid white
+}
+.item_price h3{
+    font-size: 15px;
+    text-align: center;
+    padding: 5px 0px;
+    margin: 0;
+    color: white;
+}
+
+.item_name h3 {
+    font-size: 15px;
+    text-align: center;
+    padding: 5px 0px;
+    margin: 0;
+    color: white;
+}
+
+.item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: 0 auto;
+    display: block;
+}
+
+.item_label_ctn {
+    position: relative;
+    width: 200px;
+    text-align: center;
+    text-transform: uppercase;
+    top: 120px;
+    
+}
+
+.item_price_ctn {
+    background-color: black;
+    color: white;
+    font-family: "Motiva Sans", Sans-serif;
+    
+    min-width: 200px;
+    height: 30px;
+    margin: 0px 10px 20px 10px;
+}
+
+.item_price_ctn h3 {
+    font-size: 15px;
+    text-align: center;
+    padding: 5px 0px;
+    margin: 0;
+}
+
+.item_ctn:hover {
+    transform: scale(1.1);
+}
+
+.set_label {
+    background-color: #1b2838;
+    margin: 0;
+    padding: 0 0 0 10px;
+    color: white;
+}
+
+.label {
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 0.1ch;
+    color: white;
+    /* text-align: center; */
+    /* position: absolute;
+    position: relative;
+    top: 100px; */
+}

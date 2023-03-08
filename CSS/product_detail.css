@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'roboto', sans-serif ;
+    height: 100vh;
+    margin: 0;
+    background-color: #171a21;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+}
+
+header h3{
+    font-family: 'roboto', sans-serif ;
+    background-color: gray;
+    font-size: 24px;
+    /* padding: 50px; */
+}
+
+.header_box {
+    background-color: #171a21;
+    min-height: 50px;
+    display: block;
+    
+    
+}
+
+.responsive_header_logo {
+    position: relative;
+    background-color: #171a21;
+    height: 36px;
+    text-align: center;
+    top: 7px;
+}
+
+.responsive_header_logo img {
+    height: 36px;
+    vertical-align: middle;
+}
+
+header nav {
+    background-color: yellowgreen;
+    min-height: 50px;
+}
+
+.game_page{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.game_header{
+    width: 940px;
+    margin: 10px 0 10px 0;
+    color: white;
+    
+}
+.content_block {
+    width: 940px;
+    height:315px;
+    margin: 0 auto;
+    color: #c6d4df;
+    background-color: #30333b;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.product_trailer{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+}
+
+.left_col {
+    width: 55%;
+    height: 100%;
+    background-color: black;
+    margin-right: 15px;
+    background-color: #30333b;
+    
+}
+
+.right_col {
+    width: 45%;
+    height: 100%;
+    background-color: #30333b;
+    /* margin: 0 50px 0 0; */
+    /* background-color: red; */
+    
+}.glance_ctn{
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    background-color: #30333b;
+}
+.game_header_image_full img{
+    max-width: 100%;
+    height: auto;
+    object-fit:cover;
+}
+.game_description{
+    text-align: justify;
+    margin-right: 15px;
+}
+.cart_block{
+    display: flex;
+    height: 50px;
+    width: 940px;
+    background-color: #436827;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.game_purchase_action{
+    height: 40px;
+    width: 80%;
+    position: absolute;
+    top: 35px;
+    display: flex;
+    flex-direction:row-reverse;
+    
+}
+.game_purchase_price{
+    padding: 12px;
+    border: 1px solid black;
+    background-color: black;
+    color: white;
+    text-decoration: none;
+}
+.btn_cart{
+    padding: 12px;
+    border: 1px solid black;
+    /* border-radius: 5px; */
+    background-color: #60941d;
+    color: white;
+    text-decoration: none;
+    /* position: absolute; */
+    /* right: 0; */
+}
+.cart_block h1
+{
+    width: 100%;
+    height: 30px;
+    color: white;
+    margin: 0;
+    margin-left: 20px;
+}
