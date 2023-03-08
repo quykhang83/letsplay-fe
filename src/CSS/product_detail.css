@@ -55,6 +55,10 @@ header nav {
     justify-content: center;
     align-items: center;
 }
+.game_info{
+    display: flex;
+    flex-direction: column;
+}
 .game_header{
     width: 940px;
     margin: 10px 0 10px 0;
@@ -119,7 +123,7 @@ header nav {
     width: 940px;
     background-color: #436827;
     margin-top: 20px;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     justify-content: center;
     align-items: center;
     position: relative;
@@ -144,13 +148,36 @@ header nav {
     padding: 12px;
     border: 1px solid black;
     /* border-radius: 5px; */
-    background-color: #60941d;
+    background-color: #436827;
     color: white;
     text-decoration: none;
     /* position: absolute; */
     /* right: 0; */
 }
 .cart_block h1
+{
+    width: 100%;
+    height: 30px;
+    color: white;
+    margin: 0;
+    margin-left: 20px;
+}
+
+/* CUSTOMER REVIEW */
+
+.customer_review {
+    display: flex;
+    height: 50px;
+    width: 940px;
+    background-color: #436827;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.customer_review h1
 {
     width: 100%;
     height: 30px;
