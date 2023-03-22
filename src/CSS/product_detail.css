@@ -167,21 +167,72 @@ header nav {
 
 .customer_review {
     display: flex;
-    height: 50px;
+    flex-direction: column;
+    /* height: 50px; */
     width: 940px;
     background-color: #436827;
     margin-top: 20px;
     margin-bottom: 50px;
-    justify-content: center;
-    align-items: center;
+  
     position: relative;
 }
-
-.customer_review h1
-{
+.customer_review_title {
+    display: flex;
     width: 100%;
-    height: 30px;
-    color: white;
+    height: 50px;
+    display: flex;
     margin: 0;
     margin-left: 20px;
+    align-items: center;
+}
+.customer_review h1
+{
+    color: white;   
+}
+.comment_section{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    background-color: #16202d;
+}
+.comment_section_left{
+    margin-left: 20px;
+    display: flex;
+    flex: 1
+}
+.comment_section_right{
+    display: flex;
+    flex: 2
+}
+
+.cmt_username {
+    color: white;
+    font-size: 20px;
+    font-family: "Motiva Sans", Sans-serif;
+    font-weight: bold;
+}
+.cmt_info{
+    display: flex;
+    flex-direction: column;
+}
+.cmt_favor {
+    display: flex;
+    color: white;
+    font-size: 20px;
+    font-family: "Motiva Sans", Sans-serif;
+    font-weight: bold;
+}
+.cmt_from_date {
+    display: flex;
+    color: white;
+    font-size: 20px;
+    font-family: "Motiva Sans", Sans-serif;
+    font-weight: bold;
+}
+.cmt_content {
+    display: flex;
+    color: white;
+    font-size: 20px;
+    font-family: "Motiva Sans", Sans-serif;
+    font-weight: bold;
 }
