@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'roboto', sans-serif ;
+    height: 100vh;
+    margin: 0;
+    background-color: #1a1d25;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+}
+
+header h3{
+    font-family: 'roboto', sans-serif ;
+    background-color: gray;
+    font-size: 24px;
+    /* padding: 50px; */
+}
+
+.header_box {
+    background-color: #171a21;
+    min-height: 50px;
+    display: block;
+    
+    
+}
+
+.responsive_header_logo {
+    position: relative;
+    background-color: #171a21;
+    height: 36px;
+    text-align: center;
+    top: 7px;
+}
+
+.responsive_header_logo img {
+    height: 36px;
+    vertical-align: middle;
+}
+
+.login_container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 500px;
+    /* background-color: greenyellow; */
+    align-items: center;
+    justify-content: center;
+    /* position: absolute; */
+}
+.login_container h3{
+    color: white;
+}
+.login_form_container {
+  
+    padding: 24px 32px 24px 32px;
+    width: 500px;
+    height: 300px;
+    position: relative;
+    background-color: grey;
+}
+.login_form_container h3{
+    margin: 10px;
+}
+.login_input {
+    width: 100%;
+}
+
+input[type="text"], input[type="password"] {
+    background-color: #f2f2f2;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    padding: 8px;
+}
+input[type="text"], input[type="password"] {
+    font-size: 16px;
+    color: #333;
+  }
+.submit_button_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* #submit_button {
+    justify-content: center;
+} */
+
+input[type="submit"] {
+    background-color: #3498db; /* blue background color */
+    color: #fff; /* white text color */
+    border: none; /* remove border */
+    padding: 10px 20px; /* add some padding to the button */
+    border-radius: 5px; /* add rounded corners */
+    font-size: 16px; /* increase font size */
+    cursor: pointer; /* change cursor to pointer when hovering over button */
+    transition: background-color 0.3s ease-in-out; /* add a transition effect */
+  }
+  
+  input[type="submit"]:hover {
+    background-color: #2980b9; /* change background color when hovering over button */
+  }
