@@ -45,8 +45,12 @@ header h3{
 }
 
 header nav {
-    background-color: yellowgreen;
+    background-color: white;
     min-height: 50px;
+}
+.container-fluid{
+    width: 940px;
+    padding: 0;
 }
 
 .game_page{
@@ -131,36 +135,43 @@ header nav {
 .game_purchase_action{
     height: 40px;
     width: 80%;
-    position: absolute;
     top: 35px;
     display: flex;
     flex-direction:row-reverse;
+    position: absolute;
     
 }
 .game_purchase_price{
-    padding: 12px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     background-color: black;
     color: white;
     text-decoration: none;
+    font-size: 1rem;
+    height: 40px;
+    width: 115px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
 }
 .btn_cart{
-    padding: 12px;
     border: 1px solid black;
-    /* border-radius: 5px; */
     background-color: #436827;
     color: white;
     text-decoration: none;
-    /* position: absolute; */
-    /* right: 0; */
+    font-size: 1rem;
+    height: 40px;
+    width: 115px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
 }
 .cart_block h1
 {
     width: 100%;
-    height: 30px;
     color: white;
     margin: 0;
     margin-left: 20px;
+    font-size: 1.5rem;
 }
 
 /* CUSTOMER REVIEW */
@@ -187,22 +198,36 @@ header nav {
 }
 .customer_review h1
 {
-    color: white;   
+    width: 100%;
+    color: white;
+    margin-left: 20px;
+    font-size: 1.5rem;
 }
-.comment_section{
+.cmt_section_container{
+    background-color: #171a21;
+}
+.cmt_section{
     display: flex;
     flex-direction: row;
     width: 100%;
     background-color: #16202d;
+    border: white solid 1px;
+    border-radius: 5px;
+    margin: 10px auto;
 }
-.comment_section_left{
+.cmt_section_left{
     margin-left: 20px;
     display: flex;
-    flex: 1
+    flex-direction: column;
+    flex: 1;
+    /* background-color: royalblue; */
+    justify-content: center;
+    align-items: center;
+
 }
-.comment_section_right{
+.cmt_section_right{
     display: flex;
-    flex: 2
+    flex: 5;
 }
 
 .cmt_username {
@@ -214,25 +239,53 @@ header nav {
 .cmt_info{
     display: flex;
     flex-direction: column;
+    width: 100%;
+    margin-right: 10px;
 }
 .cmt_favor {
-    display: flex;
     color: white;
     font-size: 20px;
     font-family: "Motiva Sans", Sans-serif;
     font-weight: bold;
+    margin-left: 10px;
 }
 .cmt_from_date {
+    
     display: flex;
     color: white;
-    font-size: 20px;
+    font-size: 16px;
     font-family: "Motiva Sans", Sans-serif;
-    font-weight: bold;
+    /* font-weight: bold; */
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 .cmt_content {
     display: flex;
     color: white;
     font-size: 20px;
     font-family: "Motiva Sans", Sans-serif;
-    font-weight: bold;
+    /* font-weight: bold; */
+}
+.cmt_avatar{
+    border: black solid 2px;
+    max-width: 50%;
+    /* margin-top: 10px; */
+    margin-bottom: 10px;
+    /* max-height: 50%; */
+}
+.cmt_favor_container{
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+#cmt_favor_item{
+    max-width: 50px;
+}
+.cmt_content_container{
+    /* border: black solid 5px; */
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
 }
