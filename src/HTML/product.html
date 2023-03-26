@@ -11,9 +11,24 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="../CSS/product_detail.css" />
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
     <title>Dynamic Title</title>
   </head>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+    crossorigin="anonymous"
+  ></script>
+  <script src="../JS/product.js"></script>
   <body>
     <header>
       <!-- <h3>Game</h3> -->
@@ -22,7 +37,50 @@
           <img src="../resources/img/logo_steam.svg" alt="LOGO" />
         </div>
       </div>
-      <nav></nav>
+      <div class="nav_container">
+        <nav class="navbar navbar-expand-lg">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="#">LOGO</a>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="index.html">STORE</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">LIBRARY</a>
+                </li>
+                <!-- <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Dropdown </a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><hr class="dropdown-divider" /></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                  </ul>
+                </li> -->
+                <!-- <li class="nav-item">
+                  <a class="nav-link disabled">Disabled</a>
+                </li> -->
+              </ul>
+              <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                <button class="btn btn-outline-success" type="submit">Search</button>
+              </form>
+            </div>
+          </div>
+        </nav>
+      </div>
     </header>
 
     <div class="game_page">
@@ -75,15 +133,88 @@
 
       <section class="customer_review">
         <h1 class="customer_review_title">CUSTOMER REVIEW</h1>
-        <div class="comment_section">
-          <div class="comment_section_left">
-            <div class="cmt_username">Q. Khang</div>
+        <div class="cmt_section_container">
+          <div class="cmt_section">
+            <div class="cmt_section_left">
+              <img
+                class="cmt_avatar"
+                src="../resources/img/User/avatar.jpg"
+                alt=""
+              />
+              <div class="cmt_username">hqkhang83</div>
+            </div>
+            <div class="cmt_section_right">
+              <div class="cmt_info">
+                <div class="cmt_favor_container">
+                  <img
+                    id="cmt_favor_item"
+                    src="../resources/img/materials/thump_up.png"
+                    alt=""
+                  />
+                  <div class="cmt_favor">RECOMMENED</div>
+                </div>
+
+                <div class="cmt_from_date">8/3/2023</div>
+                <div class="cmt_content_container">
+                  <div class="cmt_content">This is great!</div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="comment_section_right">
-            <div class="cmt_info">
-              <div class="cmt_favor">1</div>
-              <div class="cmt_from_date">8/3/2023</div>
-              <div class="cmt_content">This is great!</div>
+
+          <div class="cmt_section">
+            <div class="cmt_section_left">
+              <img
+                class="cmt_avatar"
+                src="../resources/img/User/avatar.jpg"
+                alt=""
+              />
+              <div class="cmt_username">luuca792</div>
+            </div>
+            <div class="cmt_section_right">
+              <div class="cmt_info">
+                <div class="cmt_favor_container">
+                  <img
+                    id="cmt_favor_item"
+                    src="../resources/img/materials/thump_up.png"
+                    alt=""
+                  />
+                  <div class="cmt_favor">RECOMMENED</div>
+                </div>
+
+                <div class="cmt_from_date">8/3/2023</div>
+                <div class="cmt_content_container">
+                  <div class="cmt_content">Peak of gaming right here! </br>  I almost tear up when Goku said "it's Go time" and proceed to Gok all of the enemies</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cmt_section">
+            <div class="cmt_section_left">
+              <img
+                class="cmt_avatar"
+                src="../resources/img/User/avatar.jpg"
+                alt=""
+              />
+              <div class="cmt_username">lncnhan</div>
+            </div>
+            <div class="cmt_section_right">
+              <div class="cmt_info">
+                <div class="cmt_favor_container">
+                  <img
+                    id="cmt_favor_item"
+                    src="../resources/img/materials/thump_down.png"
+                    alt=""
+                  />
+                  <div class="cmt_favor">NOT RECOMMENED</div>
+                </div>
+
+                <div class="cmt_from_date">8/3/2023</div>
+                <div class="cmt_content_container">
+                  <div class="cmt_content">Well you see, it's a very typical combat type of game where you fly all over the place and shoot ki blast</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

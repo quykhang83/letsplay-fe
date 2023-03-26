@@ -13,6 +13,7 @@ body {
     height: 100vh;
     /* overflow: hidden; */
     margin: 0;
+    overflow-y: hidden;
 }
 
 header {
@@ -58,13 +59,51 @@ header nav {
     min-height: 50px;
 }
 
-.item_set {
+/* .container-fluid{
+    background-color:  yellowgreen;
+} */
+
+.item_set_container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     background-color: #1b2838;
     min-height: 270px;
     overflow-x: scroll;
     overflow-y: hidden;
+    justify-content: center;
+    
+}
+/* width */
+::-webkit-scrollbar {
+    width: 20px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: grey; 
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(71, 69, 69); 
+  }
+.set_label{
+    font-size: 1rem;
+    padding: 0 0 0 10px;
+    margin: 10px 10px;
+    color: white;
+}
+.set_item{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
 }
 
 .item_ctn {
@@ -72,19 +111,28 @@ header nav {
     cursor: pointer;
     width: 210px;
     box-shadow:#171a21;
+    margin-left: 10px;
+    /* border-radius: 5px; */
 }
 
 .item {
-    margin: 20px 10px 0px 10px;
+    /* margin: 20px 10px 0px 10px; */
     min-width: 200px;
     height: 160px;
 }
-.item_price, .item_name{
+.item_name{
     background-color: black;
-    margin: 0px 10px 0px 10px;
     min-width: 200px;
     height: 30px;
-    border: 1px solid white
+    border: 1px solid white;
+}
+.item_price{
+    background-color: black;
+    min-width: 200px;
+    height: 30px;
+    border: 1px solid white;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 .item_price h3{
     font-size: 15px;
@@ -108,6 +156,7 @@ header nav {
     object-fit: cover;
     margin: 0 auto;
     display: block;
+    border-top-left-radius: 10px;border-top-right-radius: 10px;
 }
 
 .item_label_ctn {
@@ -119,32 +168,8 @@ header nav {
     
 }
 
-.item_price_ctn {
-    background-color: black;
-    color: white;
-    font-family: "Motiva Sans", Sans-serif;
-    
-    min-width: 200px;
-    height: 30px;
-    margin: 0px 10px 20px 10px;
-}
-
-.item_price_ctn h3 {
-    font-size: 15px;
-    text-align: center;
-    padding: 5px 0px;
-    margin: 0;
-}
-
 .item_ctn:hover {
     transform: scale(1.1);
-}
-
-.set_label {
-    background-color: #1b2838;
-    margin: 0;
-    padding: 0 0 0 10px;
-    color: white;
 }
 
 .label {
