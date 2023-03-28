@@ -1,0 +1,8 @@
+{
+  "realm": "ctu",
+  "auth-server-url": "http://localhost:8027/",
+  "ssl-required": "external",
+  "resource": "letsplay_app",
+  "public-client": true,
+  "confidential-port": 0
+}
