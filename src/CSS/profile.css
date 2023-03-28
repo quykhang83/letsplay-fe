@@ -1,0 +1,148 @@
+@import url("https://fonts.googleapis.com/css?family=Muli&display=swap");
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: "roboto", sans-serif;
+  height: 100vh;
+  margin: 0;
+  background-color: #171a21;
+  scrollbar-width: none; 
+  -ms-overflow-style: none;
+}
+body::-webkit-scrollbar {
+  width: 0px;
+}
+header {
+  display: flex;
+  flex-direction: column;
+}
+header h3 {
+  font-family: "roboto", sans-serif;
+  background-color: gray;
+  font-size: 24px;
+  /* padding: 50px; */
+}
+.header_box {
+  background-color: #171a21;
+  min-height: 50px;
+  display: block;
+}
+.responsive_header_logo {
+  position: relative;
+  background-color: #171a21;
+  height: 36px;
+  text-align: center;
+  top: 7px;
+}
+.responsive_header_logo img {
+  height: 36px;
+  vertical-align: middle;
+}
+header nav {
+  background-color: white;
+  min-height: 50px;
+}
+.container-fluid {
+  width: 940px;
+  padding: 0;
+}
+.profile-container {
+  display: flex;
+  flex-direction: row;
+  height: 500px;
+  /* background-color: aquamarine; */
+  justify-content: center;
+  position: relative;
+}
+.btn-container {
+  /* background-color: turquoise; */
+  width: 150px;
+  right: 0;
+  font-size: 1rem;
+}
+.btn-general{
+    margin-top: 10px;
+}
+.profile-nav-box {
+  display: flex;
+  justify-content: right;
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: calc((100% - 940px) / 2);
+  /* background-color: burlywood; */
+}
+.profile-box {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  width: 940px;
+  position: absolute;
+  left: (100vw - 940px)/2;
+  /* background-color: greenyellow; */
+}
+.tab-content {
+    margin-top: 10px;
+    width: 800px;
+    /* background-color: grey; */
+}
+.profile-header{
+    color: white;
+    font-size: 1.2rem;
+}
+.dialog-body-text{
+    font-size: 1rem;
+    text-align: justify;
+    color: grey;
+}
+.btn-outline-secondary {
+  color: white;
+  /* background-color: gray; */
+  width: 100%;
+  border-radius: 0;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.5s ease-in-out;
+}
+.btn-outline-secondary:hover {
+  background-color: grey;
+}
+.tab-panel {
+  display: none;
+}
+.tab-panel.active {
+  display: block;
+}
+.form-label{
+  color: white;
+}
+.profile-section-header{
+  color: white;
+  border-bottom: rgb(71, 66, 66) solid 1px;
+}
+.profile-section{
+  padding: 20px 10px 10px 10px;
+}
+.avatar-section{
+  display: flex;
+  margin-top: 20px;
+  align-items: flex-end;
+}
+.avatar{
+  display: block;
+  margin-right: 20px;
+}
+.avatar-184{
+  width: 184px;
+}
+.avatar-64{
+  width: 64px;
+}
+.avatar-32{
+  width: 32px;
+}
+.avatar-size{
+  color: gray;
+  font-size: 0.7rem;
+}
