@@ -11,6 +11,7 @@ types {
   image/png                             png;
   image/x-icon                          ico;
   image/x-jng                           jng;
+  image/svg+xml                         svg svgz;
   image/vnd.wap.wbmp                    wbmp;
   application/java-archive              jar war ear;
   application/mac-binhex40              hqx;
