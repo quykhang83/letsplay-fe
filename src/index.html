@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
@@ -20,7 +21,7 @@
     <link rel="stylesheet" href="../CSS/homepage.css" />
     <title>Game</title>
     <script
-      src="http://localhost/js/keycloak.js"
+      src="http://localhost:8027/js/keycloak.js"
       type="text/javascript"
       defer
     ></script>
@@ -32,7 +33,7 @@
     crossorigin="anonymous"
   ></script>
   
-  <body>
+  <body onload="authenticateLogin()">
     <header>
       <!-- <h3>Game</h3> -->
       <div class="header_box">
