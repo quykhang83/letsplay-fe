@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../CSS/profile.css" />
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"
+      integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <title>Profile</title>
+  </head>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+    crossorigin="anonymous"
+  ></script>
+  <body>
+    <header>
+      <!-- <h3>Game</h3> -->
+      <div class="header_box">
+        <div class="responsive_header_logo">
+          <img src="../resources/img/logo_steam.svg" alt="LOGO" />
+        </div>
+      </div>
+      <div class="nav_container">
+        <nav class="navbar navbar-expand-lg">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="#">LOGO</a>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="index.html">STORE</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">LIBRARY</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">PROFILE</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <div class="profile-container">
+      <div class="profile-nav-box">
+        <div class="btn-container">
+          <div class="btn-general">
+            <button type="button" class="btn btn-outline-secondary is-active" data-tab="general">General</button>
+          </div>
+          <div class="btn-avatar">
+            <button type="button" class="btn btn-outline-secondary" data-tab="avatar">Avatar</button>
+          </div>
+        </div>
+      </div>
+      <div class="profile-box">
+        <div class="tab-content">
+          <div class="tab-panel active" data-tab="general">
+            <div class="profile-header">ABOUT</div>
+            <div class="dialog-body-text">
+              Set your profile name and details. Providing additional information like your real name can help friends find you on the Let's Play
+              Community. Your profile name represent you throughout Let's Play, and must be appropriate for all audiences.
+            </div>
+            <br />
+            <div class="profile-section-header">GENERAL</div>
+            <div class="profile-section">
+              <div class="mb-3">
+                <label for="formGroupExampleInput" class="form-label">Profile Name</label>
+                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="User current profile name from db" />
+              </div>
+              <div class="mb-3">
+                <label for="formGroupExampleInput2" class="form-label">Real Name</label>
+                <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="User current real name from db" />
+              </div>
+            </div>
+
+            <div class="profile-section-header">CONTACT</div>
+            <div class="profile-section">
+              <div class="mb-3">
+                <label for="formGroupExampleInput" class="form-label">Email</label>
+                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="placeholder" />
+              </div>
+              <div class="mb-3">
+                <label for="formGroupExampleInput" class="form-label">Phone Number</label>
+                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="placeholder" />
+              </div>
+            </div>
+
+            <div class="profile-section-header">SUMMARY</div>
+            <div class="profile-section">
+              <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Bio</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" maxlength="150"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="tab-panel" data-tab="avatar">
+            <div class="profile-header">ABOUT</div>
+            <div class="dialog-body-text">Your avatar represent you throughout Let's Play, and must be appropriate for all audiences.</div>
+            <br />
+            <div class="profile-section-header">CHOSE YOUR AVATAR</div>
+            <div class="avatar-section">
+              <div class="avatar">
+                <img class="avatar-184" src="../resources/img/User/avatar.jpg" alt="Avatar" />
+                <div class="avatar-size">184px</div>
+              </div>
+              <div class="avatar">
+                <img class="avatar-64" src="../resources/img/User/avatar.jpg" alt="Avatar" />
+                <div class="avatar-size">64px</div>
+              </div>
+              <div class="avatar">
+                <img class="avatar-32" src="../resources/img/User/avatar.jpg" alt="Avatar" />
+                <div class="avatar-size">32px</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="../JS/profile.js"></script>
+</html>

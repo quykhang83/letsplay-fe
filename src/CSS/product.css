@@ -268,7 +268,7 @@ header nav {
 }
 .cmt_avatar{
     border: black solid 2px;
-    max-width: 50%;
+    max-width: 64px;
     /* margin-top: 10px; */
     margin-bottom: 10px;
     /* max-height: 50%; */
