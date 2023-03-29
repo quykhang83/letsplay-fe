@@ -117,6 +117,18 @@ header nav {
 .form-label{
   color: white;
 }
+.form-control{
+  background-color: #17191a;
+  border: black solid 1px;
+  color: white
+}
+.form-control::placeholder{
+  color:grey;
+}
+.form-control:focus{
+  background-color: #17191a ;
+  color: white;
+}
 .profile-section-header{
   color: white;
   border-bottom: rgb(71, 66, 66) solid 1px;
