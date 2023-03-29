@@ -1,10 +1,10 @@
+// const keycloak = new Keycloak("https://staging-approveme.axonactive.vn.local/keycloak.json");
 const keycloak = new Keycloak("http://localhost/keycloak.json");
-// const keycloak = new Keycloak("https://localhost/keycloak.json");
 
 function authenticateLogin() {
   keycloak.init({
     onLoad: "login-required",
-    redirectUri: window.location.origin + "/Request.html",
+    redirectUri: window.location.origin + "/index.html",
     checkLoginIframe: false,
     promiseType: "native",
   })
@@ -39,7 +39,7 @@ function authenticateLogin() {
 // }
 $(() => {
   $("#logout_btn").on("click", () => {
-    keycloak.logout({ redirectUri: window.location.origin + "/Request.html" });
+    keycloak.logout({ redirectUri: window.location.origin + "/index.html" });
   });
 
   var $inputSearch = $("#searchBar");
