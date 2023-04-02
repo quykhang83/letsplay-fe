@@ -106,17 +106,50 @@ header nav {
 }
 
 .item_ctn {
-    transition: all .2s ease-in-out;
     cursor: pointer;
     width: 200px;
     margin-left: 10px;
+}
+.item_ctn a{
+    display: flex;
+    flex-direction: column;
+    height: 236px;
+}
+.new_item_ctn {
+    cursor: pointer;
+    width: 200px;
+    height: 236px;
+    margin-left: 10px;
+    background-color: rgb(227, 214, 214);
+    border-radius: 10px;
+}
+.new_item_ctn img{
+    height: auto;
 }
 .item {
     min-width: 200px;
     height: 160px;
     overflow: hidden;
 }
+.new-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 200px;
+    height: 236px;
+    overflow: hidden;
+}
+
+.item_ctn:hover img {
+    transform: scale(1.1);
+}
+.new_item_ctn:hover img{
+    transform: scale(1.1);
+}
 .item img{
+    transition: all .2s ease-in-out;
+}
+.new-item img{
     transition: all .2s ease-in-out;
 }
 .item_name{
@@ -126,12 +159,17 @@ header nav {
     border: 1px solid white;
 }
 .item_price{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     background-color: black;
     min-width: 200px;
     height: fit-content;
     border: 1px solid white;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    flex-grow: 1;
 }
 .item_price h3{
     font-size: 1rem;
@@ -179,10 +217,6 @@ header nav {
     text-transform: uppercase;
     top: 120px;
     
-}
-
-.item_ctn:hover img {
-    transform: scale(1.1);
 }
 
 .label {

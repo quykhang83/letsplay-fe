@@ -4,12 +4,6 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"
-      integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
@@ -23,18 +17,15 @@
       integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="../CSS/homepage.css" />
+    <link rel="stylesheet" href="../CSS/design.css" />
     <title>Game</title>
-    <script src="http://localhost:8027/js/keycloak.js" type="text/javascript" defer></script>
-    <script src="./JS/keycloakauth.js" defer></script>
   </head>
   <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
     crossorigin="anonymous"
   ></script>
-
-  <body">
+  <body>
     <header>
       <!-- <h3>Game</h3> -->
       <div class="header_box">
@@ -69,11 +60,11 @@
                   <a class="nav-link" href="profile.html">PROFILE</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="design.html">DESIGN</a>
+                  <a class="nav-link" href="#">DESIGN</a>
                 </li>
               </ul>
               <form class="d-flex" role="search">
-                <input id="searchBar" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
                 <button class="btn btn-outline-success" type="submit">Search</button>
               </form>
             </div>
@@ -82,23 +73,13 @@
       </nav>
     </header>
 
-    <div id="product-result"></div>
-
     <div class="item_set_container">
       <h3 class="set_label">FEATURED & RECOMMENDED</h3>
       <div class="set_item">
-        <div class="item_ctn">
-          <a href="product.html" style="text-decoration: none">
-            <div class="item">
-              <img src="/images/god_of_war_rng.jpg" alt="" />
-            </div>
-            <div class="item_name">
-              <h3>God Of War: Ragnarok</h3>
-            </div>
-            <div class="item_price">
-              <h3>1.400.000đ</h3>
-            </div>
-          </a>
+        <div class="new_item_ctn">
+          <div class="new-item">
+            <img src="/images/materials/plus.png" alt="" />
+          </div>
         </div>
         <div class="item_ctn">
           <a href="product.html" style="text-decoration: none">
@@ -110,71 +91,6 @@
             </div>
             <div class="item_price">
               <h3>Free To Play</h3>
-            </div>
-          </a>
-        </div>
-        <div class="item_ctn">
-          <a href="product.html?product_id=1" style="text-decoration: none">
-            <div class="item">
-              <img src="/images/Dragon_Ball_Z_Kakarot_logo.png" alt="" />
-            </div>
-            <div class="item_name">
-              <h3>Dragon Ball Z: Kakarot</h3>
-            </div>
-            <div class="item_price">
-              <h3>1.400.000đ</h3>
-            </div>
-          </a>
-        </div>
-        <div class="item_ctn">
-          <a href="product.html?product_id=1" style="text-decoration: none">
-            <div class="item">
-              <img src="/images/Dragon_Ball_Z_Kakarot_logo.png" alt="" />
-            </div>
-            <div class="item_name">
-              <h3>Dragon Ball Z: Kakarot</h3>
-            </div>
-            <div class="item_price">
-              <h3>1.400.000đ</h3>
-            </div>
-          </a>
-        </div>
-        <div class="item_ctn">
-          <a href="product.html?product_id=1" style="text-decoration: none">
-            <div class="item">
-              <img src="/images/Dragon_Ball_Z_Kakarot_logo.png" alt="" />
-            </div>
-            <div class="item_name">
-              <h3>Dragon Ball Z: Kakarot</h3>
-            </div>
-            <div class="item_price">
-              <h3>1.400.000đ</h3>
-            </div>
-          </a>
-        </div>
-        <div class="item_ctn">
-          <a href="product.html?product_id=2" style="text-decoration: none">
-            <div class="item">
-              <img src="/images/Dragon_Ball_Z_Kakarot_logo.png" alt="" />
-            </div>
-            <div class="item_name">
-              <h3>Dragon Ball Z: Kakarot</h3>
-            </div>
-            <div class="item_price">
-              <h3>1.400.000đ</h3>
-            </div>
-          </a>
-        </div>
-        <div class="item_ctn">
-          <a href="product.html?product_id=2" style="text-decoration: none">
-            <div class="item">
-              <img src="/images/Dragon_Ball_Z_Kakarot_logo.png" alt="" />
-            </div>
-            <div class="item_name">
-              <h3>Dragon Ball Z: Kakarot</h3>
-            </div>
-            <div class="item_price">
-              <h3>1.400.000đ</h3>
             </div>
           </a>
         </div>
@@ -197,19 +113,10 @@
     <div class="item_set_container">
       <h3 class="set_label">SPECIAL OFFERS</h3>
       <div class="set_item">
-        <div class="item_ctn">
-          <a href="product.html" style="text-decoration: none">
-            <div class="item">
-              <img src="/images/god_of_war_rng.jpg" alt="" />
-            </div>
-            <div class="item_name">
-              <h3>God Of War: Ragnarok</h3>
-            </div>
-            <div class="item_price">
-              <h3 class="item_original_price">1.400.000đ</h3>
-              <h3 class="item_discount_price">999.000đ</h3>
-            </div>
-          </a>
+        <div class="new_item_ctn">
+          <div class="new-item">
+            <img src="/images/materials/plus.png" alt="" />
+          </div>
         </div>
         <div class="item_ctn">
           <a href="product.html" style="text-decoration: none">
@@ -228,16 +135,15 @@
       </div>
     </div>
 
-    <div class="item_set_container">
+    <!-- <div class="item_set_container">
       <h3 class="set_label">BEST WITH FRIENDS</h3>
       <div class="set_item"></div>
-    </div>
+    </div> -->
 
     <footer>
       <div class="footer_box"></div>
     </footer>
 
-    <script src="./JS/homepage.js"></script>
-    <script type="module" src="./JS/main.js"></script>
+    <script src="../JS/design.js"></script>
   </body>
 </html>
