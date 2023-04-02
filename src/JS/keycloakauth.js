@@ -10,7 +10,7 @@ function authenticateLogin() {
   })
     .then((authenticated) => {
       if (authenticated) {
-        // getAllRequests(keycloak.token);
+        getAllProducts(keycloak.token);
         // connectSSE();
       }
     })
