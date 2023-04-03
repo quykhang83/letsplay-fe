@@ -130,6 +130,8 @@ header nav {
     min-width: 200px;
     height: 160px;
     overflow: hidden;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 .new-item {
     display: flex;
@@ -138,16 +140,20 @@ header nav {
     min-width: 200px;
     height: 236px;
     overflow: hidden;
+    background: none;
+    border-radius: inherit;
+    border: none;
 }
 
 .item_ctn:hover img {
     transform: scale(1.1);
+    /* border-top-left-radius: 10px;
+    border-top-right-radius: 10px; */
 }
 .new_item_ctn:hover img{
     transform: scale(1.1);
-}
-.item img{
-    transition: all .2s ease-in-out;
+    /* border-top-left-radius: 10px;
+    border-top-right-radius: 10px; */
 }
 .new-item img{
     transition: all .2s ease-in-out;
@@ -207,7 +213,8 @@ header nav {
     object-fit: cover;
     margin: 0 auto;
     display: block;
-    border-top-left-radius: 10px;border-top-right-radius: 10px;
+    border-radius: inherit;
+    transition: all .2s ease-in-out;
 }
 
 .item_label_ctn {
