@@ -41,6 +41,9 @@ $(() => {
   $("#logout_btn").on("click", () => {
     keycloak.logout({ redirectUri: window.location.origin + "/index.html" });
   });
+  $("#change_pass_btn").on("click", () => {
+    keycloak.login({ action: 'UPDATE_PASSWORD' });
+  });
 
   var $inputSearch = $("#searchBar");
   var $searchResultsCtn = document.getElementById("res_search_result");
