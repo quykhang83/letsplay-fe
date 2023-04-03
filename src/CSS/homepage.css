@@ -115,9 +115,8 @@ header nav {
     min-width: 200px;
     height: 160px;
     overflow: hidden;
-}
-.item img{
-    transition: all .2s ease-in-out;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 .item_name{
     background-color: black;
@@ -169,7 +168,8 @@ header nav {
     object-fit: cover;
     margin: 0 auto;
     display: block;
-    border-top-left-radius: 10px;border-top-right-radius: 10px;
+    transition: all .2s ease-in-out;
+    border-radius: inherit;
 }
 
 .item_label_ctn {
