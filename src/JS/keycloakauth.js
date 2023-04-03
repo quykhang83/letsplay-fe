@@ -2,12 +2,13 @@
 const keycloak = new Keycloak("http://localhost/keycloak.json");
 
 function authenticateLogin() {
-  keycloak.init({
-    onLoad: "login-required",
-    redirectUri: window.location.origin + "/index.html",
-    checkLoginIframe: false,
-    promiseType: "native",
-  })
+  keycloak
+    .init({
+      onLoad: "login-required",
+      redirectUri: window.location.origin + "/index.html",
+      checkLoginIframe: false,
+      promiseType: "native",
+    })
     .then((authenticated) => {
       if (authenticated) {
         getAllProducts(keycloak.token);
@@ -17,15 +18,19 @@ function authenticateLogin() {
     .catch((error) => {
       alert("Something went wrong due to \n" + error);
     });
-  }
-  keycloak.onTokenExpired = () => {
+}
+keycloak.onTokenExpired = () => {
   var kc_updateToken = keycloak.updateToken(300);
-  kc_updateToken.then(() => {
-  });
+  kc_updateToken.then(() => {});
   kc_updateToken.catch(() => {
     console.error("Failed to refresh token at " + new Date());
   });
 };
+
+// function logoutKeycloak(){
+//   keycloak.logout({ redirectUri: window.location.origin + "/index.html" });
+//   authenticateLogin();
+// }
 
 // function connectSSE() {
 //   console.log("CALLING SSEVENT...");
@@ -42,7 +47,7 @@ $(() => {
     keycloak.logout({ redirectUri: window.location.origin + "/index.html" });
   });
   $("#change_pass_btn").on("click", () => {
-    keycloak.login({ action: 'UPDATE_PASSWORD' });
+    keycloak.login({ action: "UPDATE_PASSWORD" });
   });
 
   var $inputSearch = $("#searchBar");
