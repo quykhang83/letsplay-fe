@@ -3,13 +3,12 @@ importScripts("https://www.gstatic.com/firebasejs/9.16.0/firebase-messaging-comp
 // importScripts("https://www.gstatic.com/firebasejs/9.16.0/firebase-messaging-sw.js");
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBBjbixp3Lc2iRuUswQjA8tFKvm2YFWLCw",
-  authDomain: "aavn-approveme.firebaseapp.com",
-  projectId: "aavn-approveme",
-  storageBucket: "aavn-approveme.appspot.com",
-  messagingSenderId: "551021280444",
-  appId: "1:551021280444:web:5038a12456d1af5a1e24b9",
-  measurementId: "G-PG88814LKD",
+  apiKey: "AIzaSyDb8hMhMeZBG_0uobMmHxCjF7sditTKXo8",
+  authDomain: "ctu-letsplay.firebaseapp.com",
+  projectId: "ctu-letsplay",
+  storageBucket: "ctu-letsplay.appspot.com",
+  messagingSenderId: "669968732330",
+  appId: "1:669968732330:web:98afc1f3a3be9893ce80d3"
 };
 
 firebase.initializeApp(firebaseConfig);
