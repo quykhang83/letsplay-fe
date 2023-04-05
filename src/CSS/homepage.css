@@ -10,6 +10,7 @@ body {
     margin: 0;
     scrollbar-width: none; 
      -ms-overflow-style: none;
+     background-color: #1b2838;
 }
 body::-webkit-scrollbar {
     width: 0px;
@@ -31,8 +32,6 @@ header h3{
     background-color: #171a21;
     min-height: 50px;
     display: block;
-    
-    
 }
 
 .responsive_header_logo {
