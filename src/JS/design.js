@@ -4,16 +4,16 @@ $(function () {
 });
 
 function loadAllProducts(callback) {
-  $("#product-result").html("");
+  $('#product-result').html('');
 
   // Make a ajax request call
   var request = $.ajax({
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/jsons",
+      Accept: 'application/json',
+      'Content-Type': 'application/jsons',
     },
-    url: "/product-types",
-    method: "GET",
+    url: '/product-types',
+    method: 'GET',
   });
 
   request.done((data) => {
@@ -26,81 +26,85 @@ function loadAllProducts(callback) {
     for (let i = 0; i < data.length; i++) {
       const element = data[i];
       const encodedProductTypeName = encodeURIComponent(element.productTypeName);
+      // console.log(element.productTypeName);
+      if (element.productTypeName != '#') {
+        const promise = new Promise((resolve, reject) => {
+          var out = '';
+          out += "<div class='item-set-container noselect'>";
 
-      const promise = new Promise((resolve, reject) => {
-        var out = "";
-        out += "<div class='item_set_container'>";
-        out += "<h3 class='set_label'>" + element.productTypeName + "</h3>" + "<div class='set_item'>";
+          out += "<div class='new-item-ctn'>";
+          out += "<div class='new-item' data-product-type=" + element.productTypeName + '>';
+          out += "<img src='/images/materials/edit.png' alt='' draggable='false'/>";
+          out += '</div> </div>';
 
-        out += "<div class='new-item-ctn'>";
-        out += "<div class='new-item'>";
-        out += "<img src='/images/materials/plus.png' alt='' />";
-        out += "</div> </div>";
+          out += "<div class='item-scroll-ctn'>";
+          out += "<h3 class='set_label'>" + element.productTypeName + '</h3>' + "<div class='set_item'>";
 
-        // Call to get products by type api
-        $.ajax({
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/jsons",
-          },
-          url: "/products?type=" + encodedProductTypeName,
-          method: "GET",
-          success: function (product_data) {
-            product_data.forEach((product_element) => {
-              var product_out = "";
+          // Call to get products by type api
+          $.ajax({
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/jsons',
+            },
+            url: '/products?type=' + encodedProductTypeName,
+            method: 'GET',
+            success: function (product_data) {
+              product_data.forEach((product_element) => {
+                var product_out = '';
 
-              //Format product price to have dot according to VND
-              const formattedproductPrice = product_element.productPrice.toLocaleString("vi-VN");
+                //Format product price to have dot according to VND
+                const formattedproductPrice = product_element.productPrice.toLocaleString('vi-VN');
 
-              product_out +=
-                "<div class='item_ctn'><a href='product.html' style='text-decoration: none'>" +
-                "<div class='item'>" +
-                "<img src='/images/god_of_war_rng.jpg' alt='' />" +
-                "</div>" +
-                "<div class='item_name'>" +
-                "<h3>" +
-                product_element.productName +
-                "</h3>" +
-                "</div>" +
-                "<div class='item_price'>" +
-                "<h3 class='item_original_price'>" +
-                formattedproductPrice +
-                "đ</h3>" +
-                "<h3 class='item_discount_price'>150.000đ</h3>" +
-                "</div>" +
-                "</a></div>";
+                product_out +=
+                  "<div class='item_ctn'><a href='product.html' style='text-decoration: none'>" +
+                  "<div class='item'>" +
+                  "<img src='/images/god_of_war_rng.jpg' alt='' draggable='false'/>" +
+                  '</div>' +
+                  "<div class='item_name'>" +
+                  '<h3>' +
+                  product_element.productName +
+                  '</h3>' +
+                  '</div>' +
+                  "<div class='item_price noselect'>" +
+                  "<h3 class='item_original_price'>" +
+                  formattedproductPrice +
+                  'đ</h3>' +
+                  "<h3 class='item_discount_price'>150.000đ</h3>" +
+                  '</div>' +
+                  '</a></div>';
 
-              out += product_out;
-            });
+                out += product_out;
+              });
 
-            // Close set-item
-            out += "</div>";
+              // Close set-item
+              out += '</div>';
+              // Close item-scroll-container
+              out += '</div>';
+              // Close item-set-container
+              out += '</div>';
 
-            // Close item-set-container
-            out += "</div>";
-
-            resolve(out);
-          },
-          error: function (jqXHR, textStatus, errorThrown) {
-            console.log("Error: " + textStatus + " - " + errorThrown);
-            reject(errorThrown);
-          },
+              resolve(out);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+              console.log('Error: ' + textStatus + ' - ' + errorThrown);
+              reject(errorThrown);
+            },
+          });
         });
-      });
-
-      promises.push(promise);
+        promises.push(promise);
+      }
     }
 
     // Use Promise.all() to ensure that the promises are executed in the correct order
     Promise.all(promises)
       .then((results) => {
         results.forEach((result) => {
-          $("#product-result").append(result);
+          $('#product-result').append(result);
         });
         callback();
       })
       .catch((error) => {
-        console.log("Error: " + error);
+        console.log('Error: ' + error);
       });
   });
 }
@@ -108,14 +112,14 @@ function loadAllProducts(callback) {
 function getAllProducts() {
   var request = $.ajax({
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/jsons",
+      Accept: 'application/json',
+      'Content-Type': 'application/jsons',
     },
-    url: "/products",
-    method: "GET",
+    url: '/products',
+    method: 'GET',
   });
   request.done((data) => {
-    console.log("Get products");
+    console.log('Get products');
     data.forEach((element) => {
       console.log(element);
     });
@@ -126,34 +130,181 @@ function getAllProducts() {
 }
 
 function afterLoadAllProducts() {
-  console.log("After load all products called");
 
-  const originalPrices = document.querySelectorAll(".item_original_price");
-  const discountPrices = document.querySelectorAll(".item_discount_price");
-  console.log(originalPrices);
+  const originalPrices = document.querySelectorAll('.item_original_price');
+  const discountPrices = document.querySelectorAll('.item_discount_price');
+  // console.log(originalPrices);
 
   for (let i = 0; i < originalPrices.length; i++) {
-    if (discountPrices[i].innerText !== "0đ") {
-      originalPrices[i].classList.add("discount");
-      discountPrices[i].classList.add("has_discount_price");
+    if (discountPrices[i].innerText !== '0đ') {
+      originalPrices[i].classList.add('discount');
+      discountPrices[i].classList.add('has_discount_price');
     }
   }
 
-  const addProductButtons = document.querySelectorAll(".new-item");
-  const productSelection = document.querySelector(".product-selection-view");
-  const closeButton = productSelection.querySelector(".close-button");
-  const darkFilter = document.querySelector(".dark-filter");
+  const addProductButtons = document.querySelectorAll('.new-item');
+  const productSelection = document.querySelector('.product-selection-view');
+  const closeButton = productSelection.querySelector('.close-button');
+  const submitButton = productSelection.querySelector('.submit-button');
+  const darkFilter = document.querySelector('.dark-filter');
 
   addProductButtons.forEach((button) => {
-    console.log(button);
-    button.addEventListener("click", () => {
-      productSelection.style.display = "flex";
-      darkFilter.style.display = "block";
+    button.addEventListener('click', () => {
+      productSelection.style.display = 'flex';
+      darkFilter.style.display = 'block';
+
+      var product_type = button.getAttribute('data-product-type');
+      // console.log(product_type);
+      loadProductSelection(product_type);
     });
   });
 
-  closeButton.addEventListener("click", () => {
-    productSelection.style.display = "none";
-    darkFilter.style.display = "none";
+  closeButton.addEventListener('click', () => {
+    productSelection.style.display = 'none';
+    darkFilter.style.display = 'none';
+  });
+  submitButton.addEventListener('click', () => {
+    productSelection.style.display = 'none';
+    darkFilter.style.display = 'none';
+    const checkboxes = document.querySelectorAll('.product-checkbox');
+
+    const keycloak = new Keycloak("http://localhost/keycloak.json");
+    let token;
+    // keycloak
+    // .init({
+    //   onLoad: "login-required",
+    //   checkLoginIframe: false,
+    //   promiseType: "native",
+    // })
+    // .then((authenticated) => {
+    //   if (authenticated) {
+    //     token = keycloak.token;
+    //     // console.log(token);
+    //   }
+    // })
+    // .catch((error) => {
+    //   alert("Something went wrong due to \n" + error);
+    // });
+
+    let checkedProducts = [];
+    let uncheckedProducts = [];
+
+    for (let i = 0; i < checkboxes.length; i++) {
+      console.log(checkboxes[i])
+      if (checkboxes[i].checked) {
+        const productId = checkboxes[i].getAttribute('data-product-id');
+        checkedProducts.push(productId);
+      }
+      else{
+        const productId = checkboxes[i].getAttribute('data-product-id');
+        uncheckedProducts.push(productId);
+      }
+    }
+    // console.log(checkedProducts);
+    // console.log(uncheckedProducts);
+
+    const submitButton = document.getElementById('submit-button');
+    var productType = submitButton.getAttribute('data-product-type');
+    console.log(productType);
+    
+    const checkedRequests = checkedProducts.map((productId) => {
+      const data = {
+        productTypeName: productType
+      };
+      return $.ajax({
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          // Authorization: "Bearer " + token,
+        },
+        url: '/products/' + productId,
+        method: 'PATCH',
+        dataType: "json",
+        data: JSON.stringify(data),
+      });
+    });
+    
+    const uncheckedRequests = uncheckedProducts.map((productId) => {
+      return $.ajax({
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          // Authorization: "Bearer " + token,
+        },
+        url: '/products/' + productId,
+        method: 'PATCH',
+        dataType: "json",
+        data: JSON.stringify({ productTypeName: "#"}),
+      });
+    });
+    
+    Promise.all([...checkedRequests, ...uncheckedRequests])
+      .then(() => {
+        location.reload(true);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    
+  });
+}
+
+// keycloak.onTokenExpired = () => {
+//   var kc_updateToken = keycloak.updateToken(300);
+//   kc_updateToken.then(() => {});
+//   kc_updateToken.catch(() => {
+//     console.error("Failed to refresh token at " + new Date());
+//   });
+// };
+
+function loadProductSelection(productType) {
+  $('#product-selection-result').html('');
+
+  var out = '';
+
+  // Make a ajax request call
+  var request1 = $.ajax({
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/jsons',
+    },
+    url: '/products?type=' + productType,
+    method: 'GET',
+  });
+
+  var request2 = $.ajax({
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/jsons',
+    },
+    url: '/products?type=%23',
+    method: 'GET',
+  });
+
+  Promise.all([request1, request2]).then(function(results) {
+    // results is an array of the resolved values of the input promises
+    var data1 = results[0];
+    var data2 = results[1];
+  
+    // Do something with data1, data2, and data3
+    out = '';
+    data1.forEach((element) => {
+      out += "<div class='product'>";
+      out += "<h3 class='product-detail'>" + element.productName + '</h3>';
+      out += "<input type='checkbox' class='product-checkbox' data-product-id=" + element.productId + ' checked/>';
+      out += '</div>';
+    });
+    $('#product-selection-result').append(out);
+
+    out = '';
+    data2.forEach((element) => {
+      out += "<div class='product'>";
+      out += "<h3 class='product-detail'>" + element.productName + '</h3>';
+      out += "<input type='checkbox' class='product-checkbox' data-product-id=" + element.productId + ' />';
+      out += '</div>';
+    });
+    $('#product-selection-result').append(out);
+    const submitButton = document.getElementById('submit-button');
+    submitButton.setAttribute('data-product-type', productType);
   });
 }
