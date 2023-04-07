@@ -128,7 +128,8 @@ header nav {
 }
 .new-item-ctn {
   cursor: pointer;
-  width: 60px;
+  min-width: 60px;
+  max-width: 60px;
   height: 235px;
   margin: 10px 5px 10px 10px;
   background-color: rgb(227, 214, 214);

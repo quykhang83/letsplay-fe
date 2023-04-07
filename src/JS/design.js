@@ -1,6 +1,7 @@
 // Item dynamic price
 $(function () {
   loadAllProducts(afterLoadAllProducts);
+  console.log(keycloak.token);
 });
 
 function loadAllProducts(callback) {
@@ -166,31 +167,13 @@ function afterLoadAllProducts() {
   submitButton.addEventListener('click', () => {
     productSelection.style.display = 'none';
     darkFilter.style.display = 'none';
+    // const token = keycloak.token;
     const checkboxes = document.querySelectorAll('.product-checkbox');
-
-    const keycloak = new Keycloak("http://localhost/keycloak.json");
-    let token;
-    // keycloak
-    // .init({
-    //   onLoad: "login-required",
-    //   checkLoginIframe: false,
-    //   promiseType: "native",
-    // })
-    // .then((authenticated) => {
-    //   if (authenticated) {
-    //     token = keycloak.token;
-    //     // console.log(token);
-    //   }
-    // })
-    // .catch((error) => {
-    //   alert("Something went wrong due to \n" + error);
-    // });
 
     let checkedProducts = [];
     let uncheckedProducts = [];
 
     for (let i = 0; i < checkboxes.length; i++) {
-      console.log(checkboxes[i])
       if (checkboxes[i].checked) {
         const productId = checkboxes[i].getAttribute('data-product-id');
         checkedProducts.push(productId);
@@ -200,8 +183,6 @@ function afterLoadAllProducts() {
         uncheckedProducts.push(productId);
       }
     }
-    // console.log(checkedProducts);
-    // console.log(uncheckedProducts);
 
     const submitButton = document.getElementById('submit-button');
     var productType = submitButton.getAttribute('data-product-type');
@@ -215,7 +196,7 @@ function afterLoadAllProducts() {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          // Authorization: "Bearer " + token,
+          Authorization: "Bearer " + keycloak.token,
         },
         url: '/products/' + productId,
         method: 'PATCH',
@@ -229,7 +210,7 @@ function afterLoadAllProducts() {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          // Authorization: "Bearer " + token,
+          Authorization: "Bearer " + keycloak.token,
         },
         url: '/products/' + productId,
         method: 'PATCH',
@@ -248,14 +229,6 @@ function afterLoadAllProducts() {
     
   });
 }
-
-// keycloak.onTokenExpired = () => {
-//   var kc_updateToken = keycloak.updateToken(300);
-//   kc_updateToken.then(() => {});
-//   kc_updateToken.catch(() => {
-//     console.error("Failed to refresh token at " + new Date());
-//   });
-// };
 
 function loadProductSelection(productType) {
   $('#product-selection-result').html('');
