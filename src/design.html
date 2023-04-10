@@ -89,18 +89,30 @@
         </button>
       </div>
       <div class="product-selection-body">
+        <div class="mb-3 product-type-name-ctn">
+          <input type="text" class="form-control" id="product-type-name-edit-box" placeholder="Product type name" />
+        </div>
         <div class="product-selection-ctn">
           <div id="product-selection-result"></div>
         </div>
       </div>
       <div class="product-selection-footer">
-        <button id="submit-button" class="submit-button">Save</button>
+        <button id="delete-button" class="button">Delete</button>
+        <button id="submit-button" class="button">Save</button>
       </div>
     </div>
-
+    <div class="confirm-delete-type">
+      <div class="confirm-delete-header">Delete category</div>
+      <h3 id="confirm-delete-product-type-name">Type Name</h3>
+      <div class="confirm-delete-btn-group">
+        <div id="confirm-delete-yes-button" class="button">Yes</div>
+        <div id="confirm-delete-no-button" class="button">No</div>
+      </div>
+    </div>
     <div id="product-result"></div>
 
-    <div class="new-item-ctn noselect">
+    <div class="add-item-ctn noselect">
+      <div class="add-new-item-title">Add new category</div>
       <div class="add-item">
         <img src="/images/materials/plus.png" alt="" />
       </div>
