@@ -135,9 +135,51 @@ header nav {
   background-color: rgb(227, 214, 214);
   border-radius: 10px;
 }
+.add-item-ctn {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  cursor: pointer;
+  max-width: 70px;
+  height: 60px;
+  margin: 10px 0px 10px 0px;
+  background-color: rgb(227, 214, 214);
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  transition: max-width 0.2s ease-out;
+}
+.add-item-ctn:hover{
+  max-width: 200px;
+}
+.add-item-ctn:hover .add-new-item-title{
+  display: block;
+  margin-right: 10px;
+}
 .new-item-ctn img {
   height: auto;
   width: 40px;
+}
+.add-item-ctn img {
+  height: auto;
+  width: 40px;
+  margin-right: 10px;
+}
+.add-new-item-title{
+  display: none;
+  opacity: 0;
+  transform: translateX(-70%);
+  animation: pull-in 0.5s ease-out forwards;
+  animation-delay: 0.1s;
+}
+@keyframes pull-in {
+  0% {
+    opacity: 0;
+    transform: translateX(-70%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0%);
+  }
 }
 .item {
   min-width: 200px;
@@ -158,16 +200,9 @@ header nav {
 }
 .item_ctn:hover img {
   transform: scale(1.1);
-  /* border-top-left-radius: 10px;
-    border-top-right-radius: 10px; */
 }
 .new-item-ctn:hover img {
   transform: scale(1.1);
-  /* border-top-left-radius: 10px;
-    border-top-right-radius: 10px; */
-}
-.new-item img, .add-item img {
-  transition: all 0.2s ease-in-out;
 }
 .item_name {
   background-color: black;
@@ -254,7 +289,7 @@ header nav {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 9998;
+  z-index: 9990;
 }
 .close-button {
   display: flex;
@@ -272,27 +307,23 @@ header nav {
   width: 25px;
   height: auto;
 }
-
-.close-button:hover {
-  background-color: #df3c3c;
+#delete-button, 
+#confirm-delete-yes-button {
+  background-color: #ED2B2A;
+  color: #fff;
+  margin-right: 10px;
 }
-.submit-button {
-  display: flex;
-  align-items: center;
-  text-align: center;
-  vertical-align: middle;
-  height: 30px;
-  padding: 10px 20px;
+#submit-button,
+#confirm-delete-no-button {
   background-color: #4a4c4e;
   color: #fff;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
 }
-
-.submit-button:hover {
+#delete-button:hover,
+#confirm-delete-yes-button:hover {
+  background-color: #D21312;
+}
+#submit-button:hover,
+#confirm-delete-no-button:hover {
   background-color: #000000;
 }
 .product-selection-view {
@@ -302,13 +333,60 @@ header nav {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 9999;
   background-color: white;
   width: 50%;
   height: 70%;
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-  z-index: 9999;
+  z-index: 9991;
+}
+.confirm-delete-type {
+  align-items: center;
+  display: none;
+  flex-direction: column;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  width: 250px;
+  height: 120px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  z-index: 9993;
+}
+.confirm-delete-header {
+  background: #f9e46a;
+  width: 100%;
+  text-align: center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+#confirm-delete-product-type-name {
+  margin-top: 10px;
+  margin-bottom: 25px;
+}
+.confirm-delete-btn-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.confirm-delete-type h3{
+  font-size: 1rem;
+}
+.button{
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  vertical-align: middle;
+  height: 30px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.2s ease-in-out;
 }
 .product-selection-header {
   display: flex;
@@ -316,7 +394,7 @@ header nav {
   align-items: center;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
-  background-color: white;
+  background-color: #f9e46a;
   width: 100%;
   height: 40px;
 }
@@ -333,6 +411,28 @@ header nav {
   background-color: white;
   width: 100%;
   height: calc(100% - 80px);
+}
+.product-type-name-ctn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  /* background-color: aquamarine; */
+}
+.product-type-name-ctn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+#product-type-name-edit-box {
+  margin: 0 !important;
+  width: 60%;
+  text-align: center !important;
+}
+#product-type-name-edit-box:focus{
+  box-shadow: none;
 }
 .product-selection-footer {
   display: flex;

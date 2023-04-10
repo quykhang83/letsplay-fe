@@ -1,7 +1,4 @@
-// const keycloak = new Keycloak("https://staging-approveme.axonactive.vn.local/keycloak.json");
 const keycloak = new Keycloak("http://localhost/keycloak.json");
-
-let token;
 
 function authenticateLogin() {
   keycloak
