@@ -49,7 +49,9 @@ function loadAllProducts(callback) {
                 const formattedproductPrice = product_element.productPrice.toLocaleString('vi-VN');
 
                 product_out +=
-                  "<div class='item_ctn'><a href='product.html' style='text-decoration: none'>" +
+                "<div class='item_ctn'><a href='product.html?product-id=" 
+                + product_element.productId + "' " 
+                + "style='text-decoration: none'>" +
                   "<div class='item'>" +
                   "<img src='/images/god_of_war_rng.jpg' alt='' />" +
                   '</div>' +
