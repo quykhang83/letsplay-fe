@@ -12,6 +12,7 @@ function authenticateLogin() {
     .then((authenticated) => {
       if (authenticated) {
         getAllProducts(keycloak.token);
+        getUserInfo();
         // connectSSE();
       }
     })
@@ -27,10 +28,17 @@ keycloak.onTokenExpired = () => {
   });
 };
 
-// function logoutKeycloak(){
-//   keycloak.logout({ redirectUri: window.location.origin + "/index.html" });
-//   authenticateLogin();
-// }
+function getUserInfo() {
+  $.ajax({
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + keycloak.token,
+    },
+    url: "/get-user-info",
+    method: "GET",
+  });
+}
 
 // function connectSSE() {
 //   console.log("CALLING SSEVENT...");
