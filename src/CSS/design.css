@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Muli&display=swap");
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
 
 * {
   box-sizing: border-box;
@@ -13,7 +13,7 @@
 
 body {
   position: relative;
-  font-family: "roboto", sans-serif;
+  font-family: 'roboto', sans-serif;
   height: 100vh;
   margin: 0;
   scrollbar-width: none;
@@ -30,7 +30,7 @@ header {
 }
 
 header h3 {
-  font-family: "roboto", sans-serif;
+  font-family: 'roboto', sans-serif;
   background-color: gray;
   font-size: 24px;
   /* padding: 50px; */
@@ -148,10 +148,10 @@ header nav {
   border-bottom-right-radius: 10px;
   transition: max-width 0.2s ease-out;
 }
-.add-item-ctn:hover{
+.add-item-ctn:hover {
   max-width: 200px;
 }
-.add-item-ctn:hover .add-new-item-title{
+.add-item-ctn:hover .add-new-item-title {
   display: block;
   margin-right: 10px;
 }
@@ -164,7 +164,7 @@ header nav {
   width: 40px;
   margin-right: 10px;
 }
-.add-new-item-title{
+.add-new-item-title {
   display: none;
   opacity: 0;
   transform: translateX(-70%);
@@ -188,7 +188,8 @@ header nav {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
-.new-item, .add-item {
+.new-item,
+.add-item {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -307,9 +308,9 @@ header nav {
   width: 25px;
   height: auto;
 }
-#delete-button, 
+#delete-button,
 #confirm-delete-yes-button {
-  background-color: #ED2B2A;
+  background-color: #ed2b2a;
   color: #fff;
   margin-right: 10px;
 }
@@ -320,7 +321,7 @@ header nav {
 }
 #delete-button:hover,
 #confirm-delete-yes-button:hover {
-  background-color: #D21312;
+  background-color: #d21312;
 }
 #submit-button:hover,
 #confirm-delete-no-button:hover {
@@ -372,10 +373,10 @@ header nav {
   justify-content: center;
   align-items: center;
 }
-.confirm-delete-type h3{
+.confirm-delete-type h3 {
   font-size: 1rem;
 }
-.button{
+.button {
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -402,7 +403,7 @@ header nav {
   text-align: center;
   position: absolute;
   width: 100%;
-  font-family: "roboto";
+  font-family: 'roboto';
   font-size: 1.2rem;
   padding: 0;
   margin: 0;
@@ -431,7 +432,7 @@ header nav {
   width: 60%;
   text-align: center !important;
 }
-#product-type-name-edit-box:focus{
+#product-type-name-edit-box:focus {
   box-shadow: none;
 }
 .product-selection-footer {
@@ -458,7 +459,7 @@ header nav {
 }
 .product-detail {
   width: calc(100% - 10px);
-  font-family: "roboto";
+  font-family: 'roboto';
   font-size: 1.2rem;
   padding: 0;
   margin: 0;
@@ -469,4 +470,12 @@ header nav {
   margin-right: 5px;
   user-select: none;
   align-items: flex-end;
+}
+.empty-warning {
+  display: none;
+  color: red;
+  font-size: 0.9rem;
+  font-weight: normal;
+  font-style: oblique;
+  margin-left: 8px;
 }
