@@ -4,7 +4,12 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"
+      integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
@@ -19,9 +24,8 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="../CSS/product.css" />
-    
-    
-    <title>Dynamic Title</title>
+
+    <title>Let's Play</title>
   </head>
   <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
@@ -59,7 +63,7 @@
                   <a class="nav-link active" aria-current="page" href="index.html">STORE</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">LIBRARY</a>
+                  <a class="nav-link" href="library.html">LIBRARY</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="profile.html">PROFILE</a>
@@ -78,11 +82,11 @@
     <div class="game_page">
       <section class="game_info">
         <div class="game_header">
-          <h3>DRAGON BALL Z: KAKAROT</h3>
+          <h3 id="game-title">[Title]</h3>
         </div>
         <div class="content_block">
           <div class="left_col">
-            <div class="product_trailer">
+            <div class="product_trailer" id="game-trailer-video">
               <iframe
                 width="560"
                 height="315"
@@ -97,28 +101,20 @@
           <div class="right_col">
             <div class="glance_ctn">
               <div class="game_header_image_full">
-                <img
-                  src="/images/DBZK/game_header_image_full.jpg"
-                  alt=""
-                />
+                <img id="game-image" src="/images/DBZK/game_header_image_full.jpg" alt="" />
               </div>
-              <div class="game_description" id="game_description">
-                Relive the story of Goku and other Z Fighters in DRAGON BALL Z:
-                KAKAROT! Beyond the epic battles, experience life in the DRAGON
-                BALL Z world as you fight, fish, eat, and train with Goku,
-                Gohan, Vegeta and others.
-              </div>
+              <div class="game_description" id="game_description">[Description]</div>
             </div>
           </div>
         </div>
       </section>
 
       <section class="cart_block">
-        <!-- <div class=""> -->
-        <h1>Buy DRAGON BALL Z: KAKAROT</h1>
+        <!-- <div class=''> -->
+        <h1 id="game-title-cart">Buy [Title]</h1>
         <div class="game_purchase_action">
           <a href="#" class="btn_cart">Add to Cart</a>
-          <div class="game_purchase_price">1.250.000đ</div>
+          <div class="game_purchase_price" id="game-purchase-price">[Price]</div>
         </div>
         <!-- </div> -->
       </section>
@@ -126,89 +122,30 @@
       <section class="customer_review">
         <h1 class="customer_review_title">CUSTOMER REVIEW</h1>
         <div class="cmt_section_container">
-          <div class="cmt_section">
+          <div id="comment-result">
+            <div class="no-cmt-container">
+              <div id="no-cmt-label">There is no comment</div>
+            </div>
+          </div>
+          <!-- <div class="cmt_section">
             <div class="cmt_section_left">
-              <img
-                class="cmt_avatar"
-                src="/images/User/avatar.jpg"
-                alt=""
-              />
-              <div class="cmt_username">hqkhang83</div>
+              <img class="cmt_avatar" src="/images/User/avatar.jpg" alt="" />
+              <div id="cmt_username" class="cmt_username">[username]</div>
             </div>
             <div class="cmt_section_right">
               <div class="cmt_info">
                 <div class="cmt_favor_container">
-                  <img
-                    id="cmt_favor_item"
-                    src="/images/materials/thump_up.png"
-                    alt=""
-                  />
+                  <img id="cmt_favor_item" src="/images/materials/thump_up.png" alt="" />
                   <div class="cmt_favor">RECOMMENED</div>
                 </div>
 
-                <div class="cmt_from_date">8/3/2023</div>
+                <div class="cmt_from_date">[Date]</div>
                 <div class="cmt_content_container">
-                  <div class="cmt_content">This is great!</div>
+                  <div class="cmt_content">[content]</div>
                 </div>
               </div>
             </div>
-          </div>
-
-          <div class="cmt_section">
-            <div class="cmt_section_left">
-              <img
-                class="cmt_avatar"
-                src="/images/User/avatar.jpg"
-                alt=""
-              />
-              <div class="cmt_username">luuca792</div>
-            </div>
-            <div class="cmt_section_right">
-              <div class="cmt_info">
-                <div class="cmt_favor_container">
-                  <img
-                    id="cmt_favor_item"
-                    src="/images/materials/thump_up.png"
-                    alt=""
-                  />
-                  <div class="cmt_favor">RECOMMENED</div>
-                </div>
-
-                <div class="cmt_from_date">8/3/2023</div>
-                <div class="cmt_content_container">
-                  <div class="cmt_content">Peak of gaming right here! </br>  I almost tear up when Goku said "it's Go time" and proceed to Gok all of the enemies</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="cmt_section">
-            <div class="cmt_section_left">
-              <img
-                class="cmt_avatar"
-                src="/images/User/avatar.jpg"
-                alt=""
-              />
-              <div class="cmt_username">lncnhan</div>
-            </div>
-            <div class="cmt_section_right">
-              <div class="cmt_info">
-                <div class="cmt_favor_container">
-                  <img
-                    id="cmt_favor_item"
-                    src="/images/materials/thump_down.png"
-                    alt=""
-                  />
-                  <div class="cmt_favor">NOT RECOMMENED</div>
-                </div>
-
-                <div class="cmt_from_date">8/3/2023</div>
-                <div class="cmt_content_container">
-                  <div class="cmt_content">Well you see, it's a very typical combat type of game where you fly all over the place and shoot ki blast</div>
-                </div>
-              </div>
-            </div>
-          </div>
+          </div> -->
         </div>
       </section>
     </div>

@@ -5,7 +5,7 @@ keycloak
     promiseType: 'native',
   })
   .then(() => {
-    localStorage.setItem('isLoggedIn', true);
+    // localStorage.setItem('isLoggedIn', true);
   })
   .catch((error) => {
     alert('Something went wrong due to \n' + error);
@@ -15,6 +15,8 @@ let isNewProductType = true;
 
 $(function () {
   initialize();
+  if (isLoggedIn) console.log("Is logged in");
+  else console.log("Is not logged in");
 });
 
 function isLoggedIn() {
