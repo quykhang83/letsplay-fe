@@ -1,7 +1,18 @@
 // Item dynamic price
 $(function () {
   loadAllProducts(afterLoadAllProducts);
+  if (isLoggedIn) console.log("Is logged in");
+  else console.log("Is not logged in");
 });
+
+function isLoggedIn() {
+  return keycloak.authenticated;
+}
+
+function isTokenValid() {
+  const expired = keycloak.isTokenExpired();
+  return isLoggedIn() && !expired;
+}
 
 function loadAllProducts(callback) {
   $('#product-result').html('');
