@@ -1,4 +1,3 @@
-// const keycloak = new Keycloak("https://staging-approveme.axonactive.vn.local/keycloak.json");
 const keycloak = new Keycloak("http://localhost/keycloak.json");
 
 function authenticateLogin() {
@@ -13,6 +12,7 @@ function authenticateLogin() {
       if (authenticated) {
         getAllProducts(keycloak.token);
         getUserInfo();
+        token = keycloak.token;
         // connectSSE();
       }
     })
