@@ -114,6 +114,8 @@ header nav {
   background-color: antiquewhite;
 }
 #game-info-2 {
+  display: flex;
+  align-items: center;
   width: 100%;
   flex: 1;
   background-color: rgb(231, 200, 159);
@@ -158,4 +160,18 @@ header nav {
     justify-content: center;
     width: 100%;
     height: fit-content;
+}
+#game-info-2-container{
+  display: flex;
+  width: 100%;
+}
+.game-info-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+.game-info-container h3{
+  margin: 0;
+  font-size: 1rem;
 }
