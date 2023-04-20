@@ -1,17 +1,17 @@
+// import Keycloak from 'keycloak-js';
 const keycloak = new Keycloak("http://localhost/keycloak.json");
 
-function authenticateLogin() {
-  keycloak
+async function authenticateLogin() {
+  await keycloak
     .init({
       onLoad: "login-required",
-      redirectUri: window.location.origin + "/index.html",
+      // redirectUri: window.location.origin + "/index.html",
       checkLoginIframe: false,
       promiseType: "native",
     })
     .then((authenticated) => {
       if (authenticated) {
-        getAllProducts(keycloak.token);
-        token = keycloak.token;
+        console.log(keycloak.authenticated);
         // connectSSE();
       }
     })
@@ -19,6 +19,9 @@ function authenticateLogin() {
       alert("Something went wrong due to \n" + error);
     });
 }
+
+export { keycloak, authenticateLogin };
+
 keycloak.onTokenExpired = () => {
   var kc_updateToken = keycloak.updateToken(300);
   kc_updateToken.then(() => {});
@@ -26,7 +29,6 @@ keycloak.onTokenExpired = () => {
     console.error("Failed to refresh token at " + new Date());
   });
 };
-
 // function logoutKeycloak(){
 //   keycloak.logout({ redirectUri: window.location.origin + "/index.html" });
 //   authenticateLogin();

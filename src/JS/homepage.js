@@ -1,10 +1,35 @@
-// Item dynamic price
-$(function () {
+import { keycloak, authenticateLogin } from './keycloakauth.js';
+
+$(async function () {
   loadAllProducts(afterLoadAllProducts);
-  if (isLoggedIn) console.log("Is logged in");
-  else console.log("Is not logged in");
+  addClickListeners();
+  await keycloak.init({
+    onLoad: 'check-sso',
+    checkLoginIframe: false
+  }).then((authenticated) => {
+    console.log("Authentication status: "+keycloak.authenticated);
+  }).catch((err) => {
+    console.log(err);
+  });
+  getUserProfile();
 });
 
+async function getUserProfile() {
+  try {
+    const profile = await keycloak.loadUserProfile();
+    console.log("User profile:", profile);
+    console.log("User email:", profile.email);
+  } catch (error) {
+    console.log("Error loading user profile:", error);
+  }
+}
+
+function addClickListeners(){
+  const loginButton = document.getElementById("login_btn");
+  loginButton.addEventListener('click', () => {
+    authenticateLogin();
+  });
+}
 function isLoggedIn() {
   return keycloak.authenticated;
 }
