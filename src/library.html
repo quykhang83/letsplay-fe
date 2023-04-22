@@ -23,8 +23,8 @@
       integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="../CSS/homepage.css" />
-    <title>Let's Play</title>
+    <link rel="stylesheet" href="../CSS/library.css" />
+    <title>Library</title>
     <script src="http://localhost:8027/js/keycloak.js" type="text/javascript"></script>
     <script type="module" src="./JS/keycloakauth.js"></script>
   </head>
@@ -43,7 +43,6 @@
     // console.log("Code: "+url.get("code"));
     // console.log("WindowLogs: "+window.location.search);
   </script> -->
-
   <body>
     <header>
       <!-- <h3>Game</h3> -->
@@ -69,10 +68,10 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="index.html">STORE</a>
+                <a class="nav-link" aria-current="page" href="index.html">STORE</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="library.html">LIBRARY</a>
+                <a class="nav-link active" href="#">LIBRARY</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="profile.html">PROFILE</a>
@@ -81,26 +80,61 @@
                 <a class="nav-link" href="design.html">DESIGN</a>
               </li>
             </ul>
-            <form class="d-flex" role="search">
-              <input id="searchBar" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-
-            <button type="button" class="btn btn-primary ms-2" id="login_btn">Login</button>
+            <!-- <button type="button" class="btn btn-primary ms-2" id="login_btn" onclick="authenticateLogin()">Login</button>
             <button type="button" class="btn btn-primary ms-2" id="logout_btn">Logout</button>
-            <button type="button" class="btn btn-primary ms-2" id="change_pass_btn">Change Password</button>
+            <button type="button" class="btn btn-primary ms-2" id="change_pass_btn">Change Password</button> -->
           </div>
         </div>
       </nav>
     </header>
-
-    <div id="product-result"></div>
+    <div id="library-view-container">
+      <div id="library-container">
+        <div id="lib-left-column">
+          <div id="lib-game-container">
+            <div id="game-list-result"></div>
+            <div class="game-container">
+              <div class="game-inlist-img"></div>
+              <div class="game-inlist-title">
+                <h3>Dragon Ball Z: Kakarot</h3>
+              </div>
+            </div>
+            <div class="game-container">
+              <div class="game-inlist-img"></div>
+              <div class="game-inlist-title">
+                <h3>BELL IN SOMEWHERE</h3>
+              </div>
+            </div>
+            <div class="game-container">
+              <div class="game-inlist-img"></div>
+              <div class="game-inlist-title">
+                <h3>God Of War: Ragnarok</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="lib-right-column">
+          <div id="game-info-1"></div>
+          <div id="game-info-2">
+            <div id="game-info-2-container">
+              <div class="game-info-container">
+                <h3>Capacity: 50 GB</h3>
+              </div>
+              <div class="game-info-container">
+                <h3>Played Time: 12 hours</h3>
+              </div>
+              <div class="game-info-container">
+                <h3>Downloaded: 100K</h3>
+              </div>
+            </div>
+          </div>
+          <div id="game-info-3"></div>
+        </div>
+      </div>
+    </div>
 
     <footer>
       <div class="footer_box"></div>
     </footer>
-
-    <script type="module" src="./JS/homepage.js"></script>
-    <script type="module" src="./JS/main.js"></script>
+    <script type="module" src="./JS/library.js"></script>
   </body>
 </html>

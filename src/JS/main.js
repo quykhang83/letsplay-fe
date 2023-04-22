@@ -1,4 +1,5 @@
 // Import the functions you need from the SDKs you need
+import { keycloak } from './keycloakauth.js';
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
 import {
   getMessaging,
@@ -34,44 +35,45 @@ const applicationServerPublicKey =
 // subsequent calls to getToken will return from cache.
 const messaging = getMessaging(app);
 
-getToken(messaging, { vapidKey: applicationServerPublicKey })
-  .then((currentToken) => {
-    if (currentToken) {
-      console.log("Current token: ", currentToken);
+// getToken(messaging, { vapidKey: applicationServerPublicKey })
+//   .then((currentToken) => {
+//     if (currentToken) {
+//       // console.log("Current token: ", currentToken);
+//       // console.log("User email: ", keycloak.token);
 
-      // Send the token to your server and update the UI if necessary
-      // fetch('push-subscription', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({ token: currentToken })
-      // });
-      $.ajax({
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + keycloak.token,
-        },
-        data: {
-          username: keycloak.idTokenParsed.preferred_username,
-          token: currentToken,
-        },
-        url: "/push-subscription",
-        method: "GET",
-      });
-    } else {
-      // Show permission request UI
-      console.log(
-        "No registration token available. Request permission to generate one."
-      );
-      // ...
-    }
-  })
-  .catch((err) => {
-    console.log("An error occurred while retrieving token. ", err);
-    // ...
-  });
+//       // Send the token to your server and update the UI if necessary
+//       // fetch('push-subscription', {
+//       //   method: 'POST',
+//       //   headers: {
+//       //     'Content-Type': 'application/json',
+//       //   },
+//       //   body: JSON.stringify({ token: currentToken })
+//       // });
+//       $.ajax({
+//         headers: {
+//           Accept: "application/json",
+//           "Content-Type": "application/json",
+//           Authorization: "Bearer " + keycloak.token,
+//         },
+//         data: {
+//           username: keycloak.idTokenParsed.preferred_username,
+//           token: currentToken,
+//         },
+//         url: "/push-subscription",
+//         method: "GET",
+//       });
+//     } else {
+//       // Show permission request UI
+//       console.log(
+//         "No registration token available. Request permission to generate one."
+//       );
+//       // ...
+//     }
+//   })
+//   .catch((err) => {
+//     console.log("An error occurred while retrieving token. ", err);
+//     // ...
+//   });
 
 var swRegistration = null;
 
