@@ -11,7 +11,10 @@ async function authenticateLogin() {
     })
     .then((authenticated) => {
       if (authenticated) {
-        console.log(keycloak.authenticated);
+        // getAllProducts(keycloak.token);
+        getUserInfo();
+        // token = keycloak.token;
+        // console.log(keycloak.authenticated);
         // connectSSE();
       }
     })
@@ -23,16 +26,24 @@ async function authenticateLogin() {
 export { keycloak, authenticateLogin };
 
 keycloak.onTokenExpired = () => {
-  var kc_updateToken = keycloak.updateToken(300);
+  var kc_updateToken = keycloak.updateToken(60);
   kc_updateToken.then(() => {});
   kc_updateToken.catch(() => {
     console.error("Failed to refresh token at " + new Date());
   });
 };
-// function logoutKeycloak(){
-//   keycloak.logout({ redirectUri: window.location.origin + "/index.html" });
-//   authenticateLogin();
-// }
+
+function getUserInfo() {
+  $.ajax({
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + keycloak.token,
+    },
+    url: "/get-user-info",
+    method: "GET",
+  });
+}
 
 // function connectSSE() {
 //   console.log("CALLING SSEVENT...");
