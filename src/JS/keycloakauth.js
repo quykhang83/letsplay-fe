@@ -26,7 +26,7 @@ async function authenticateLogin() {
 export { keycloak, authenticateLogin };
 
 keycloak.onTokenExpired = () => {
-  var kc_updateToken = keycloak.updateToken(300);
+  var kc_updateToken = keycloak.updateToken(60);
   kc_updateToken.then(() => {});
   kc_updateToken.catch(() => {
     console.error("Failed to refresh token at " + new Date());
