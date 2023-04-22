@@ -24,6 +24,8 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="../CSS/product.css" />
+    <script src="http://localhost:8027/js/keycloak.js" type="text/javascript"></script>
+    <script type="module" src="./JS/keycloakauth.js"></script>
 
     <title>Let's Play</title>
   </head>
@@ -32,7 +34,6 @@
     integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
     crossorigin="anonymous"
   ></script>
-  <script src="./JS/product.js"></script>
 
   <body>
     <header>
@@ -101,7 +102,7 @@
           <div class="right_col">
             <div class="glance_ctn">
               <div class="game_header_image_full">
-                <img id="game-image" src="/images/DBZK/game_header_image_full.jpg" alt="" />
+                <img id="game-image" alt="game-image" />
               </div>
               <div class="game_description" id="game_description">[Description]</div>
             </div>
@@ -113,7 +114,7 @@
         <!-- <div class=''> -->
         <h1 id="game-title-cart">Buy [Title]</h1>
         <div class="game_purchase_action">
-          <a href="#" class="btn_cart">Add to Cart</a>
+          <a href="#" id="btn_cart" class="btn_cart">Add to Library</a>
           <div class="game_purchase_price" id="game-purchase-price">[Price]</div>
         </div>
         <!-- </div> -->
@@ -150,4 +151,5 @@
       </section>
     </div>
   </body>
+  <script type="module" src="./JS/product.js"></script>
 </html>
