@@ -3,29 +3,41 @@ import { keycloak, authenticateLogin } from './keycloakauth.js';
 $(async function () {
   loadAllProducts(afterLoadAllProducts);
   addClickListeners();
-  await keycloak.init({
-    onLoad: 'check-sso',
-    checkLoginIframe: false
-  }).then((authenticated) => {
-    console.log("Authentication status: "+keycloak.authenticated);
-  }).catch((err) => {
-    console.log(err);
-  });
+  await keycloak
+    .init({
+      onLoad: 'check-sso',
+      checkLoginIframe: false,
+    })
+    .then((authenticated) => {
+      console.log('Authentication status: ' + keycloak.authenticated);
+      const loginBtn = document.getElementById("login_btn");
+      const logoutBtn = document.getElementById("logout_btn");
+      const change_passBtn = document.getElementById("change_pass_btn");
+      if (keycloak.authenticated == true) {
+        logoutBtn.style.display = 'flex';
+        change_passBtn.style.display = 'flex';
+      } else {
+        loginBtn.style.display = 'flex';
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   getUserProfile();
 });
 
 async function getUserProfile() {
   try {
     const profile = await keycloak.loadUserProfile();
-    console.log("User profile:", profile);
-    console.log("User email:", profile.email);
+    console.log('User profile:', profile);
+    console.log('User email:', profile.email);
   } catch (error) {
-    console.log("Error loading user profile:", error);
+    console.log('Error loading user profile:', error);
   }
 }
 
-function addClickListeners(){
-  const loginButton = document.getElementById("login_btn");
+function addClickListeners() {
+  const loginButton = document.getElementById('login_btn');
   loginButton.addEventListener('click', () => {
     authenticateLogin();
   });
@@ -79,17 +91,31 @@ function loadAllProducts(callback) {
             method: 'GET',
             success: function (product_data) {
               product_data.forEach((product_element) => {
+                const demo = product_element.productDemos.find(function (demo) {
+                  return demo.productDemoTitle === 'header';
+                });
+
+                var demoUrl;
+                if (demo) {
+                  demoUrl = demo.productDemoUrl;
+                } else {
+                  demoUrl = '';
+                }
+
                 var product_out = '';
 
                 //Format product price to have dot according to VND
                 const formattedproductPrice = product_element.productPrice.toLocaleString('vi-VN');
 
                 product_out +=
-                "<div class='item_ctn'><a href='product.html?product-id=" 
-                + product_element.productId + "' " 
-                + "style='text-decoration: none'>" +
+                  "<div class='item_ctn'><a href='product.html?product-id=" +
+                  product_element.productId +
+                  "' " +
+                  "style='text-decoration: none'>" +
                   "<div class='item'>" +
-                  "<img src='/images/god_of_war_rng.jpg' alt='' />" +
+                  "<img src='" +
+                  demoUrl +
+                  "' alt='' />" +
                   '</div>' +
                   "<div class='item_name'>" +
                   '<h3>' +
