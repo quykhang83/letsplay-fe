@@ -2,6 +2,22 @@ $(function () {
   getProductById();
 });
 
+var date_options = [{ month: "2-digit", day: "2-digit", year: "numeric" }];
+var hour_options = [
+  { hour: "2-digit", minute: "2-digit", second: "2-digit", hourCycle: "h23" },
+];
+function convertTime(timeString) {
+  var time = new Date(timeString);
+  function format(m) {
+    let f = new Intl.DateTimeFormat("en", m);
+    return f.format(time);
+  }
+  var result = new Intl.DateTimeFormat("en", { weekday: "short" }).format(time);
+  result += ", " + date_options.map(format).join("/");
+  result += ", " + hour_options.map(format).join(":");
+  return result;
+}
+
 async function getProductById() {
   const params = new Proxy(new URLSearchParams(window.location.search), {
     get: (searchParams, prop) => searchParams.get(prop),
@@ -65,7 +81,7 @@ async function getProductById() {
       + "<img id='cmt_favor_item' src='/images/materials/thump_up.png' alt='' />"
       + "<div class='cmt_favor'>RECOMMENED</div>"
       + "</div>"
-      + "<div class='cmt_from_date'>Success Date</div>"
+      + "<div class='cmt_from_date'>"+ convertTime(comment.createdTime) +"</div>"
       + "<div class='cmt_content_container'>"
       + "<div class='cmt_content'>"+ comment.commentContent +"</div>"
       + "</div> </div> </div> </div>"
