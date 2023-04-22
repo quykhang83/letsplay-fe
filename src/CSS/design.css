@@ -183,7 +183,7 @@ header nav {
 }
 .item {
   min-width: 200px;
-  height: 160px;
+  height: fit-content;
   overflow: hidden;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -206,9 +206,12 @@ header nav {
   transform: scale(1.1);
 }
 .item_name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: black;
   min-width: 200px;
-  height: 30px;
+  min-height: 46px;
   border: 1px solid white;
 }
 .item_price {
@@ -257,11 +260,11 @@ header nav {
 .item img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   margin: 0 auto;
   display: block;
+  transition: all .2s ease-in-out;
   border-radius: inherit;
-  transition: all 0.2s ease-in-out;
 }
 
 .item_label_ctn {
