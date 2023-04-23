@@ -72,7 +72,7 @@ header nav {
 .item-set-container {
   display: flex;
   flex-direction: row;
-  align-items: end;
+  align-items: center;
   background-color: #1b2838;
   min-height: 270px;
   overflow-x: scroll;
@@ -124,14 +124,14 @@ header nav {
 .item_ctn a {
   display: flex;
   flex-direction: column;
-  height: 236px;
+  height: auto;
 }
 .new-item-ctn {
   cursor: pointer;
   min-width: 60px;
   max-width: 60px;
-  height: 235px;
-  margin: 10px 5px 10px 10px;
+  height: 188px;
+  margin: 35px 5px 10px 10px;
   background-color: rgb(227, 214, 214);
   border-radius: 10px;
 }
@@ -215,17 +215,12 @@ header nav {
   border: 1px solid white;
 }
 .item_price {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   background-color: black;
   min-width: 200px;
   height: fit-content;
   border: 1px solid white;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
-  flex-grow: 1;
 }
 .item_price h3 {
   font-size: 1rem;

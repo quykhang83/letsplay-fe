@@ -1,8 +1,6 @@
 import { keycloak, authenticateLogin } from './keycloakauth.js';
 
 $(async function () {
-  loadAllProducts(afterLoadAllProducts);
-  addClickListeners();
   await keycloak
     .init({
       onLoad: 'check-sso',
@@ -10,20 +8,33 @@ $(async function () {
     })
     .then((authenticated) => {
       console.log('Authentication status: ' + keycloak.authenticated);
-      const loginBtn = document.getElementById("login_btn");
-      const logoutBtn = document.getElementById("logout_btn");
-      const change_passBtn = document.getElementById("change_pass_btn");
+      const loginBtn = document.getElementById('login_btn');
+      const logoutBtn = document.getElementById('logout_btn');
+      const change_passBtn = document.getElementById('change_pass_btn');
       if (keycloak.authenticated == true) {
+        // Display logout and change password button
         logoutBtn.style.display = 'flex';
         change_passBtn.style.display = 'flex';
+        // Display profile button
+        document.getElementById('profile-page-btn').style.display = 'flex';
+        // Display library button
+        document.getElementById('library-page-btn').style.display = 'flex';
+
+        // Display the design page button if user is manager
+        if (keycloak.hasRealmRole('manager')) {
+          document.getElementById('design-page-btn').style.display = 'flex';
+        }
+
+        getUserProfile();
       } else {
+        // Display login button
         loginBtn.style.display = 'flex';
       }
     })
     .catch((err) => {
       console.log(err);
     });
-  getUserProfile();
+    initialize();
 });
 
 async function getUserProfile() {
@@ -51,36 +62,23 @@ function isTokenValid() {
   return isLoggedIn() && !expired;
 }
 
-function loadAllProducts(callback) {
+async function initialize() {
   $('#product-result').html('');
-
-  // Make a ajax request call
-  var request = $.ajax({
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/jsons',
-    },
-    url: '/product-types',
-    method: 'GET',
-  });
-
-  request.done((data) => {
-    // Sort the data by productTypeName
+  try {
+    const data = await loadAllProducts();
     data.sort((a, b) => a.productTypeName.localeCompare(b.productTypeName));
 
+    // Define an array to hold all the promises for each product type
     const promises = [];
-
     // Loop through the sorted data and add each $.ajax call to promises array
     for (let i = 0; i < data.length; i++) {
       const element = data[i];
-      const encodedProductTypeName = encodeURIComponent(element.productTypeName);
-
       if (element.productTypeName != '#') {
+        const encodedProductTypeName = encodeURIComponent(element.productTypeName);
         const promise = new Promise((resolve, reject) => {
           var out = '';
           out += "<div class='item_set_container'>";
           out += "<h3 class='set_label'>" + element.productTypeName + '</h3>' + "<div class='set_item'>";
-
           // Call to get products by type api
           $.ajax({
             headers: {
@@ -135,10 +133,8 @@ function loadAllProducts(callback) {
 
               // Close set-item
               out += '</div>';
-
               // Close item-set-container
               out += '</div>';
-
               resolve(out);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -150,42 +146,34 @@ function loadAllProducts(callback) {
         promises.push(promise);
       }
     }
+    // Wait for all promises to resolve before running these functions
+    const htmlStrings = await Promise.all(promises);
 
-    // Use Promise.all() to ensure that the promises are executed in the correct order
-    Promise.all(promises)
-      .then((results) => {
-        results.forEach((result) => {
-          $('#product-result').append(result);
-        });
-        callback();
-      })
-      .catch((error) => {
-        console.log('Error: ' + error);
-      });
-  });
+    // Loop through the htmlStrings array and append each html string to the product-result element
+    for (let i = 0; i < htmlStrings.length; i++) {
+      const htmlString = htmlStrings[i];
+      $('#product-result').append(htmlString);
+    }
+
+    addClickListeners();
+    loadProductDiscountPrice();
+  } catch (error) {
+    console.error(error);
+  }
 }
 
-function getAllProducts() {
-  var request = $.ajax({
+function loadAllProducts() {
+  return $.ajax({
     headers: {
       Accept: 'application/json',
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/jsons',
     },
-    url: '/products',
+    url: '/product-types',
     method: 'GET',
-  });
-  request.done((data) => {
-    // console.log('Get products');
-    data.forEach((element) => {
-      console.log(element);
-    });
-  });
-  request.fail((err) => {
-    console.log(err);
   });
 }
 
-function afterLoadAllProducts() {
+function loadProductDiscountPrice() {
   const originalPrices = document.querySelectorAll('.item_original_price');
   const discountPrices = document.querySelectorAll('.item_discount_price');
 

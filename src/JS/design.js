@@ -1,22 +1,16 @@
-keycloak
-  .init({
-    onLoad: 'login-required',
-    checkLoginIframe: false,
-    promiseType: 'native',
-  })
-  .then(() => {
-    // localStorage.setItem('isLoggedIn', true);
-  })
-  .catch((error) => {
-    alert('Something went wrong due to \n' + error);
-  });
+import { keycloak, authenticateLogin } from './keycloakauth.js';
 
 let isNewProductType = true;
 
-$(function () {
+$(async function () {
+  await authenticateLogin();
+  if (keycloak.authenticated) {
+    console.log('User is authenticated');
+  } else {
+    console.log('User is not authenticated! Calling authenticate function');
+    console.log('Authentication status: ', keycloak.authenticated);
+  }
   initialize();
-  if (isLoggedIn) console.log("Is logged in");
-  else console.log("Is not logged in");
 });
 
 function isLoggedIn() {
@@ -64,6 +58,17 @@ async function initialize() {
             method: 'GET',
             success: function (product_data) {
               product_data.forEach((product_element) => {
+                const demo = product_element.productDemos.find(function (demo) {
+                  return demo.productDemoTitle === 'header';
+                });
+
+                var demoUrl;
+                if (demo) {
+                  demoUrl = demo.productDemoUrl;
+                } else {
+                  demoUrl = '';
+                }
+
                 var product_out = '';
 
                 //Format product price to have dot according to VND
@@ -75,7 +80,9 @@ async function initialize() {
                   "' " +
                   "style='text-decoration: none'>" +
                   "<div class='item'>" +
-                  "<img src='/images/god_of_war_rng.jpg' alt='' draggable='false'/>" +
+                  "<img src='" +
+                  demoUrl +
+                  "' alt='' draggable='false'/>" +
                   '</div>' +
                   "<div class='item_name'>" +
                   '<h3>' +
@@ -172,12 +179,15 @@ function loadProductSelection(productTypeName, productTypeId) {
   if (isNewProductType == false) {
     document.querySelector('#delete-button').style.display = 'flex';
 
+    // Encode the input product type name to avoid special characters
+    const encodedProductTypeName = encodeURIComponent(productTypeName);
+
     var request1 = $.ajax({
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/jsons',
       },
-      url: '/products?type=' + productTypeName,
+      url: '/products?type=' + encodedProductTypeName,
       method: 'GET',
     });
     requests.push(request1);
@@ -198,7 +208,7 @@ function loadProductSelection(productTypeName, productTypeId) {
     if (isNewProductType == false) {
       var data1 = results[0];
 
-      // Do something with data1, data2, and data3
+      // Load product that is already of this type with check mark
       out = '';
       data1.forEach((element) => {
         out += "<div class='product'>";
@@ -208,7 +218,7 @@ function loadProductSelection(productTypeName, productTypeId) {
       });
       $('#product-selection-result').append(out);
     }
-
+    // Lod product that is of no type with uncheck mark
     var data2 = results[results.length - 1];
 
     out = '';
@@ -416,80 +426,78 @@ async function submitButtonClickListener(event) {
       }
     }
   } else {
-    if (isTokenValid == false) {
-      authenticateLogin();
-    } else {
-      // Get the new product type name that is going to be created
-      const newProductTypeName = document.getElementById('product-type-name-edit-box').value;
-      // Loop through all checkboxes and stored productID of checked box
-      for (let i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i].checked) {
-          const productId = checkboxes[i].getAttribute('data-product-id');
-          checkedProducts.push(productId);
-        }
+    // Get the new product type name that is going to be created
+    const newProductTypeName = document.getElementById('product-type-name-edit-box').value;
+    // Loop through all checkboxes and stored productID of checked box
+    for (let i = 0; i < checkboxes.length; i++) {
+      if (checkboxes[i].checked) {
+        const productId = checkboxes[i].getAttribute('data-product-id');
+        checkedProducts.push(productId);
       }
+    }
 
-      if (checkedProducts.length == 0 || newProductTypeName == '') {
-        if (checkedProducts.length == 0) document.getElementById('no-checked-product').style.display = 'block';
-        if (newProductTypeName == '') document.getElementById('empty-type-name').style.display = 'block';
-      } else {
-        // Turn off product selection view
-        productSelection.style.display = 'none';
-        darkFilter.style.display = 'none';
-        // Create json body for create product type api
-        let data = {
+    if (checkedProducts.length == 0 || newProductTypeName == '') {
+      if (checkedProducts.length == 0) document.getElementById('no-checked-product').style.display = 'block';
+      if (newProductTypeName == '') document.getElementById('empty-type-name').style.display = 'block';
+    } else {
+      // Turn off product selection view
+      productSelection.style.display = 'none';
+      darkFilter.style.display = 'none';
+      // Create json body for create product type api
+      let data = {
+        productTypeName: newProductTypeName,
+        productTypeDescription: 'Bah',
+      };
+      // Create a promise object to create new product type
+      const createProductType = await $.ajax({
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + keycloak.token,
+        },
+        url: '/product-types/',
+        method: 'POST',
+        dataType: 'json',
+        data: JSON.stringify(data),
+      });
+      // Create a promise object to add all checked product to the new type
+      // const encodedNewProductTypeName = encodeURIComponent(newProductTypeName);
+      const checkedRequests = checkedProducts.map(async (productId) => {
+        console.log(newProductTypeName);
+        const data = {
           productTypeName: newProductTypeName,
-          productTypeDescription: 'Bah',
         };
-        // Create a promise object to create new product type
-        const createProductType = $.ajax({
+        return await $.ajax({
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
             Authorization: 'Bearer ' + keycloak.token,
           },
-          url: '/product-types/',
-          method: 'POST',
+          url: '/products/' + productId,
+          method: 'PATCH',
           dataType: 'json',
           data: JSON.stringify(data),
         });
-        // Create a promise object to add all checked product to the new type
-        const checkedRequests = checkedProducts.map((productId) => {
-          const data = {
-            productTypeName: newProductTypeName,
-          };
-          return $.ajax({
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-              Authorization: 'Bearer ' + keycloak.token,
-            },
-            url: '/products/' + productId,
-            method: 'PATCH',
-            dataType: 'json',
-            data: JSON.stringify(data),
-          });
-        });
+      });
 
-        try{
-          await createProductType;
-          await Promise.all(checkedRequests);
-          await initialize();
-        } catch (error) {
-          console.error('An error occurred:', error);
-        }
-          
-        // createProductType
-        //   .then(() => {
-        //     return Promise.all(checkedRequests);
-        //   })
-        //   .then(async () => {
-        //     await initialize();
-        //   })
-        //   .catch((error) => {
-        //     console.error('An error occurred:', error);
-        //   });
+      try {
+        await createProductType;
+        await Promise.all(checkedRequests);
+        await initialize();
+      } catch (error) {
+        console.error('An error occurred:', error);
       }
+
+      // createProductType
+      //   .then(() => {
+      //     return Promise.all(checkedRequests);
+      //   })
+      //   .then(async () => {
+      //     await initialize();
+      //   })
+      //   .catch((error) => {
+      //     console.error('An error occurred:', error);
+      //   });
     }
   }
 }

@@ -207,3 +207,6 @@ header nav {
 #change_pass_btn{
     display: none;
 }
+#design-page-btn, #profile-page-btn, #library-page-btn{
+    display: none;
+}

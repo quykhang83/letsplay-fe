@@ -3,6 +3,10 @@ $(async function () {
   await authenticateLogin();
   if (keycloak.authenticated) {
     console.log('User is authenticated');
+    // Display the design page button if user is manager
+    if (keycloak.hasRealmRole('manager')) {
+      document.getElementById('design-page-btn').style.display = 'flex';
+    }
   } else {
     console.log('User is not authenticated! Calling authenticate function');
     console.log('Authentication status: ', keycloak.authenticated);
