@@ -19,6 +19,8 @@ $(async function () {
         document.getElementById('profile-page-btn').style.display = 'flex';
         // Display library button
         document.getElementById('library-page-btn').style.display = 'flex';
+        // Display user info button
+        document.getElementById('user-info-btn').style.display = 'flex';
 
         // Display the design page button if user is manager
         if (keycloak.hasRealmRole('manager')) {
@@ -34,7 +36,7 @@ $(async function () {
     .catch((err) => {
       console.log(err);
     });
-    initialize();
+  initialize();
 });
 
 async function getUserProfile() {
@@ -160,6 +162,23 @@ async function initialize() {
   } catch (error) {
     console.error(error);
   }
+
+  await loadUserInfoBar();
+}
+async function loadUserInfoBar() {
+  var user_info = await $.ajax({
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/jsons',
+      Authorization: 'Bearer ' + keycloak.token,
+    },
+    url: '/get-user-info',
+    method: 'GET',
+  });
+
+  console.log('User data: ', user_info);
+  document.getElementById("user-name").textContent = user_info.username;
+  document.getElementById("user-avatar").src = user_info.userAvt;
 }
 
 function loadAllProducts() {

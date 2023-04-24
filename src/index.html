@@ -76,8 +76,18 @@
             </form>
 
             <button type="button" class="btn btn-primary ms-2" id="login_btn">Login</button>
-            <button type="button" class="btn btn-primary ms-2" id="logout_btn">Logout</button>
-            <button type="button" class="btn btn-primary ms-2" id="change_pass_btn">Change Password</button>
+            <div class="dropdown" id="user-info-btn">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <h3 id="user-name"></h3>
+                <img src="" alt="" id="user-avatar" />
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" id="change_pass_btn">Change Password</a></li>
+                <li><a class="dropdown-item" id="logout_btn">Logout</a></li>
+              </ul>
+            </div>
+            <!-- <button type="button" class="btn btn-primary ms-2" id="logout_btn">Logout</button>
+            <button type="button" class="btn btn-primary ms-2" id="change_pass_btn">Change Password</button> -->
           </div>
         </div>
       </nav>
