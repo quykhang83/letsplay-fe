@@ -405,7 +405,7 @@ async function submitButtonClickListener(event) {
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            // Authorization: "Bearer " + keycloak.token,
+            Authorization: "Bearer " + keycloak.token,
           },
           url: '/product-types/' + productTypeId,
           method: 'PATCH',
