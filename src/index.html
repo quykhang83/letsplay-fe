@@ -33,17 +33,6 @@
     integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
     crossorigin="anonymous"
   ></script>
-  <!-- <script>
-    const url = new URL(window.location.href).toString();
-    console.log('Code: ' + url);
-
-    if (url.includes('code')) {
-      authenticateLogin();
-    }
-    // console.log("Code: "+url.get("code"));
-    // console.log("WindowLogs: "+window.location.search);
-  </script> -->
-
   <body>
     <header>
       <!-- <h3>Game</h3> -->
@@ -71,13 +60,13 @@
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="index.html">STORE</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item" id="library-page-btn">
                 <a class="nav-link" href="library.html">LIBRARY</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item" id="profile-page-btn">
                 <a class="nav-link" href="profile.html">PROFILE</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item" id="design-page-btn">
                 <a class="nav-link" href="design.html">DESIGN</a>
               </li>
             </ul>
@@ -87,8 +76,18 @@
             </form>
 
             <button type="button" class="btn btn-primary ms-2" id="login_btn">Login</button>
-            <button type="button" class="btn btn-primary ms-2" id="logout_btn">Logout</button>
-            <button type="button" class="btn btn-primary ms-2" id="change_pass_btn">Change Password</button>
+            <div class="dropdown" id="user-info-btn">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <h3 id="user-name"></h3>
+                <img src="" alt="" id="user-avatar" />
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" id="change_pass_btn">Change Password</a></li>
+                <li><a class="dropdown-item" id="logout_btn">Logout</a></li>
+              </ul>
+            </div>
+            <!-- <button type="button" class="btn btn-primary ms-2" id="logout_btn">Logout</button>
+            <button type="button" class="btn btn-primary ms-2" id="change_pass_btn">Change Password</button> -->
           </div>
         </div>
       </nav>

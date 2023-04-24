@@ -1,12 +1,29 @@
 import { keycloak, authenticateLogin } from './keycloakauth.js';
 $(async function () {
-  await authenticateLogin();
-  if (keycloak.authenticated) {
-    console.log('User is authenticated');
-  } else {
-    console.log('User is not authenticated! Calling authenticate function');
-    console.log('Authentication status: ', keycloak.authenticated);
-  }
+  await keycloak
+  .init({
+    onLoad: 'check-sso',
+    checkLoginIframe: false,
+  })
+  .then((authenticated) => {
+    if (keycloak.authenticated) {
+      console.log('User is authenticated');
+      // Display profile button
+      document.getElementById('profile-page-btn').style.display = 'flex';
+      // Display library button
+      document.getElementById('library-page-btn').style.display = 'flex';
+      // Display the design page button if user is manager
+      if (keycloak.hasRealmRole('manager')) {
+        document.getElementById('design-page-btn').style.display = 'flex';
+      }
+    } else {
+      console.log('User is not authenticated! Calling authenticate function');
+      console.log('Authentication status: ', keycloak.authenticated);
+    }
+  })
+  .catch((err) => {
+    console.log(err);
+  });
   await initialized();
 });
 
