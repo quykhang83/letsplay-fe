@@ -1,33 +1,32 @@
 import { keycloak, authenticateLogin } from './keycloakauth.js';
 $(async function () {
   await keycloak
-  .init({
-    onLoad: 'check-sso',
-    checkLoginIframe: false,
-  })
-  .then((authenticated) => {
-    if (keycloak.authenticated) {
-      console.log('User is authenticated');
-      // Display profile button
-      document.getElementById('profile-page-btn').style.display = 'flex';
-      // Display library button
-      document.getElementById('library-page-btn').style.display = 'flex';
-      // Display the design page button if user is manager
-      if (keycloak.hasRealmRole('manager')) {
-        document.getElementById('design-page-btn').style.display = 'flex';
+    .init({
+      onLoad: 'check-sso',
+      checkLoginIframe: false,
+    })
+    .then((authenticated) => {
+      if (keycloak.authenticated) {
+        console.log('User is authenticated');
+        // Display profile button
+        document.getElementById('profile-page-btn').style.display = 'flex';
+        // Display library button
+        document.getElementById('library-page-btn').style.display = 'flex';
+        // Display the design page button if user is manager
+        if (keycloak.hasRealmRole('manager')) {
+          document.getElementById('design-page-btn').style.display = 'flex';
+        }
+      } else {
+        console.log('Authentication status: ', keycloak.authenticated);
       }
-    } else {
-      console.log('User is not authenticated! Calling authenticate function');
-      console.log('Authentication status: ', keycloak.authenticated);
-    }
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   await initialized();
 });
 
-async function initialized(){
+async function initialized() {
   await getProductById();
   addClickListener();
 }
@@ -63,7 +62,7 @@ async function getProductById() {
       method: 'GET',
     });
 
-    console.log(product);
+    // console.log(product);
     $('#game-title').html('');
     $('#game-title').append(product.productName);
     document.title = product.productName + " on Let's Play";
@@ -108,7 +107,6 @@ async function getProductById() {
 
     var comments = await $.ajax({
       headers: {
-        // Accept: "text/event-stream",
         Accept: 'application/json',
         'Content-Type': 'application/jsons',
       },
@@ -116,37 +114,56 @@ async function getProductById() {
       method: 'GET',
     });
 
-    console.log(comments);
+    comments.sort(function (a, b) {
+      var dateA = new Date(a.createdTime);
+      var dateB = new Date(b.createdTime);
+      return dateB - dateA;
+    });
+
+    // console.log(comments);
+    // console.log(comments.length);
     if (comments.length > 0) {
       $('#comment-result').html('');
+      var cmt_html = '';
+      for (var i = 0; i < comments.length; i++) {
+        var comment = comments[i];
+        console.log(comment.createdTime);
+        var recommended_icon = '';
+        if (comment.commentRecommend == true) {
+          recommended_icon = 'thump_up.png';
+        } else recommended_icon = 'thump_down.png';
+        cmt_html +=
+          "<div class='cmt_section'>" +
+          "<div class='cmt_section_left'>" +
+          "<img class='cmt_avatar' src='/images/User/avatar.jpg' alt='' />" +
+          "<div id='cmt_username' class='cmt_username'>" +
+          comment.user.username +
+          '</div>' +
+          '</div>' +
+          " <div class='cmt_section_right'>" +
+          "<div class='cmt_info'>" +
+          " <div class='cmt_favor_container'>" +
+          "<img id='cmt_favor_item' src='/images/materials/" +
+          recommended_icon +
+          "' alt='' />";
+
+        if (comment.commentRecommend == true) {
+          cmt_html += "<div class='cmt_favor'>RECOMMENED</div>";
+        } else cmt_html += "<div class='cmt_favor'>NOT RECOMMENED</div>";
+
+        cmt_html +=
+          '</div>' +
+          "<div class='cmt_from_date'>" +
+          convertTime(comment.createdTime) +
+          '</div>' +
+          "<div class='cmt_content_container'>" +
+          "<div class='cmt_content'>" +
+          comment.commentContent +
+          '</div>' +
+          '</div> </div> </div> </div>';
+      }
+      $('#comment-result').append(cmt_html);
     }
-    var cmt_html = '';
-    for (var i = 0; i < comments.length; i++) {
-      var comment = comments[i];
-      cmt_html +=
-        "<div class='cmt_section'>" +
-        "<div class='cmt_section_left'>" +
-        "<img class='cmt_avatar' src='/images/User/avatar.jpg' alt='' />" +
-        "<div id='cmt_username' class='cmt_username'>" +
-        comment.user.username +
-        '</div>' +
-        '</div>' +
-        " <div class='cmt_section_right'>" +
-        "<div class='cmt_info'>" +
-        " <div class='cmt_favor_container'>" +
-        "<img id='cmt_favor_item' src='/images/materials/thump_up.png' alt='' />" +
-        "<div class='cmt_favor'>RECOMMENED</div>" +
-        '</div>' +
-        "<div class='cmt_from_date'>" +
-        convertTime(comment.createdTime) +
-        '</div>' +
-        "<div class='cmt_content_container'>" +
-        "<div class='cmt_content'>" +
-        comment.commentContent +
-        '</div>' +
-        '</div> </div> </div> </div>';
-    }
-    $('#comment-result').append(cmt_html);
   } catch (error) {
     console.log(error);
   }
@@ -155,7 +172,6 @@ async function getProductById() {
 function addClickListener() {
   const cart_btn = document.getElementById('btn_cart');
   cart_btn.addEventListener('click', async () => {
-
     const params = new Proxy(new URLSearchParams(window.location.search), {
       get: (searchParams, prop) => searchParams.get(prop),
     });
@@ -167,11 +183,10 @@ function addClickListener() {
         'Content-Type': 'application/jsons',
         Authorization: 'Bearer ' + keycloak.token,
       },
-      url: '/users' + "/library/product/"+ productId +"/save",
+      url: '/users' + '/library/product/' + productId + '/save',
       method: 'POST',
     });
 
     // Reload cart button
-
   });
 }
