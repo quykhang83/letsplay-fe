@@ -158,3 +158,6 @@ header nav {
   color: gray;
   font-size: 0.7rem;
 }
+#design-page-btn{
+  display: none;
+}

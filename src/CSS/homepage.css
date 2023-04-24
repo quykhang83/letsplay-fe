@@ -207,3 +207,41 @@ header nav {
 #change_pass_btn{
     display: none;
 }
+#design-page-btn, #profile-page-btn, #library-page-btn{
+    display: none;
+}
+.dropdown-menu{
+    position: absolute;
+    left: -61px !important;
+}
+.dropdown-menu li{
+    cursor: pointer;
+}
+.dropdown-toggle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background: none;
+    padding: 5px 10px 5px 5px;
+    color: black;
+    margin-left: 10px;
+}
+.dropdown-toggle::after{
+    color: black;
+}
+.dropdown-toggle img {
+    width: 48px;
+    border: 2px solid #5e5e5e;
+    border-radius: 5px;
+}
+.dropdown-toggle h3 {
+    padding: 0;
+    margin: 0;
+    background: none;
+    margin-right: 5px;
+    font-size: 1rem;
+}
+#user-info-btn {
+    display: none;
+}
