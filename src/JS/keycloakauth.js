@@ -56,6 +56,9 @@ function getUserInfo() {
 //   };
 // }
 $(() => {
+  $("#login_btn").on("click", () => {
+    authenticateLogin();
+  });
   $("#logout_btn").on("click", () => {
     keycloak.logout({ redirectUri: window.location.origin + "/index.html" });
   });

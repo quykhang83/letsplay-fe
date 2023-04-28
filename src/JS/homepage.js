@@ -9,12 +9,7 @@ $(async function () {
     .then((authenticated) => {
       console.log('Authentication status: ' + keycloak.authenticated);
       const loginBtn = document.getElementById('login_btn');
-      const logoutBtn = document.getElementById('logout_btn');
-      const change_passBtn = document.getElementById('change_pass_btn');
       if (keycloak.authenticated == true) {
-        // Display logout and change password button
-        logoutBtn.style.display = 'flex';
-        change_passBtn.style.display = 'flex';
         // Display profile button
         document.getElementById('profile-page-btn').style.display = 'flex';
         // Display library button
@@ -26,7 +21,7 @@ $(async function () {
         if (keycloak.hasRealmRole('manager')) {
           document.getElementById('design-page-btn').style.display = 'flex';
         }
-
+        loadUserInfoBar();
         getUserProfile();
       } else {
         // Display login button
@@ -50,10 +45,6 @@ async function getUserProfile() {
 }
 
 function addClickListeners() {
-  const loginButton = document.getElementById('login_btn');
-  loginButton.addEventListener('click', () => {
-    authenticateLogin();
-  });
 }
 function isLoggedIn() {
   return keycloak.authenticated;
@@ -163,7 +154,6 @@ async function initialize() {
     console.error(error);
   }
 
-  await loadUserInfoBar();
 }
 async function loadUserInfoBar() {
   var user_info = await $.ajax({
@@ -176,7 +166,6 @@ async function loadUserInfoBar() {
     method: 'GET',
   });
 
-  console.log('User data: ', user_info);
   document.getElementById("user-name").textContent = user_info.username;
   document.getElementById("user-avatar").src = user_info.userAvt;
 }
