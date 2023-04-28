@@ -146,7 +146,7 @@ async function loadGameList() {
             "<div id='acvm-percent'>75%</div>" +
             '</div> </div>' +
             "<div id='article-container'>" +
-            '<h3>Related Article</h3>' +
+            '<h3>Related Articles</h3>' +
             "<div id='article-list'>";
 
           for (let i = 0; i < article_images.length; i++) {
@@ -158,7 +158,7 @@ async function loadGameList() {
               '</div>' +
               "<img src='" +
               article_images[i] +
-              "' />" +
+              "' class='article-image' />" +
               '</div>';
           }
           out2 += '</div> </div> </div> </div>';

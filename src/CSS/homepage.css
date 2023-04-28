@@ -201,18 +201,12 @@ header nav {
 #login_btn{
     display: none;
 }
-#logout_btn{
-    display: none;
-}
-#change_pass_btn{
-    display: none;
-}
 #design-page-btn, #profile-page-btn, #library-page-btn{
     display: none;
 }
+/* User account */
 .dropdown-menu{
     position: absolute;
-    left: -61px !important;
 }
 .dropdown-menu li{
     cursor: pointer;
