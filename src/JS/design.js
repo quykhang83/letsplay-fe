@@ -6,27 +6,36 @@ $(async function () {
   await authenticateLogin();
   if (keycloak.authenticated) {
     console.log('User is authenticated');
+
+    if (keycloak.hasRealmRole('manager')) {
+    } else {
+    }
+    
   } else {
-    console.log('User is not authenticated! Calling authenticate function');
     console.log('Authentication status: ', keycloak.authenticated);
   }
-  initialize();
+  await initialize();
+  setTimeout(function() {
+    $("#spinner-container").fadeOut();
+  }, 500);
 });
 
-function isLoggedIn() {
-  return keycloak.authenticated;
-}
-
-function isTokenValid() {
-  const expired = keycloak.isTokenExpired();
-  return isLoggedIn() && !expired;
-}
-
 async function initialize() {
+  await Promise.all([loadAllProducts()]);
+}
+
+async function loadAllProducts() {
   $('#product-result').html('');
   $('#product-selection-result').html('');
   try {
-    const data = await loadAllProducts();
+    const data = await $.ajax({
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/jsons',
+      },
+      url: '/product-types',
+      method: 'GET',
+    });
     data.sort((a, b) => a.productTypeName.localeCompare(b.productTypeName));
 
     // Define an array to hold all the promises for each product type
@@ -58,9 +67,8 @@ async function initialize() {
             method: 'GET',
             success: function (product_data) {
               product_data.forEach((product_element) => {
-                const demo = product_element.productDemos.find(function (demo) {
-                  return demo.productDemoTitle === 'header';
-                });
+                
+                const demo = product_element.productDemo;
 
                 var demoUrl;
                 if (demo) {
@@ -142,17 +150,6 @@ async function initialize() {
   } catch (error) {
     console.error(error);
   }
-}
-
-function loadAllProducts() {
-  return $.ajax({
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/jsons',
-    },
-    url: '/product-types',
-    method: 'GET',
-  });
 }
 
 function loadProductDiscountPrice() {

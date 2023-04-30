@@ -1,4 +1,6 @@
 import { keycloak, authenticateLogin } from './keycloakauth.js';
+import * as common from './common.js';
+
 var user_avatar;
 var user_name;
 $(async function () {
@@ -13,8 +15,6 @@ $(async function () {
         console.log('User is authenticated');
         // Display profile button
         document.getElementById('profile-page-btn').style.display = 'flex';
-        // Display library button
-        document.getElementById('library-page-btn').style.display = 'flex';
         // Display the design page button if user is manager
         if (keycloak.hasRealmRole('manager')) {
           document.getElementById('design-page-btn').style.display = 'flex';
@@ -28,6 +28,15 @@ $(async function () {
         // Set user avatar and name to comment input section
         document.getElementById('current-user-cmt-avatar').src = user_avatar;
         document.getElementById('current-user-cmt-username').textContent = user_name;
+
+        if (keycloak.hasRealmRole('manager')) {
+        } else {
+          // Display library button
+          document.getElementById('library-page-btn').style.display = 'flex';
+          // Display go-to-cart icon
+          document.getElementById('cart-btn').style.display = 'flex';
+          common.loadCartNumber();
+        }
       } else {
         // Display login button
         loginBtn.style.display = 'flex';
@@ -37,6 +46,9 @@ $(async function () {
       console.log(err);
     });
   await initialized();
+  setTimeout(function () {
+    $('#spinner-container').fadeOut();
+  }, 500);
 });
 
 const params = new Proxy(new URLSearchParams(window.location.search), {
@@ -45,7 +57,7 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
 let productId = params['product-id'];
 
 async function initialized() {
-  await getProductById();
+  await Promise.all([getProductById(), loadAllComments()]);
   addClickListener();
 }
 
@@ -81,7 +93,6 @@ function convertTime(timeString) {
 }
 
 async function getProductById() {
-  console.log('Product id: ' + productId);
   try {
     var product = await $.ajax({
       headers: {
@@ -109,9 +120,7 @@ async function getProductById() {
     $('#game-title-cart').append('Buy ' + product.productName);
 
     // Getting game header image
-    const header_image = product.productDemos.find(function (demo) {
-      return demo.productDemoTitle === 'header';
-    });
+    const header_image = product.productDemo;
 
     var header_image_url;
     if (header_image) {
@@ -123,20 +132,18 @@ async function getProductById() {
     gameImage.src = header_image_url;
 
     // Getting game trailer video
-    const trailer_video = product.productDemos.find(function (demo) {
-      return demo.productDemoTitle === 'video';
-    });
-    var trailer_video_url;
-    if (trailer_video) {
-      trailer_video_url = trailer_video.productDemoUrl;
-    } else {
-      trailer_video_url = '';
-    }
+    // const trailer_video = product.productDemos.find(function (demo) {
+    //   return demo.productDemoTitle === 'video';
+    // });
+    // var trailer_video_url;
+    // if (trailer_video) {
+    //   trailer_video_url = trailer_video.productDemoUrl;
+    // } else {
+    //   trailer_video_url = '';
+    // }
 
-    $('#game-trailer-video').html('');
-    $('#game-trailer-video').append(trailer_video_url);
-
-    await loadAllComments();
+    // $('#game-trailer-video').html('');
+    // $('#game-trailer-video').append(trailer_video_url);
   } catch (error) {
     console.log(error);
   }
@@ -209,20 +216,27 @@ function addClickListener() {
   // Add to cart button
   const cart_btn = document.getElementById('btn_cart');
   cart_btn.addEventListener('click', async () => {
-    const params = new Proxy(new URLSearchParams(window.location.search), {
-      get: (searchParams, prop) => searchParams.get(prop),
-    });
-    let productId = params['product-id'];
+    const cart_block = document.getElementById('game-title-cart');
+    cart_block.classList.add('product-in-cart');
+    $('#game-title-cart').html('');
+    $('#game-title-cart').append("This game is in your cart <i class='fas fa-shopping-cart' style='margin-left: 10px'></i>");
 
-    var add_product = await $.ajax({
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + keycloak.token,
-      },
-      url: '/users' + '/library/product/' + productId + '/save',
-      method: 'POST',
-    });
+    document.getElementById('game_purchase_action').style.display = 'none';
+
+    // const params = new Proxy(new URLSearchParams(window.location.search), {
+    //   get: (searchParams, prop) => searchParams.get(prop),
+    // });
+    // let productId = params['product-id'];
+
+    // var add_product = await $.ajax({
+    //   headers: {
+    //     Accept: 'application/json',
+    //     'Content-Type': 'application/json',
+    //     Authorization: 'Bearer ' + keycloak.token,
+    //   },
+    //   url: '/users' + '/library/product/' + productId + '/save',
+    //   method: 'POST',
+    // });
 
     // Reload cart button
   });
@@ -317,23 +331,23 @@ function addClickListener() {
 
       $('#comment-result').prepend(cmt_html);
       const new_comment = $('#comment-result .cmt_section').first();
-      setTimeout(function() {
+      setTimeout(function () {
         new_comment.addClass('new-comment');
       }, 100);
-      
+
       // Disable post review button for 2 seconds to avoid problems
       cmt_submit_btn.disabled = true;
-      setTimeout(function() {
+      setTimeout(function () {
         cmt_submit_btn.disabled = false;
       }, 2000);
       // Remove no comment notify if existed
-      const comment_result_check = document.getElementById("no-cmt-container");
+      const comment_result_check = document.getElementById('no-cmt-container');
       console.log(comment_result_check);
-      if (comment_result_check){
+      if (comment_result_check) {
         comment_result_check.style.display = 'none';
       }
       // Clear comment input text area
-      document.getElementById('cmt-input-area').value = "";
+      document.getElementById('cmt-input-area').value = '';
     }
   });
 }

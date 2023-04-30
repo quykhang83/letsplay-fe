@@ -41,57 +41,68 @@
           <img src="/images/logo.png" alt="LOGO" />
         </div>
       </div>
-      <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#"></a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="index.html">STORE</a>
-              </li>
-              <li class="nav-item" id="library-page-btn">
-                <a class="nav-link" href="library.html">LIBRARY</a>
-              </li>
-              <li class="nav-item" id="profile-page-btn">
-                <a class="nav-link" href="profile.html">PROFILE</a>
-              </li>
-              <li class="nav-item" id="design-page-btn">
-                <a class="nav-link" href="design.html">DESIGN</a>
-              </li>
-            </ul>
-            <form class="d-flex" role="search">
-              <input id="searchBar" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-            <!-- User account -->
-            <button type="button" class="btn btn-primary ms-2" id="login_btn">Login</button>
-            <div class="dropdown" id="user-info-btn">
-              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <h3 id="user-name"></h3>
-                <img src="" alt="" id="user-avatar" />
-              </button>
-              <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" id="change_pass_btn">Change Password</a></li>
-                <li><a class="dropdown-item" id="logout_btn">Logout</a></li>
+      <div class="nav_container">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="#"></a>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="index.html">STORE</a>
+                </li>
+                <li class="nav-item" id="library-page-btn">
+                  <a class="nav-link" href="library.html">LIBRARY</a>
+                </li>
+                <li class="nav-item" id="profile-page-btn">
+                  <a class="nav-link" href="profile.html">PROFILE</a>
+                </li>
+                <li class="nav-item" id="design-page-btn">
+                  <a class="nav-link" href="design.html">DESIGN</a>
+                </li>
               </ul>
+              <form class="d-flex" role="search">
+                <input id="searchBar" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                <button class="btn btn-outline-success" type="submit">Search</button>
+              </form>
+              <!-- Cart -->
+              <a href="cart.html" class="btn btn-primary position-relative" id="cart-btn">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-num-product"></span>
+              </a>
+              <!-- User account -->
+              <button type="button" class="btn btn-primary ms-2" id="login_btn">Login</button>
+              <div class="dropdown" id="user-info-btn">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <h3 id="user-name"></h3>
+                  <img src="" alt="" id="user-avatar" />
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li><a class="dropdown-item" id="change_pass_btn">Change Password</a></li>
+                  <li><a class="dropdown-item" id="logout_btn">Logout</a></li>
+                </ul>
+              </div>
             </div>
-            <!-- <button type="button" class="btn btn-primary ms-2" id="logout_btn">Logout</button>
-            <button type="button" class="btn btn-primary ms-2" id="change_pass_btn">Change Password</button> -->
           </div>
-        </div>
-      </nav>
+        </nav>
+      </div>
     </header>
+
+    <div id="spinner-container" class="spinner-container">
+      <div class="spinner-grow text-light" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
 
     <div id="product-result"></div>
 
@@ -101,5 +112,6 @@
 
     <script type="module" src="./JS/homepage.js"></script>
     <script type="module" src="./JS/main.js"></script>
+    <script type="module" src="./JS/common.js"></script>
   </body>
 </html>

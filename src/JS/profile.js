@@ -7,15 +7,21 @@ $(async function () {
     // Display the design page button if user is manager
     if (keycloak.hasRealmRole('manager')) {
       document.getElementById('design-page-btn').style.display = 'flex';
+    } else {
+      // Display library button
+      document.getElementById('library-page-btn').style.display = 'flex';
     }
   } else {
     console.log('User is not authenticated! Calling authenticate function');
     console.log('Authentication status: ', keycloak.authenticated);
   }
-  initialize();
+  await initialize();
+  setTimeout(function () {
+    $('#spinner-container').fadeOut();
+  }, 500);
 });
 
-function initialize(){
+async function initialize(){
   addClickListeners();
 }
 function addClickListeners(){

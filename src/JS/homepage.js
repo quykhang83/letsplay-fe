@@ -1,4 +1,5 @@
 import { keycloak, authenticateLogin } from './keycloakauth.js';
+import * as common from './common.js';
 
 $(async function () {
   await keycloak
@@ -12,16 +13,20 @@ $(async function () {
       if (keycloak.authenticated == true) {
         // Display profile button
         document.getElementById('profile-page-btn').style.display = 'flex';
-        // Display library button
-        document.getElementById('library-page-btn').style.display = 'flex';
         // Display user info button
         document.getElementById('user-info-btn').style.display = 'flex';
 
         // Display the design page button if user is manager
         if (keycloak.hasRealmRole('manager')) {
           document.getElementById('design-page-btn').style.display = 'flex';
+        } else {
+          // Display library button
+          document.getElementById('library-page-btn').style.display = 'flex';
+          // Display go-to-cart icon
+          document.getElementById('cart-btn').style.display = 'flex';
+          common.loadCartNumber();
         }
-        loadUserInfoBar();
+        common.loadUserInfoBar();
         getUserProfile();
       } else {
         // Display login button
@@ -31,34 +36,39 @@ $(async function () {
     .catch((err) => {
       console.log(err);
     });
-  initialize();
+  await initialize();
+  setTimeout(function () {
+    $('#spinner-container').fadeOut();
+  }, 500);
 });
 
 async function getUserProfile() {
   try {
     const profile = await keycloak.loadUserProfile();
-    console.log('User profile:', profile);
-    console.log('User email:', profile.email);
   } catch (error) {
     console.log('Error loading user profile:', error);
   }
 }
 
-function addClickListeners() {
-}
-function isLoggedIn() {
-  return keycloak.authenticated;
-}
-
-function isTokenValid() {
-  const expired = keycloak.isTokenExpired();
-  return isLoggedIn() && !expired;
-}
+function addClickListeners() {}
 
 async function initialize() {
+  await Promise.all([loadAllProducts()]);
+  addClickListeners();
+  loadProductDiscountPrice();
+}
+
+async function loadAllProducts() {
   $('#product-result').html('');
   try {
-    const data = await loadAllProducts();
+    const data = await $.ajax({
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/jsons',
+      },
+      url: '/product-types',
+      method: 'GET',
+    });
     data.sort((a, b) => a.productTypeName.localeCompare(b.productTypeName));
 
     // Define an array to hold all the promises for each product type
@@ -82,9 +92,7 @@ async function initialize() {
             method: 'GET',
             success: function (product_data) {
               product_data.forEach((product_element) => {
-                const demo = product_element.productDemos.find(function (demo) {
-                  return demo.productDemoTitle === 'header';
-                });
+                const demo = product_element.productDemo;
 
                 var demoUrl;
                 if (demo) {
@@ -147,38 +155,9 @@ async function initialize() {
       const htmlString = htmlStrings[i];
       $('#product-result').append(htmlString);
     }
-
-    addClickListeners();
-    loadProductDiscountPrice();
   } catch (error) {
     console.error(error);
   }
-
-}
-async function loadUserInfoBar() {
-  var user_info = await $.ajax({
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/jsons',
-      Authorization: 'Bearer ' + keycloak.token,
-    },
-    url: '/get-user-info',
-    method: 'GET',
-  });
-
-  document.getElementById("user-name").textContent = user_info.username;
-  document.getElementById("user-avatar").src = user_info.userAvt;
-}
-
-function loadAllProducts() {
-  return $.ajax({
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/jsons',
-    },
-    url: '/product-types',
-    method: 'GET',
-  });
 }
 
 function loadProductDiscountPrice() {
