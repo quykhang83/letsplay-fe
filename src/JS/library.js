@@ -5,13 +5,15 @@ $(async function () {
     console.log('User is authenticated');
     // Display the design page button if user is manager
     if (keycloak.hasRealmRole('manager')) {
-      document.getElementById('design-page-btn').style.display = 'flex';
     }
   } else {
     console.log('User is not authenticated! Calling authenticate function');
     console.log('Authentication status: ', keycloak.authenticated);
   }
   await initialized();
+  setTimeout(function() {
+    $("#spinner-container").fadeOut();
+  }, 500);
 });
 async function initialized() {
   await loadGameList();
