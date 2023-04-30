@@ -120,7 +120,9 @@ async function getProductById() {
     $('#game-title-cart').append('Buy ' + product.productName);
 
     // Getting game header image
-    const header_image = product.productDemo;
+    const header_image = product.productDemos.find(function (demo) {
+      return demo.productDemoTitle === 'header';
+    });
 
     var header_image_url;
     if (header_image) {
@@ -132,18 +134,18 @@ async function getProductById() {
     gameImage.src = header_image_url;
 
     // Getting game trailer video
-    // const trailer_video = product.productDemos.find(function (demo) {
-    //   return demo.productDemoTitle === 'video';
-    // });
-    // var trailer_video_url;
-    // if (trailer_video) {
-    //   trailer_video_url = trailer_video.productDemoUrl;
-    // } else {
-    //   trailer_video_url = '';
-    // }
+    const trailer_video = product.productDemos.find(function (demo) {
+      return demo.productDemoTitle === 'video';
+    });
+    var trailer_video_url;
+    if (trailer_video) {
+      trailer_video_url = trailer_video.productDemoUrl;
+    } else {
+      trailer_video_url = '';
+    }
 
-    // $('#game-trailer-video').html('');
-    // $('#game-trailer-video').append(trailer_video_url);
+    $('#game-trailer-video').html('');
+    $('#game-trailer-video').append(trailer_video_url);
   } catch (error) {
     console.log(error);
   }
