@@ -160,6 +160,10 @@ header h3 {
   justify-content: center;
   cursor: pointer;
 }
+.btn_cart:hover{
+  border: 1px solid #99b72f;
+  background-color: #99b72f;
+}
 .cart_block h1 {
   width: 100%;
   color: white;

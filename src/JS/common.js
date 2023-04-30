@@ -10,7 +10,13 @@ async function loadCartNumber() {
     url: '/users/' + 'cart',
     method: 'GET',
   });
-  document.getElementById('cart-num-product').innerHTML = data.cartTotal;
+  if (data.cartTotal == 0){
+    document.getElementById("cart-num-product").style.display = 'none';
+  } else{
+    document.getElementById("cart-num-product").style.display = 'flex';
+    document.getElementById('cart-num-product').innerHTML = data.cartTotal;
+  }
+  
 }
 
 async function loadUserInfoBar() {

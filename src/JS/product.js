@@ -57,7 +57,7 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
 let productId = params['product-id'];
 
 async function initialized() {
-  await Promise.all([getProductById(), loadAllComments()]);
+  await Promise.all([getProductById(), loadAllComments(), checkItemInCart()]);
   addClickListener();
 }
 
@@ -96,15 +96,12 @@ async function getProductById() {
   try {
     var product = await $.ajax({
       headers: {
-        // Accept: "text/event-stream",
         Accept: 'application/json',
         'Content-Type': 'application/jsons',
       },
       url: '/products/' + productId,
       method: 'GET',
     });
-
-    // console.log(product);
     $('#game-title').html('');
     $('#game-title').append(product.productName);
     document.title = product.productName + " on Let's Play";
@@ -165,15 +162,11 @@ async function loadAllComments() {
     var dateB = new Date(b.createdTime);
     return dateB - dateA;
   });
-
-  // console.log(comments);
-  // console.log(comments.length);
   if (comments.length > 0) {
     $('#comment-result').html('');
     var cmt_html = '';
     for (var i = 0; i < comments.length; i++) {
       var comment = comments[i];
-      // console.log(comment.createdTime);
       var recommended_icon = '';
       if (comment.commentRecommend == true) {
         recommended_icon = 'thump_up.png';
@@ -213,6 +206,28 @@ async function loadAllComments() {
     $('#comment-result').append(cmt_html);
   }
 }
+async function checkItemInCart() {
+  const data = await $.ajax({
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/jsons',
+      Authorization: 'Bearer ' + keycloak.token,
+    },
+    url: '/users/' + 'cart',
+    method: 'GET',
+  });
+  for (let i = 0; i < data.cartDetails.length; i++) {
+    console.log(data.cartDetails[i].productId);
+    if (data.cartDetails[i].productId == productId) {
+      const cart_block = document.getElementById('game-title-cart');
+      cart_block.classList.add('product-in-cart');
+      $('#game-title-cart').html('');
+      $('#game-title-cart').append("This game is in your cart <i class='fas fa-shopping-cart' style='margin-left: 10px'></i>");
+      document.getElementById('game_purchase_action').style.display = 'none';
+      break;
+    }
+  }
+}
 
 function addClickListener() {
   // Add to cart button
@@ -224,6 +239,18 @@ function addClickListener() {
     $('#game-title-cart').append("This game is in your cart <i class='fas fa-shopping-cart' style='margin-left: 10px'></i>");
 
     document.getElementById('game_purchase_action').style.display = 'none';
+
+    await $.ajax({
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/jsons',
+        Authorization: 'Bearer ' + keycloak.token,
+      },
+      url: '/users/' + 'cart/product/'+ productId +'/save',
+      method: 'POST',
+    });
+
+    common.loadCartNumber();
 
     // const params = new Proxy(new URLSearchParams(window.location.search), {
     //   get: (searchParams, prop) => searchParams.get(prop),
