@@ -1,4 +1,6 @@
 import { keycloak, authenticateLogin } from './keycloakauth.js';
+import * as common from './common.js';
+
 var user_avatar;
 var user_name;
 $(async function () {
@@ -13,8 +15,6 @@ $(async function () {
         console.log('User is authenticated');
         // Display profile button
         document.getElementById('profile-page-btn').style.display = 'flex';
-        // Display library button
-        document.getElementById('library-page-btn').style.display = 'flex';
         // Display the design page button if user is manager
         if (keycloak.hasRealmRole('manager')) {
           document.getElementById('design-page-btn').style.display = 'flex';
@@ -28,6 +28,15 @@ $(async function () {
         // Set user avatar and name to comment input section
         document.getElementById('current-user-cmt-avatar').src = user_avatar;
         document.getElementById('current-user-cmt-username').textContent = user_name;
+
+        if (keycloak.hasRealmRole('manager')) {
+        } else {
+          // Display library button
+          document.getElementById('library-page-btn').style.display = 'flex';
+          // Display go-to-cart icon
+          document.getElementById('cart-btn').style.display = 'flex';
+          common.loadCartNumber();
+        }
       } else {
         // Display login button
         loginBtn.style.display = 'flex';
@@ -37,6 +46,9 @@ $(async function () {
       console.log(err);
     });
   await initialized();
+  setTimeout(function () {
+    $('#spinner-container').fadeOut();
+  }, 500);
 });
 
 const params = new Proxy(new URLSearchParams(window.location.search), {
@@ -45,7 +57,7 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
 let productId = params['product-id'];
 
 async function initialized() {
-  await getProductById();
+  await Promise.all([getProductById(), loadAllComments(), checkItemInCart()]);
   addClickListener();
 }
 
@@ -81,19 +93,15 @@ function convertTime(timeString) {
 }
 
 async function getProductById() {
-  console.log('Product id: ' + productId);
   try {
     var product = await $.ajax({
       headers: {
-        // Accept: "text/event-stream",
         Accept: 'application/json',
         'Content-Type': 'application/jsons',
       },
       url: '/products/' + productId,
       method: 'GET',
     });
-
-    // console.log(product);
     $('#game-title').html('');
     $('#game-title').append(product.productName);
     document.title = product.productName + " on Let's Play";
@@ -135,8 +143,6 @@ async function getProductById() {
 
     $('#game-trailer-video').html('');
     $('#game-trailer-video').append(trailer_video_url);
-
-    await loadAllComments();
   } catch (error) {
     console.log(error);
   }
@@ -156,15 +162,11 @@ async function loadAllComments() {
     var dateB = new Date(b.createdTime);
     return dateB - dateA;
   });
-
-  // console.log(comments);
-  // console.log(comments.length);
   if (comments.length > 0) {
     $('#comment-result').html('');
     var cmt_html = '';
     for (var i = 0; i < comments.length; i++) {
       var comment = comments[i];
-      // console.log(comment.createdTime);
       var recommended_icon = '';
       if (comment.commentRecommend == true) {
         recommended_icon = 'thump_up.png';
@@ -204,25 +206,66 @@ async function loadAllComments() {
     $('#comment-result').append(cmt_html);
   }
 }
+async function checkItemInCart() {
+  const data = await $.ajax({
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/jsons',
+      Authorization: 'Bearer ' + keycloak.token,
+    },
+    url: '/users/' + 'cart',
+    method: 'GET',
+  });
+  for (let i = 0; i < data.cartDetails.length; i++) {
+    console.log(data.cartDetails[i].productId);
+    if (data.cartDetails[i].productId == productId) {
+      const cart_block = document.getElementById('game-title-cart');
+      cart_block.classList.add('product-in-cart');
+      $('#game-title-cart').html('');
+      $('#game-title-cart').append("This game is in your cart <i class='fas fa-shopping-cart' style='margin-left: 10px'></i>");
+      document.getElementById('game_purchase_action').style.display = 'none';
+      break;
+    }
+  }
+}
 
 function addClickListener() {
   // Add to cart button
   const cart_btn = document.getElementById('btn_cart');
   cart_btn.addEventListener('click', async () => {
-    const params = new Proxy(new URLSearchParams(window.location.search), {
-      get: (searchParams, prop) => searchParams.get(prop),
-    });
-    let productId = params['product-id'];
+    const cart_block = document.getElementById('game-title-cart');
+    cart_block.classList.add('product-in-cart');
+    $('#game-title-cart').html('');
+    $('#game-title-cart').append("This game is in your cart <i class='fas fa-shopping-cart' style='margin-left: 10px'></i>");
 
-    var add_product = await $.ajax({
+    document.getElementById('game_purchase_action').style.display = 'none';
+
+    await $.ajax({
       headers: {
         Accept: 'application/json',
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/jsons',
         Authorization: 'Bearer ' + keycloak.token,
       },
-      url: '/users' + '/library/product/' + productId + '/save',
+      url: '/users/' + 'cart/product/'+ productId +'/save',
       method: 'POST',
     });
+
+    common.loadCartNumber();
+
+    // const params = new Proxy(new URLSearchParams(window.location.search), {
+    //   get: (searchParams, prop) => searchParams.get(prop),
+    // });
+    // let productId = params['product-id'];
+
+    // var add_product = await $.ajax({
+    //   headers: {
+    //     Accept: 'application/json',
+    //     'Content-Type': 'application/json',
+    //     Authorization: 'Bearer ' + keycloak.token,
+    //   },
+    //   url: '/users' + '/library/product/' + productId + '/save',
+    //   method: 'POST',
+    // });
 
     // Reload cart button
   });
@@ -317,23 +360,23 @@ function addClickListener() {
 
       $('#comment-result').prepend(cmt_html);
       const new_comment = $('#comment-result .cmt_section').first();
-      setTimeout(function() {
+      setTimeout(function () {
         new_comment.addClass('new-comment');
       }, 100);
-      
+
       // Disable post review button for 2 seconds to avoid problems
       cmt_submit_btn.disabled = true;
-      setTimeout(function() {
+      setTimeout(function () {
         cmt_submit_btn.disabled = false;
       }, 2000);
       // Remove no comment notify if existed
-      const comment_result_check = document.getElementById("no-cmt-container");
+      const comment_result_check = document.getElementById('no-cmt-container');
       console.log(comment_result_check);
-      if (comment_result_check){
+      if (comment_result_check) {
         comment_result_check.style.display = 'none';
       }
       // Clear comment input text area
-      document.getElementById('cmt-input-area').value = "";
+      document.getElementById('cmt-input-area').value = '';
     }
   });
 }
