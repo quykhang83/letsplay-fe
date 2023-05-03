@@ -29,6 +29,7 @@ $(async function () {
 
 async function initialized() {
   await Promise.all([loadAllCartItems()]);
+  checkDiscountPrice();
   addClickListeners();
 }
 
@@ -76,6 +77,20 @@ function addClickListeners() {
       }
     });
   });
+  // Purchase button
+  const purchase_btn = document.getElementById('purchase-btn');
+  purchase_btn.addEventListener('click', async function () {
+    const make_receipt = await $.ajax({
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + keycloak.token,
+      },
+      url: '/receipts',
+      method: 'POST',
+    });
+    window.location.href = '/payment.html';
+  });
 }
 
 async function loadAllCartItems() {
@@ -84,7 +99,7 @@ async function loadAllCartItems() {
     const data = await $.ajax({
       headers: {
         Accept: 'application/json',
-        'Content-Type': 'application/jsons',
+        'Content-Type': 'application/json',
         Authorization: 'Bearer ' + keycloak.token,
       },
       url: '/users/' + 'cart',
@@ -100,6 +115,12 @@ async function loadAllCartItems() {
     } else {
       for (let i = 0; i < data.cartDetails.length; i++) {
         const formattedproductPrice = data.cartDetails[i].productPrice.toLocaleString('vi-VN');
+        var formattedProductPriceDiscount;
+        if (data.cartDetails[i].productPriceDiscount == null) {
+          formattedProductPriceDiscount = formattedproductPrice;
+        } else {
+          formattedProductPriceDiscount = data.cartDetails[i].productPriceDiscount.toLocaleString('vi-VN');
+        }
 
         html +=
           "<div class='cart-item' data-id='" +
@@ -114,9 +135,11 @@ async function loadAllCartItems() {
           '</h3>' +
           '</div>' +
           "<div class='cart-product-right-col'>" +
-          "<h3 class='cart-product-old-price'>9.999.999đ</h3>" +
-          "<h3 class='cart-product-price'>" +
+          "<h3 class='cart-product-old-price'>" +
           formattedproductPrice +
+          'đ</h3>' +
+          "<h3 class='cart-product-price'>" +
+          formattedProductPriceDiscount +
           'đ</h3>' +
           "<button class='cart-remove-product-btn'>Remove</button>" +
           '</div> </div>';
@@ -128,4 +151,19 @@ async function loadAllCartItems() {
   } catch (error) {
     console.error(error);
   }
+}
+function checkDiscountPrice() {
+  const products = document.querySelectorAll('.cart-product-right-col');
+  // Iterate over each product element
+  products.forEach((product) => {
+    // Get the cart-product-price element
+    const priceEl = product.querySelector('.cart-product-price');
+
+    // Check if the product has a discount
+    if (priceEl.innerText == product.querySelector('.cart-product-old-price').innerText) {
+      // Hide the cart-product-old-price element
+      const oldPriceEl = product.querySelector('.cart-product-old-price');
+      oldPriceEl.style.display = 'none';
+    }
+  });
 }

@@ -3,6 +3,8 @@ import * as common from './common.js';
 
 var user_avatar;
 var user_name;
+var user_display_name;
+var user_id;
 $(async function () {
   await keycloak
     .init({
@@ -27,9 +29,15 @@ $(async function () {
 
         // Set user avatar and name to comment input section
         document.getElementById('current-user-cmt-avatar').src = user_avatar;
-        document.getElementById('current-user-cmt-username').textContent = user_name;
+        if (user_display_name == null){
+          document.getElementById('current-user-cmt-username').textContent = user_name;
+        } else {
+          document.getElementById('current-user-cmt-username').textContent = user_display_name;
+        }
+        
 
         if (keycloak.hasRealmRole('manager')) {
+          document.getElementById('cart_block').remove();
         } else {
           // Display library button
           document.getElementById('library-page-btn').style.display = 'flex';
@@ -40,6 +48,7 @@ $(async function () {
       } else {
         // Display login button
         loginBtn.style.display = 'flex';
+        document.getElementById('cart_block').remove();
       }
     })
     .catch((err) => {
@@ -57,7 +66,12 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
 let productId = params['product-id'];
 
 async function initialized() {
-  await Promise.all([getProductById(), loadAllComments(), checkItemInCart()]);
+  if (!keycloak.authenticated || (keycloak.authenticated && keycloak.hasRealmRole('manager'))) {
+    await Promise.all([getProductById(), loadAllComments()]);
+  } else {
+    await Promise.all([getProductById(), loadAllComments(), checkItemInCart()]);
+  }
+
   addClickListener();
 }
 
@@ -65,7 +79,7 @@ async function loadUserInfoBar() {
   var user_info = await $.ajax({
     headers: {
       Accept: 'application/json',
-      'Content-Type': 'application/jsons',
+      'Content-Type': 'application/json',
       Authorization: 'Bearer ' + keycloak.token,
     },
     url: '/get-user-info',
@@ -74,7 +88,13 @@ async function loadUserInfoBar() {
 
   user_avatar = user_info.userAvt;
   user_name = user_info.username;
-  document.getElementById('user-name').textContent = user_info.username;
+  user_id = user_info.userId;
+  user_display_name = user_info.userDisplayname;
+  if (user_info.userDisplayname == null){
+    document.getElementById('user-name').textContent = user_info.username;
+  } else {
+    document.getElementById('user-name').textContent = user_info.userDisplayname;
+  }
   document.getElementById('user-avatar').src = user_info.userAvt;
 }
 
@@ -162,6 +182,7 @@ async function loadAllComments() {
     var dateB = new Date(b.createdTime);
     return dateB - dateA;
   });
+
   if (comments.length > 0) {
     $('#comment-result').html('');
     var cmt_html = '';
@@ -172,25 +193,39 @@ async function loadAllComments() {
         recommended_icon = 'thump_up.png';
       } else recommended_icon = 'thump_down.png';
       cmt_html +=
-        "<div class='cmt_section'>" +
+        "<div class='cmt_section' cmt-id='" +
+        comment.commentId +
+        "'>" +
         "<div class='cmt_section_left'>" +
         "<img class='cmt_avatar' src='" +
         comment.user.userAvt +
         "' alt='' />" +
         "<div id='cmt_username' class='cmt_username'>" +
-        comment.user.username +
+        comment.user.userDisplayname +
         '</div>' +
         '</div>' +
         " <div class='cmt_section_right'>" +
-        "<div class='cmt_info'>" +
-        " <div class='cmt_favor_container'>" +
-        "<img id='cmt_favor_item' src='/images/materials/" +
-        recommended_icon +
-        "' alt='' />";
+        "<div class='cmt_info'>";
+      if (keycloak.authenticated && comment.user.userId == user_id) {
+        cmt_html +=
+          "<div class='cmt-favor-and-delete'>" +
+          " <div class='cmt_favor_container'>" +
+          "<img id='cmt_favor_item' src='/images/materials/" +
+          recommended_icon +
+          "' alt='' />";
 
-      if (comment.commentRecommend == true) {
-        cmt_html += "<div class='cmt_favor'>RECOMMENED</div>";
-      } else cmt_html += "<div class='cmt_favor'>NOT RECOMMENED</div>";
+        if (comment.commentRecommend == true) {
+          cmt_html += "<div class='cmt_favor'>RECOMMENED</div>";
+        } else cmt_html += "<div class='cmt_favor'>NOT RECOMMENED</div>";
+
+        cmt_html += '</div>' + "<div class='cmt-delete-container'>" + "<i class='fas fa-trash-alt cmt-delete-btn'></i>" + '</div> </div>';
+      } else {
+        cmt_html += " <div class='cmt_favor_container'>" + "<img id='cmt_favor_item' src='/images/materials/" + recommended_icon + "' alt='' />";
+
+        if (comment.commentRecommend == true) {
+          cmt_html += "<div class='cmt_favor'>RECOMMENED</div>";
+        } else cmt_html += "<div class='cmt_favor'>NOT RECOMMENED</div>";
+      }
 
       cmt_html +=
         '</div>' +
@@ -207,68 +242,75 @@ async function loadAllComments() {
   }
 }
 async function checkItemInCart() {
-  const data = await $.ajax({
+  const lib = await $.ajax({
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/jsons',
       Authorization: 'Bearer ' + keycloak.token,
     },
-    url: '/users/' + 'cart',
+    url: '/users/' + 'library',
     method: 'GET',
   });
-  for (let i = 0; i < data.cartDetails.length; i++) {
-    console.log(data.cartDetails[i].productId);
-    if (data.cartDetails[i].productId == productId) {
+  var in_library = false;
+  for (let i = 0; i < lib.length; i++) {
+    if (lib[i].productId == productId) {
       const cart_block = document.getElementById('game-title-cart');
       cart_block.classList.add('product-in-cart');
       $('#game-title-cart').html('');
-      $('#game-title-cart').append("This game is in your cart <i class='fas fa-shopping-cart' style='margin-left: 10px'></i>");
+      $('#game-title-cart').append("This game is in your library <i class='fas fa-book-open' style='margin-left: 10px'></i>");
       document.getElementById('game_purchase_action').style.display = 'none';
+      in_library = true;
       break;
     }
   }
-}
-
-function addClickListener() {
-  // Add to cart button
-  const cart_btn = document.getElementById('btn_cart');
-  cart_btn.addEventListener('click', async () => {
-    const cart_block = document.getElementById('game-title-cart');
-    cart_block.classList.add('product-in-cart');
-    $('#game-title-cart').html('');
-    $('#game-title-cart').append("This game is in your cart <i class='fas fa-shopping-cart' style='margin-left: 10px'></i>");
-
-    document.getElementById('game_purchase_action').style.display = 'none';
-
-    await $.ajax({
+  if (in_library == false) {
+    const cart = await $.ajax({
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/jsons',
         Authorization: 'Bearer ' + keycloak.token,
       },
-      url: '/users/' + 'cart/product/'+ productId +'/save',
-      method: 'POST',
+      url: '/users/' + 'cart',
+      method: 'GET',
     });
+    for (let i = 0; i < cart.cartDetails.length; i++) {
+      if (cart.cartDetails[i].productId == productId) {
+        const cart_block = document.getElementById('game-title-cart');
+        cart_block.classList.add('product-in-cart');
+        $('#game-title-cart').html('');
+        $('#game-title-cart').append("This game is in your cart <i class='fas fa-shopping-cart' style='margin-left: 10px'></i>");
+        document.getElementById('game_purchase_action').style.display = 'none';
 
-    common.loadCartNumber();
+        break;
+      }
+    }
+  }
+}
+function addClickListener() {
+  // Add to cart button
+  if (keycloak.authenticated && !keycloak.hasRealmRole('manager')) {
+    const cart_btn = document.getElementById('btn_cart');
+    cart_btn.addEventListener('click', async () => {
+      const cart_block = document.getElementById('game-title-cart');
+      cart_block.classList.add('product-in-cart');
+      $('#game-title-cart').html('');
+      $('#game-title-cart').append("This game is in your cart <i class='fas fa-shopping-cart' style='margin-left: 10px'></i>");
 
-    // const params = new Proxy(new URLSearchParams(window.location.search), {
-    //   get: (searchParams, prop) => searchParams.get(prop),
-    // });
-    // let productId = params['product-id'];
+      document.getElementById('game_purchase_action').style.display = 'none';
 
-    // var add_product = await $.ajax({
-    //   headers: {
-    //     Accept: 'application/json',
-    //     'Content-Type': 'application/json',
-    //     Authorization: 'Bearer ' + keycloak.token,
-    //   },
-    //   url: '/users' + '/library/product/' + productId + '/save',
-    //   method: 'POST',
-    // });
+      await $.ajax({
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/jsons',
+          Authorization: 'Bearer ' + keycloak.token,
+        },
+        url: '/users/' + 'cart/product/' + productId + '/save',
+        method: 'POST',
+      });
 
-    // Reload cart button
-  });
+      common.loadCartNumber();
+    });
+  }
   // Comment thumb up, down
   const thumbsUpIcon = document.getElementById('thumb-up');
   const thumbsDownIcon = document.getElementById('thumb-down');
@@ -279,7 +321,6 @@ function addClickListener() {
     document.getElementById('thumb-up-img').src = './resources/img/materials/thumb_up_trans_active.png';
     document.getElementById('thumb-down-img').src = './resources/img/materials/thumb_up_trans.png';
   });
-
   thumbsDownIcon.addEventListener('click', () => {
     thumbsDownIcon.classList.toggle('active');
     thumbsUpIcon.classList.remove('active');
@@ -314,30 +355,26 @@ function addClickListener() {
         data: JSON.stringify(data),
       });
 
+
       var recommended_icon = '';
       if (rcmd == true) {
         recommended_icon = 'thump_up.png';
       } else recommended_icon = 'thump_down.png';
 
-      const date = new Date();
-      const dateString = date.toLocaleString('en-US', { weekday: 'short', month: '2-digit', day: '2-digit', year: 'numeric' });
-      const timeString = date.toLocaleString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
-      const formattedDateTime = `${dateString}, ${timeString}`;
-      // console.log(formattedDateTime); // "Fri, 04/28/2023, 14:51"
-
       var cmt_html = '';
       cmt_html +=
-        "<div class='cmt_section' style='background-color: #868d9f' >" +
+        "<div class='cmt_section' cmt-id='"+ add_comment.commentId +"' style='background-color: #868d9f' >" +
         "<div class='cmt_section_left'>" +
         "<img class='cmt_avatar' src='" +
         user_avatar +
         "' alt='' />" +
         "<div id='cmt_username' class='cmt_username'>" +
-        user_name +
+        add_comment.user.userDisplayname +
         '</div>' +
         '</div>' +
         " <div class='cmt_section_right'>" +
         "<div class='cmt_info'>" +
+        "<div class='cmt-favor-and-delete'>" +
         " <div class='cmt_favor_container'>" +
         "<img id='cmt_favor_item' src='/images/materials/" +
         recommended_icon +
@@ -347,14 +384,16 @@ function addClickListener() {
         cmt_html += "<div class='cmt_favor'>RECOMMENED</div>";
       } else cmt_html += "<div class='cmt_favor'>NOT RECOMMENED</div>";
 
+      cmt_html += '</div>' + "<div class='cmt-delete-container'>" + "<i class='fas fa-trash-alt cmt-delete-btn'></i>" + '</div> </div>';
+
       cmt_html +=
         '</div>' +
         "<div class='cmt_from_date'>" +
-        formattedDateTime +
+        convertTime(add_comment.createdTime) +
         '</div>' +
         "<div class='cmt_content_container'>" +
         "<div class='cmt_content'>" +
-        cmt_content +
+        add_comment.commentContent +
         '</div>' +
         '</div> </div> </div> </div>';
 
@@ -363,6 +402,13 @@ function addClickListener() {
       setTimeout(function () {
         new_comment.addClass('new-comment');
       }, 100);
+
+      // Add delete click listener event for the new comment
+      const deleteBtn = document.querySelector('.cmt_section[cmt-id="'+ add_comment.commentId +'"] .cmt-delete-container');
+      deleteBtn.addEventListener('click', () => {
+        addDeleteCommentListener();
+      });
+
 
       // Disable post review button for 2 seconds to avoid problems
       cmt_submit_btn.disabled = true;
@@ -379,4 +425,27 @@ function addClickListener() {
       document.getElementById('cmt-input-area').value = '';
     }
   });
+  // Delete comment button
+  const cmtDeleteContainers = document.querySelectorAll('.cmt-delete-container');
+
+  cmtDeleteContainers.forEach((container) => {
+    container.addEventListener('click', () => {
+      addDeleteCommentListener();
+    });
+  });
+}
+async function addDeleteCommentListener() {
+  const comment_section = event.target.closest('.cmt_section');
+  const cmtId = comment_section.getAttribute('cmt-id');
+
+  var request = await $.ajax({
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + keycloak.token,
+    },
+    url: '/comments/' + cmtId,
+    method: 'DELETE',
+  });
+  comment_section.remove();
 }

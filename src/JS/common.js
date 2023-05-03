@@ -29,7 +29,11 @@ async function loadUserInfoBar() {
     url: '/get-user-info',
     method: 'GET',
   });
-  document.getElementById('user-name').textContent = user_info.username;
+  if (user_info.userDisplayname == null){
+    document.getElementById('user-name').textContent = user_info.username;
+  } else {
+    document.getElementById('user-name').textContent = user_info.userDisplayname;
+  } 
   document.getElementById('user-avatar').src = user_info.userAvt;
 }
 

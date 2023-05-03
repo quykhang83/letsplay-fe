@@ -1,0 +1,59 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'roboto', sans-serif;
+    height: 100vh;
+    margin: 0;
+  }
+  #payment-block{
+    width: 100%;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #payment-countdown{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    text-decoration: underline;
+    margin-top: 10px;
+  }
+  #payment-countdown a{
+    display: flex;
+    color: black;
+  }
+  #payment-countdown a h3{
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  #countdown-number{
+    color: red !important;
+  }
+  #delivery-box {
+    display: flex;
+    width: 640px;
+    margin-top: 10px;
+    background-color: #414858;
+    padding: 25px;
+  }
+  #web-logo-img {
+    width: 200px;
+    object-fit: contain;
+  }
+  #delivery-text-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+  #text-1 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: white;
+    font-weight: 400;
+  }

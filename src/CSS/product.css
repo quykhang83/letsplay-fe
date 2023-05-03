@@ -381,7 +381,8 @@ header h3 {
   background: none;
   padding: 5px 10px 5px 5px;
   color: black;
-  margin-left: 10px;
+  margin-left: 15px;
+  padding-left: 10px;
 }
 .dropdown-toggle::after{
   color: black;
@@ -439,4 +440,25 @@ header h3 {
   background-color: #1980b4;
   color: white;
   cursor: pointer;
+}
+.cmt-favor-and-delete{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.cmt-delete-container{
+  border-radius: 5px;
+  margin-top: 8px;
+  margin-right: 10px;
+  border: 1px solid #16202d;
+}
+.cmt-delete-btn{
+  color: white;
+  padding: 8px;
+  margin: 0;
+  cursor: pointer;
+}
+.cmt-delete-container:hover{
+  border: 1px solid #ff5454;
+  background-color: #ff5454;
 }
