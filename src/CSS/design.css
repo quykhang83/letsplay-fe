@@ -177,6 +177,8 @@ header h3 {
   }
 }
 .item {
+  border: 1px solid white;
+  border-bottom: none;
   min-width: 200px;
   height: fit-content;
   overflow: hidden;
@@ -207,15 +209,19 @@ header h3 {
   background-color: black;
   min-width: 200px;
   min-height: 46px;
-  border: 1px solid white;
 }
 .item_price {
   background-color: black;
   min-width: 200px;
-  height: fit-content;
+  height: 50px;
   border: 1px solid white;
+  border-top: none;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
 }
 .item_price h3 {
   font-size: 1rem;
@@ -240,11 +246,17 @@ header h3 {
 }
 
 .item_name h3 {
-  font-size: 15px;
-  text-align: center;
-  padding: 5px 0px;
-  margin: 0;
+  font-size: 1rem;
   color: white;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  min-width: 200px;
+  min-height: 50px;
+  border: 1px solid white;
+  margin: 0;
 }
 
 .item img {

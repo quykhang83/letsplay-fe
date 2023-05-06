@@ -57,10 +57,40 @@
                 <li class="nav-item">
                   <a class="nav-link active" href="#">PROFILE</a>
                 </li>
-                <li class="nav-item" id="design-page-btn">
-                  <a class="nav-link" href="design.html">DESIGN</a>
+                <li class="nav-item" id="manage-btn">
+                  <div class="dropdown">
+                    <button
+                      id="manage-btn-dropdown"
+                      class="btn-secondary dropdown-toggle"
+                      type="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <h3 class="nav-link">MANAGE</h3>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-start">
+                      <li><a class="nav-link dropdown-item" href="design.html">HOMEPAGE DESIGN</a></li>
+                      <li><a class="nav-link dropdown-item" href="#">DISCOUNT</a></li>
+                    </ul>
+                  </div>
                 </li>
               </ul>
+              <!-- Cart -->
+              <a href="cart.html" class="btn btn-primary position-relative" id="cart-btn">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-num-product"></span>
+              </a>
+              <!-- User account -->
+              <div class="dropdown" id="user-info-btn">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <h3 id="user-name"></h3>
+                  <img src="" alt="" id="user-avatar" />
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li><a class="dropdown-item" id="change_pass_btn">Change Password</a></li>
+                  <li><a class="dropdown-item" id="logout_btn">Logout</a></li>
+                </ul>
+              </div>
             </div>
           </div>
         </nav>
@@ -96,25 +126,40 @@
             <div class="profile-section-header">GENERAL</div>
             <div class="profile-section">
               <div class="mb-3">
-                <label for="formGroupExampleInput" class="form-label">Profile Name</label>
-                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="User current profile name from db" />
+                <label for="profile-name-input-box" class="form-label">Profile Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="profile-name-input-box"
+                  placeholder="Profile name will be display throughout Let's Play."
+                />
               </div>
             </div>
 
             <div class="profile-section-header">CONTACT</div>
             <div class="profile-section">
               <div class="mb-3">
-                <label for="formGroupExampleInput" class="form-label">Phone Number</label>
-                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="placeholder" />
+                <label for="phone-input-box" class="form-label">Phone Number</label>
+                <input type="text" class="form-control" id="phone-input-box" placeholder="Phone number help your friends contact you easier." />
               </div>
             </div>
 
             <div class="profile-section-header">SUMMARY</div>
             <div class="profile-section">
               <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label">Bio</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" maxlength="150"></textarea>
+                <label for="bio-input-box" class="form-label">Bio</label>
+                <textarea
+                  class="form-control"
+                  id="bio-input-box"
+                  rows="3"
+                  maxlength="150"
+                  placeholder="Tell your friends something about you."
+                ></textarea>
               </div>
+            </div>
+
+            <div id="profile-submit-container">
+              <button id="profile-submit-btn" class="btn btn-primary position-relative">Save</button>
             </div>
           </div>
           <div class="tab-panel" data-tab="avatar">
@@ -146,4 +191,5 @@
     </footer>
   </body>
   <script type="module" src="../JS/profile.js"></script>
+  <script type="module" src="./JS/common.js"></script>
 </html>

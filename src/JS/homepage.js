@@ -18,7 +18,7 @@ $(async function () {
 
         // Display the design page button if user is manager
         if (keycloak.hasRealmRole('manager')) {
-          document.getElementById('design-page-btn').style.display = 'flex';
+          document.getElementById('manage-btn').style.display = 'flex';
         } else {
           // Display library button
           document.getElementById('library-page-btn').style.display = 'flex';
@@ -60,104 +60,79 @@ async function initialize() {
 
 async function loadAllProducts() {
   $('#product-result').html('');
-  try {
-    const data = await $.ajax({
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/jsons',
-      },
-      url: '/product-types',
-      method: 'GET',
-    });
-    data.sort((a, b) => a.productTypeName.localeCompare(b.productTypeName));
+  const types = await $.ajax({
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    url: '/product-types',
+    method: 'GET',
+  });
+  // Sort types by alphabet
+  types.sort((a, b) => a.productTypeName.localeCompare(b.productTypeName));
 
-    // Define an array to hold all the promises for each product type
-    const promises = [];
-    // Loop through the sorted data and add each $.ajax call to promises array
-    for (let i = 0; i < data.length; i++) {
-      const element = data[i];
-      if (element.productTypeName != '#') {
-        const encodedProductTypeName = encodeURIComponent(element.productTypeName);
-        const promise = new Promise((resolve, reject) => {
-          var out = '';
-          out += "<div class='item_set_container'>";
-          out += "<h3 class='set_label'>" + element.productTypeName + '</h3>' + "<div class='set_item'>";
-          // Call to get products by type api
-          $.ajax({
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/jsons',
-            },
-            url: '/products?type=' + encodedProductTypeName,
-            method: 'GET',
-            success: function (product_data) {
-              product_data.forEach((product_element) => {
-                const demo = product_element.productDemo;
+  var products;
+  var out = '';
+  for (let i = 0; i < types.length; i++) {
+    if (types[i].productTypeName != '#') {
+      const encodedProductTypeName = encodeURIComponent(types[i].productTypeName);
 
-                var demoUrl;
-                if (demo) {
-                  demoUrl = demo.productDemoUrl;
-                } else {
-                  demoUrl = '';
-                }
+      products = await $.ajax({
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        url: '/products?type=' + encodedProductTypeName,
+        method: 'GET',
+      });
+      // Creating html data
+      out += "<div class='item_set_container noselect'>";
+      out += "<h3 class='set_label'>" + types[i].productTypeName + '</h3>' + "<div class='set_item'>";
+      for (let j = 0; j < products.length; j++) {
+        const header = products[j].productDemo;
 
-                var product_out = '';
+        var headerUrl;
+        if (header) {
+          headerUrl = header.productDemoUrl;
+        } else {
+          headerUrl = '';
+        }
 
-                //Format product price to have dot according to VND
-                const formattedproductPrice = product_element.productPrice.toLocaleString('vi-VN');
-
-                product_out +=
-                  "<div class='item_ctn'><a href='product.html?product-id=" +
-                  product_element.productId +
-                  "' " +
-                  "style='text-decoration: none'>" +
-                  "<div class='item'>" +
-                  "<img src='" +
-                  demoUrl +
-                  "' alt='' />" +
-                  '</div>' +
-                  "<div class='item_name'>" +
-                  '<h3>' +
-                  product_element.productName +
-                  '</h3>' +
-                  '</div>' +
-                  "<div class='item_price'>" +
-                  "<h3 class='item_original_price'>" +
-                  formattedproductPrice +
-                  'đ</h3>' +
-                  "<h3 class='item_discount_price'>150.000đ</h3>" +
-                  '</div>' +
-                  '</a></div>';
-
-                out += product_out;
-              });
-
-              // Close set-item
-              out += '</div>';
-              // Close item-set-container
-              out += '</div>';
-              resolve(out);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-              console.log('Error: ' + textStatus + ' - ' + errorThrown);
-              reject(errorThrown);
-            },
-          });
-        });
-        promises.push(promise);
+        //Format product price to have dot according to VND
+        const formattedproductPrice = products[j].productPrice.toLocaleString('vi-VN');
+        out +=
+          "<div class='item_ctn'><a href='product.html?product-id=" +
+          products[j].productId +
+          "' " +
+          "style='text-decoration: none'>" +
+          "<div class='item'>" +
+          "<img src='" +
+          headerUrl +
+          "' alt='' />" +
+          '</div>' +
+          "<div class='item_name'>" +
+          '<h3>' +
+          products[j].productName +
+          '</h3>' +
+          '</div>' +
+          "<div class='item_price'>" +
+          "<h3 class='item_original_price'>" +
+          formattedproductPrice +
+          'đ</h3>';
+        if (products[j].productPriceDiscount == null) {
+          out += "<h3 class='item_discount_price'>0đ</h3>" + '</div>' + '</a></div>';
+        } else {
+          const formattedProductPriceDiscount = products[j].productPriceDiscount.toLocaleString('vi-VN');
+          out += "<h3 class='item_discount_price'>" + formattedProductPriceDiscount + 'đ</h3>' + '</div>' + '</a></div>';
+        }
       }
+      // Close set-item
+      out += '</div>';
+      // Close item-set-container
+      out += '</div>';
     }
-    // Wait for all promises to resolve before running these functions
-    const htmlStrings = await Promise.all(promises);
-
-    // Loop through the htmlStrings array and append each html string to the product-result element
-    for (let i = 0; i < htmlStrings.length; i++) {
-      const htmlString = htmlStrings[i];
-      $('#product-result').append(htmlString);
-    }
-  } catch (error) {
-    console.error(error);
   }
+  $('#product-result').append(out);
 }
 
 function loadProductDiscountPrice() {

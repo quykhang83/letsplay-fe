@@ -1,4 +1,6 @@
 import { keycloak, authenticateLogin } from './keycloakauth.js';
+import * as common from './common.js';
+
 $(async function () {
   await authenticateLogin();
   if (keycloak.authenticated) {
@@ -6,6 +8,11 @@ $(async function () {
     // Display the design page button if user is manager
     if (keycloak.hasRealmRole('manager')) {
     }
+    else {
+      document.getElementById('cart-btn').style.display = 'flex';
+      common.loadCartNumber();
+    }
+    common.loadUserInfoBar();
   } else {
     console.log('User is not authenticated! Calling authenticate function');
     console.log('Authentication status: ', keycloak.authenticated);
