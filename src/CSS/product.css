@@ -136,7 +136,8 @@ header h3 {
   position: absolute;
 }
 .game_purchase_price {
-  /* border: 1px solid black; */
+  display: flex;
+  flex-direction: column;
   background-color: black;
   color: white;
   text-decoration: none;
@@ -146,6 +147,16 @@ header h3 {
   align-items: center;
   display: flex;
   justify-content: center;
+}
+#game-purchase-price{
+  margin: 0;
+  font-size: 0.9rem;
+  text-decoration: line-through;
+  color: grey;  
+}
+#game-purchase-price-discount{
+  margin: 0;
+  font-size: 1rem;
 }
 .btn_cart {
   border: 1px solid black;

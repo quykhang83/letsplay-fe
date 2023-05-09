@@ -29,15 +29,14 @@ $(async function () {
 
         // Set user avatar and name to comment input section
         document.getElementById('current-user-cmt-avatar').src = user_avatar;
-        if (user_display_name == null){
+        if (user_display_name == null) {
           document.getElementById('current-user-cmt-username').textContent = user_name;
         } else {
           document.getElementById('current-user-cmt-username').textContent = user_display_name;
         }
-        
 
         if (keycloak.hasRealmRole('manager')) {
-          document.getElementById('cart_block').remove();
+          document.getElementById('btn_cart').remove();
         } else {
           // Display library button
           document.getElementById('library-page-btn').style.display = 'flex';
@@ -48,7 +47,7 @@ $(async function () {
       } else {
         // Display login button
         loginBtn.style.display = 'flex';
-        document.getElementById('cart_block').remove();
+        // document.getElementById('cart_block').remove();
       }
     })
     .catch((err) => {
@@ -90,7 +89,7 @@ async function loadUserInfoBar() {
   user_name = user_info.username;
   user_id = user_info.userId;
   user_display_name = user_info.userDisplayname;
-  if (user_info.userDisplayname == null){
+  if (user_info.userDisplayname == null) {
     document.getElementById('user-name').textContent = user_info.username;
   } else {
     document.getElementById('user-name').textContent = user_info.userDisplayname;
@@ -130,8 +129,15 @@ async function getProductById() {
     $('#game_description').append(product.productDescription);
 
     const formattedproductPrice = product.productPrice.toLocaleString('vi-VN');
-    $('#game-purchase-price').html('');
-    $('#game-purchase-price').append(formattedproductPrice + 'đ');
+    document.getElementById('game-purchase-price').textContent = formattedproductPrice + 'đ';
+
+    if (product.productPriceDiscount == null) {
+      document.getElementById('game-purchase-price').remove();
+      document.getElementById('game-purchase-price-discount').textContent = formattedproductPrice + 'đ';
+    } else {
+      const formattedProductPriceDiscount = product.productPriceDiscount.toLocaleString('vi-VN');
+      document.getElementById('game-purchase-price-discount').textContent = formattedProductPriceDiscount + 'đ';
+    }
 
     $('#game-title-cart').html('');
     $('#game-title-cart').append('Buy ' + product.productName);
@@ -288,27 +294,30 @@ async function checkItemInCart() {
 }
 function addClickListener() {
   // Add to cart button
-  if (keycloak.authenticated && !keycloak.hasRealmRole('manager')) {
+  if (!keycloak.hasRealmRole('manager')) {
     const cart_btn = document.getElementById('btn_cart');
     cart_btn.addEventListener('click', async () => {
-      const cart_block = document.getElementById('game-title-cart');
-      cart_block.classList.add('product-in-cart');
-      $('#game-title-cart').html('');
-      $('#game-title-cart').append("This game is in your cart <i class='fas fa-shopping-cart' style='margin-left: 10px'></i>");
+      if (keycloak.authenticated) {
+        const cart_block = document.getElementById('game-title-cart');
+        cart_block.classList.add('product-in-cart');
+        $('#game-title-cart').html('');
+        $('#game-title-cart').append("This game is in your cart <i class='fas fa-shopping-cart' style='margin-left: 10px'></i>");
 
-      document.getElementById('game_purchase_action').style.display = 'none';
+        document.getElementById('game_purchase_action').style.display = 'none';
 
-      await $.ajax({
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/jsons',
-          Authorization: 'Bearer ' + keycloak.token,
-        },
-        url: '/users/' + 'cart/product/' + productId + '/save',
-        method: 'POST',
-      });
-
-      common.loadCartNumber();
+        await $.ajax({
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/jsons',
+            Authorization: 'Bearer ' + keycloak.token,
+          },
+          url: '/users/' + 'cart/product/' + productId + '/save',
+          method: 'POST',
+        });
+        common.loadCartNumber();
+      } else {
+        authenticateLogin();
+      }
     });
   }
   // Comment thumb up, down
@@ -355,7 +364,6 @@ function addClickListener() {
         data: JSON.stringify(data),
       });
 
-
       var recommended_icon = '';
       if (rcmd == true) {
         recommended_icon = 'thump_up.png';
@@ -363,7 +371,9 @@ function addClickListener() {
 
       var cmt_html = '';
       cmt_html +=
-        "<div class='cmt_section' cmt-id='"+ add_comment.commentId +"' style='background-color: #868d9f' >" +
+        "<div class='cmt_section' cmt-id='" +
+        add_comment.commentId +
+        "' style='background-color: #868d9f' >" +
         "<div class='cmt_section_left'>" +
         "<img class='cmt_avatar' src='" +
         user_avatar +
@@ -404,11 +414,10 @@ function addClickListener() {
       }, 100);
 
       // Add delete click listener event for the new comment
-      const deleteBtn = document.querySelector('.cmt_section[cmt-id="'+ add_comment.commentId +'"] .cmt-delete-container');
+      const deleteBtn = document.querySelector('.cmt_section[cmt-id="' + add_comment.commentId + '"] .cmt-delete-container');
       deleteBtn.addEventListener('click', () => {
         addDeleteCommentListener();
       });
-
 
       // Disable post review button for 2 seconds to avoid problems
       cmt_submit_btn.disabled = true;
