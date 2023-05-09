@@ -363,17 +363,17 @@ async function submitButtonClickListener(event) {
           data: JSON.stringify({ productTypeName: '#' }),
         });
       });
-      let changeProductTypeName = null;
+      // Ajax request to change product type name if new product type name is detected
       const new_product_type_name = document.getElementById('product-type-name-edit-box').value;
-      if (new_product_type_name != productTypeName && new_product_type_name != '') {
+      if ( (new_product_type_name != productTypeName) && (new_product_type_name != '')) {
         //Encode the new product type name
-        const encodedNewProductTypeName = encodeURIComponent(new_product_type_name);
+        // const encodedNewProductTypeName = encodeURIComponent(new_product_type_name);
         // const
         const data = {
-          productTypeName: encodedNewProductTypeName,
+          productTypeName: new_product_type_name,
           productTypeDescription: 'Nothing',
         };
-        changeProductTypeName = $.ajax({
+        var changeProductTypeName = await $.ajax({
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
@@ -387,12 +387,11 @@ async function submitButtonClickListener(event) {
       }
 
       try {
-        await Promise.all(checkedRequests);
-        await Promise.all(uncheckedRequests);
+        await Promise.all(checkedRequests,uncheckedRequests);
         if (changeProductTypeName) {
           await changeProductTypeName;
         }
-        await initialize();
+        await loadAllProducts();
       } catch (error) {
         console.error(error);
       }
