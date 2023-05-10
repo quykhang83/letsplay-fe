@@ -201,7 +201,17 @@ header h3 {
   margin-right: 20px;
   margin-bottom: 20px;
   display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
+}
+#add-discount i{
+  width: 35px;
+  height: 35px;
+  font-size: 2rem;
+  border: 1px solid black;
+  border-radius: 50%;
+  text-align: center;
 }
 #edit-discount-container {
   display: none;
@@ -334,7 +344,9 @@ header h3 {
   height: 30px;
   margin-top: 10px;
 }
-#edit-discount-save-btn {
+#edit-discount-save-btn,
+#add-discount-save-btn {
+  display: none;
   line-height: 15px;
   background-color: #f9e46a;
 }
