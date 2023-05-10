@@ -78,9 +78,10 @@ async function loadAllDiscounts() {
       '</div> </div>';
   }
 
-  discount_html += "<div id='add-discount'></div>";
+  discount_html += "<div id='add-discount'><i class='fas fa-plus'></i></div>";
   $('#discount-container').append(discount_html);
   discountProgramClickListeners();
+  deleteDiscountClickListener();
 }
 
 async function loadEditDiscountView(discountId) {
@@ -145,6 +146,40 @@ async function loadEditDiscountView(discountId) {
   }
   $('#edit-discount-product').append(product_html);
 }
+async function loaddAddDiscountView() {
+  document.getElementById('discount-name').value = '';
+  document.getElementById('discount-percent').value = '';
+  document.getElementById('discount-background').value = '';
+  document.getElementById('from-date-input').value = '';
+  document.getElementById('to-date-input').value = '';
+
+  // Product with no discount list
+  $('#edit-discount-product').html('');
+  var product_html = "<h3 id='none-product-warning'>*At least 1 product must be selected</h3>";
+  const products = await $.ajax({
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    url: '/products',
+    method: 'GET',
+  });
+
+  for (let i = 0; i < products.length; i++) {
+    if (products[i].productPriceDiscount == null) {
+      product_html +=
+        "<div class='product'>" +
+        "<h3 class='product-name'>" +
+        products[i].productName +
+        '</h3>' +
+        "<input type='checkbox' class='product-checkbox' data-product-id='" +
+        products[i].productId +
+        "'/>" +
+        '</div>';
+    }
+  }
+  $('#edit-discount-product').append(product_html);
+}
 
 function addClickListeners() {
   const program_edit_view = document.getElementById('edit-discount-container');
@@ -152,21 +187,19 @@ function addClickListeners() {
   const edit_close_btn = document.getElementById('edit-discount-close-btn');
   edit_close_btn.addEventListener('click', () => {
     program_edit_view.style.display = 'none';
-    document.getElementById("none-product-warning").style.display = 'none';
+    document.getElementById('none-product-warning').style.display = 'none';
   });
   // Add a new discount program btn
   const add_discout_btn = document.getElementById('add-discount');
-  add_discout_btn.addEventListener('click', () => {});
-  // Delete a discount program button
-  const removes = document.querySelectorAll('.discount-option-container');
-  removes.forEach((remove) => {
-    remove.addEventListener('click', (event) => {
-      event.stopPropagation();
-      // Your code to handle the click event goes here
-    });
+  add_discout_btn.addEventListener('click', async () => {
+    await loaddAddDiscountView();
+    document.getElementById('edit-discount-save-btn').style.display = 'none';
+    document.getElementById('add-discount-save-btn').style.display = 'flex';
+    program_edit_view.style.display = 'flex';
   });
   // Edit discount save button
   editDiscountSaveBtnClickListener();
+  editDiscountAddBtnClickListener();
 }
 function discountProgramClickListeners() {
   // Discount program
@@ -175,6 +208,8 @@ function discountProgramClickListeners() {
   programs.forEach((program) => {
     program.addEventListener('click', async () => {
       await loadEditDiscountView(program.getAttribute('discount-id'));
+      document.getElementById('edit-discount-save-btn').style.display = 'flex';
+      document.getElementById('add-discount-save-btn').style.display = 'none';
       program_edit_view.style.display = 'flex';
     });
   });
@@ -205,7 +240,7 @@ function editDiscountSaveBtnClickListener() {
       }
     });
 
-    if (checkedProducts.length > 0){
+    if (checkedProducts.length > 0) {
       const discount = await $.ajax({
         headers: {
           Accept: 'application/json',
@@ -215,16 +250,16 @@ function editDiscountSaveBtnClickListener() {
         method: 'GET',
       });
       let currentProducts = [];
-      for(let i=0; i<discount.products.length; i++){
+      for (let i = 0; i < discount.products.length; i++) {
         currentProducts.push(discount.products[i].productId.toString());
       }
-      
+
       const discountName = document.getElementById('discount-name').value;
       const discountPercent = document.getElementById('discount-percent').value;
       const discountDescription = document.getElementById('discount-background').value;
       const fromDate = document.getElementById('from-date-input').value;
       const toDate = document.getElementById('to-date-input').value;
-  
+
       // Check name
       if (discountName != discount.discountName) {
         updatedDiscount.discountName = discountName;
@@ -243,16 +278,16 @@ function editDiscountSaveBtnClickListener() {
       var year = fromDateObject.getFullYear().toString();
       const formattedFromDateString = `${year}-${month}-${day}T12:00:00+0700`;
       updatedDiscount.fromDate = formattedFromDateString;
-  
+
       const toDateObject = new Date(toDate);
       day = toDateObject.getDate().toString().padStart(2, '0');
       month = (toDateObject.getMonth() + 1).toString().padStart(2, '0');
       year = toDateObject.getFullYear().toString();
       const formattedToDateString = `${year}-${month}-${day}T12:00:00+0700`;
       updatedDiscount.toDate = formattedToDateString;
-  
+
       console.log(updatedDiscount);
-  
+
       await $.ajax({
         headers: {
           Accept: 'application/json',
@@ -264,27 +299,27 @@ function editDiscountSaveBtnClickListener() {
         dataType: 'json',
         data: JSON.stringify(updatedDiscount),
       });
-  
+
       // Update discount product list
-  
+
       // Print the arrays to the console to check if they contain the correct values
       console.log('Current Products: ', currentProducts);
       console.log('Checked Products:', checkedProducts);
       console.log('Unchecked Products:', uncheckedProducts);
-  
-      const toBeAddedProducts = checkedProducts.filter(productId => !currentProducts.includes(productId));
+
+      const toBeAddedProducts = checkedProducts.filter((productId) => !currentProducts.includes(productId));
       const toBeRemovedProducts = [];
       currentProducts.forEach((productId) => {
         if (uncheckedProducts.includes(productId)) {
           toBeRemovedProducts.push(productId);
         }
       });
-  
-      console.log("To be added products: ", toBeAddedProducts);
-      console.log("To be removed products: ", toBeRemovedProducts);
-  
-      if (toBeAddedProducts.length != 0){
-        for(let i=0; i<toBeAddedProducts.length; i++){
+
+      console.log('To be added products: ', toBeAddedProducts);
+      console.log('To be removed products: ', toBeRemovedProducts);
+
+      if (toBeAddedProducts.length != 0) {
+        for (let i = 0; i < toBeAddedProducts.length; i++) {
           await $.ajax({
             headers: {
               Accept: 'application/json',
@@ -296,9 +331,9 @@ function editDiscountSaveBtnClickListener() {
           });
         }
       }
-  
-      if (toBeRemovedProducts.length != 0){
-        for(let i=0; i<toBeRemovedProducts.length; i++){
+
+      if (toBeRemovedProducts.length != 0) {
+        for (let i = 0; i < toBeRemovedProducts.length; i++) {
           await $.ajax({
             headers: {
               Accept: 'application/json',
@@ -310,14 +345,115 @@ function editDiscountSaveBtnClickListener() {
           });
         }
       }
-  
+
       program_edit_view.style.display = 'none';
-      document.getElementById("none-product-warning").style.display = 'none';
+      document.getElementById('none-product-warning').style.display = 'none';
       loadAllDiscounts();
     } else {
-      document.getElementById("none-product-warning").style.display = 'flex';
+      document.getElementById('none-product-warning').style.display = 'flex';
     }
+  });
+}
+function editDiscountAddBtnClickListener() {
+  const program_edit_view = document.getElementById('edit-discount-container');
+  const add_btn = document.getElementById('add-discount-save-btn');
+  add_btn.addEventListener('click', async (event) => {
+    const newDiscount = {};
+    // Define arrays to hold checked product IDs
+    let checkedProducts = [];
+    const products = document.querySelectorAll('.product');
+    // Loop through each product
+    products.forEach(async (product) => {
+      // Get the checkbox element within the product
+      const checkbox = product.querySelector('input[type="checkbox"]');
+      // Get the value of the data-product-id attribute
+      const productId = checkbox.getAttribute('data-product-id');
+      // Check if the checkbox is checked and push the productId into the appropriate array
+      if (checkbox.checked) {
+        checkedProducts.push(productId);
+      }
+    });
 
+    if (checkedProducts.length > 0) {
+      const discountName = document.getElementById('discount-name').value;
+      const discountPercent = document.getElementById('discount-percent').value;
+      const discountDescription = document.getElementById('discount-background').value;
+      const fromDate = document.getElementById('from-date-input').value;
+      const toDate = document.getElementById('to-date-input').value;
 
+      newDiscount.discountName = discountName;
+      newDiscount.discountPercent = discountPercent / 100;
+      newDiscount.discountDescription = discountDescription;
+
+      const fromDateObject = new Date(fromDate);
+      var day = fromDateObject.getDate().toString().padStart(2, '0');
+      var month = (fromDateObject.getMonth() + 1).toString().padStart(2, '0');
+      var year = fromDateObject.getFullYear().toString();
+      const formattedFromDateString = `${year}-${month}-${day}T12:00:00+0700`;
+      newDiscount.fromDate = formattedFromDateString;
+
+      const toDateObject = new Date(toDate);
+      day = toDateObject.getDate().toString().padStart(2, '0');
+      month = (toDateObject.getMonth() + 1).toString().padStart(2, '0');
+      year = toDateObject.getFullYear().toString();
+      const formattedToDateString = `${year}-${month}-${day}T12:00:00+0700`;
+      newDiscount.toDate = formattedToDateString;
+
+      console.log(newDiscount);
+
+      var add_new_discount = await $.ajax({
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + keycloak.token,
+        },
+        url: '/discounts',
+        method: 'POST',
+        dataType: 'json',
+        data: JSON.stringify(newDiscount),
+      });
+
+      if (checkedProducts.length != 0) {
+        for (let i = 0; i < checkedProducts.length; i++) {
+          await $.ajax({
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + keycloak.token,
+            },
+            url: '/discounts/' + add_new_discount.discountId + '/save/product/' + checkedProducts[i],
+            method: 'POST',
+          });
+        }
+      }
+
+      program_edit_view.style.display = 'none';
+      document.getElementById('none-product-warning').style.display = 'none';
+      loadAllDiscounts();
+    } else {
+      document.getElementById('none-product-warning').style.display = 'flex';
+    }
+  });
+}
+function deleteDiscountClickListener() {
+  // Delete a discount program button
+  const removes = document.querySelectorAll('.discount-option-container');
+  removes.forEach((remove) => {
+    remove.addEventListener('click', async (event) => {
+      event.stopPropagation();
+      const discountProgram = event.target.closest('.discount-program');
+      const discountId = discountProgram.getAttribute('discount-id');
+
+      await $.ajax({
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + keycloak.token,
+        },
+        url: '/discounts/' + discountId,
+        method: 'DELETE',
+      });
+      loadAllDiscounts();
+    });
   });
 }
