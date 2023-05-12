@@ -69,8 +69,8 @@
                       <h3 class="nav-link">MANAGE</h3>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-start">
-                      <li><a class="nav-link dropdown-item" href="design.html">HOMEPAGE DESIGN</a></li>
-                      <li><a class="nav-link dropdown-item" href="#">DISCOUNT</a></li>
+                      <li><a class="nav-link dropdown-item" href="design.html">DESIGN</a></li>
+                      <li><a class="nav-link dropdown-item" href="discount.html">DISCOUNT</a></li>
                     </ul>
                   </div>
                 </li>
@@ -87,6 +87,7 @@
                   <img src="" alt="" id="user-avatar" />
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
+                  <li><a class="dropdown-item" id="receipt_btn" href="receipt.html">Receipt History</a></li>
                   <li><a class="dropdown-item" id="change_pass_btn">Change Password</a></li>
                   <li><a class="dropdown-item" id="logout_btn">Logout</a></li>
                 </ul>
@@ -103,7 +104,48 @@
       </div>
     </div>
 
-    <div class="profile-container">
+    <!-- Profile container -->
+
+    <div class="profile-container" id="profile-container">
+      <div id="profile-info-container">
+        <div id="info-container">
+          <div id="info-1">
+            <img id="user-profile-avt" src="./resources/img/User/avatar.jpg" alt="" />
+          </div>
+          <div id="info-2">
+            <h3 id="profile-info-username">luuca792</h3>
+            <div id="profile-info-buttons">
+              <i class="fas fa-comment"></i>
+              <i class="fas fa-user-plus"></i>
+            </div>
+            <h3 id="profile-info-bio">I love games.</h3>
+          </div>
+        </div>
+        <div id="edit-info-container">
+          <a href="profile.html?edit" id="profile-edit-btn" class="btn btn-primary"> Edit Profile </a>
+        </div>
+      </div>
+      <h3 id="profile-activity-header">Recently own games</h3>
+      <div id="profile-activity-container">
+        <div class="activity-item">
+          <img
+            class="activity-product-image"
+            src="https://firebasestorage.googleapis.com/v0/b/ctu-letsplay.appspot.com/o/Products%2FDORAEMON%20STORY%20OF%20SEASONS%2F1.jpg?alt=media&token=55b8a717-dadd-48fb-b6ad-ead37004039f"
+          />
+          <div class="activity-product-name-container">
+            <h3 class="activity-product-name">DORAEMON STORY OF SEASONS</h3>
+          </div>
+          <div class="activity-product-right-col">
+            <h3 class="activity-product-play-time">12.4 hours on record</h3>
+            <h3 class="activity-product-last-play">last played on 26 April</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit profile container -->
+
+    <div class="edit-profile-container" id="edit-profile-container">
       <div class="profile-nav-box">
         <div class="btn-container">
           <div class="btn-general">
@@ -159,6 +201,9 @@
             </div>
 
             <div id="profile-submit-container">
+              <a href="profile.html">
+                <button id="profile-back-btn" class="btn btn-primary position-relative">Back To Profile</button>
+              </a>
               <button id="profile-submit-btn" class="btn btn-primary position-relative">Save</button>
             </div>
           </div>
@@ -187,7 +232,30 @@
     </div>
 
     <footer>
-      <div class="footer_box"></div>
+      <div class="footer_box">
+        <div id="footer-left">
+          <img id="footer-logo-img" src="./resources/img/logo.png" alt="" />
+        </div>
+        <div id="footer-middle">
+          <h3>World's Best Gaming Community</h3>
+          <h3>Developed by students of College of ICT</h3>
+          <br />
+          <h3>Contact: 18 Tower Of Fate, Ninh Kieu, Can Tho</h3>
+          <div id="contact-email">
+            <h3>Email:</h3>
+            <h3>letsplay-support@gmail.com</h3>
+          </div>
+        </div>
+        <div id="footer-right">
+          <div id="contact-icon">
+            <img src="https://tracuutenmien.gov.vn/themes/img/footer-icons/location-icon.svg" alt="" />
+            <img src="https://tracuutenmien.gov.vn/themes/img/footer-icons/mail-icon.svg" alt="" />
+            <img src="https://tracuutenmien.gov.vn/themes/img/footer-icons/youtube-icon.svg" alt="" />
+            <img src="https://tracuutenmien.gov.vn/themes/img/footer-icons/fb-icon.svg" alt="" />
+          </div>
+          <h3>Copyright © 2023</h3>
+        </div>
+      </div>
     </footer>
   </body>
   <script type="module" src="../JS/profile.js"></script>
