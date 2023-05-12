@@ -38,6 +38,8 @@ $(async function () {
         if (keycloak.hasRealmRole('manager')) {
           document.getElementById('btn_cart').remove();
         } else {
+          // Display receipt button
+          document.getElementById('receipt_btn').style.display = 'flex';
           // Display library button
           document.getElementById('library-page-btn').style.display = 'flex';
           // Display go-to-cart icon

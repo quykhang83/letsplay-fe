@@ -24,6 +24,8 @@ $(async function () {
           document.getElementById('library-page-btn').style.display = 'flex';
           // Display go-to-cart icon
           document.getElementById('cart-btn').style.display = 'flex';
+          // Display receipt button
+          document.getElementById('receipt_btn').style.display = 'flex';
           common.loadCartNumber();
         }
         common.loadUserInfoBar();
