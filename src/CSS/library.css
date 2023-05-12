@@ -401,3 +401,6 @@ header h3 {
   cursor: pointer;
 }
 /* End of cart */
+#receipt_btn{
+  display: none;
+}

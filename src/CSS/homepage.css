@@ -363,3 +363,6 @@ header h3 {
 .discount-nav-btn.active{
   background-color: #91d6f9;
 }
+#receipt_btn{
+  display: none;
+}

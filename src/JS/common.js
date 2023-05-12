@@ -37,4 +37,6 @@ async function loadUserInfoBar() {
   document.getElementById('user-avatar').src = user_info.userAvt;
 }
 
+// async function 
+
 export { loadCartNumber, loadUserInfoBar};

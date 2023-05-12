@@ -17,6 +17,8 @@ $(async function () {
 
       if (keycloak.hasRealmRole('manager')) {
       } else {
+        // Display receipt button
+        document.getElementById('receipt_btn').style.display = 'flex';
       }
     }
   } else {

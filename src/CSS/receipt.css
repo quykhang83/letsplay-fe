@@ -1,0 +1,254 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'roboto', sans-serif;
+  height: 100vh;
+  margin: 0;
+  background-color: #171a21;
+}
+
+.spinner-container {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgb(0 0 0 / 100%);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Header  */
+header {
+  display: flex;
+  flex-direction: column;
+}
+
+header h3 {
+  font-family: 'roboto', sans-serif;
+  background-color: gray;
+  font-size: 24px;
+  /* padding: 50px; */
+}
+
+.header_box {
+  background-color: #171a21;
+  min-height: 50px;
+  display: block;
+}
+.responsive_header_logo {
+  position: relative;
+  background-color: #171a21;
+  height: 36px;
+  text-align: center;
+  top: 7px;
+}
+.responsive_header_logo img {
+  height: 36px;
+  vertical-align: middle;
+}
+.nav_container {
+  background-color: white;
+  height: 75px;
+}
+.navbar {
+  height: 100%;
+}
+.nav-link {
+  margin: 0;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+}
+#manage-btn-dropdown {
+  margin: 0;
+  padding: 0;
+}
+
+/* User account */
+.dropdown-menu {
+  position: absolute;
+}
+.dropdown-menu li {
+  cursor: pointer;
+}
+.dropdown-toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background: none;
+  padding: 5px 10px 5px 5px;
+  color: black;
+  margin-left: 15px;
+  padding-left: 10px;
+}
+.dropdown-toggle::after {
+  color: black;
+}
+.dropdown-toggle img {
+  width: 48px;
+  border: 2px solid #5e5e5e;
+  border-radius: 5px;
+}
+.dropdown-toggle h3 {
+  padding: 0;
+  margin: 0;
+  background: none;
+  margin-right: 5px;
+  font-size: 1rem;
+}
+/* End of user account */
+
+/* Cart */
+#cart-btn {
+  margin-left: 10px;
+  background-color: #f8f9fa;
+  border: 1px solid #1980b4;
+  color: black;
+  height: 38px;
+}
+#cart-btn:hover {
+  background-color: #1980b4;
+  color: white;
+  cursor: pointer;
+}
+/* End of cart */
+
+/* End of header */
+
+#receipt-ctn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+#receipt-inner-ctn {
+  width: 940px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#receipt-header {
+  color: white;
+  font-size: 3rem;
+  font-family: system-ui;
+  margin: 0;
+}
+#receipt-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  min-height: 45vh;
+}
+.receipt {
+  display: flex;
+  flex-direction: column;
+  background-color: aliceblue;
+  height: 50px;
+  min-height: 50px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  padding: 10px;
+  align-items: center;
+  cursor: pointer;
+  transition: height 0.3s ease-out;
+  overflow: hidden;
+}
+.receipt-info h3 {
+  font-size: 1rem;
+  margin: 0;
+  flex: 1;
+}
+.receipt-date{
+  text-align: center;
+}
+.receipt-price{
+  text-align: end;
+}
+.receipt-products {
+  display: none;
+}
+.receipt.expanded .receipt-products {
+  display: flex;
+  flex-direction: column;
+}
+.product {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 5px;
+  padding-left: 5px;
+  width: 100%;
+  height: 50px;
+  background-color: #95a8d5;
+  border-radius: 10px;
+  margin-bottom: 5px;
+}
+.product h3{
+  font-size: 1rem;
+  margin: 0;
+}
+.receipt-info {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+.receipt-products {
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* Delivery block  */
+#delivery-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 50px;
+}
+#delivery-header {
+  display: flex;
+  flex-direction: column;
+  width: 940px;
+}
+#delivery-header h3 {
+  color: white;
+  margin: 0;
+}
+#delivery-box {
+  display: flex;
+  width: 940px;
+  margin-top: 10px;
+  background-color: #414858;
+  padding: 25px;
+}
+#web-logo-img {
+  width: 200px;
+  object-fit: contain;
+}
+#delivery-text-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}
+#text-1 {
+  margin: 0;
+  font-size: 1.4rem;
+  color: white;
+  font-weight: 400;
+}
+#text-2 {
+  font-size: 1.1rem;
+  margin: 0;
+  color: white;
+  font-weight: 400;
+}

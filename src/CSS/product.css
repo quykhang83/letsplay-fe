@@ -473,3 +473,6 @@ header h3 {
   border: 1px solid #ff5454;
   background-color: #ff5454;
 }
+#receipt_btn{
+  display: none;
+}

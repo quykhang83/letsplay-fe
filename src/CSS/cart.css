@@ -286,3 +286,6 @@ header h3 {
   font-size: 1.5rem;
   font-style: italic;
 }
+#receipt_btn{
+  display: none;
+}
