@@ -41,11 +41,14 @@ header h3 {
   vertical-align: middle;
 }
 .nav_container {
-  background-color: white;
+  background-color: #f8f9fa;
   height: 75px;
+  display: flex;
+  justify-content: center;
 }
 .navbar {
   height: 100%;
+  width: 80%;
 }
 .nav-link {
   margin: 0;
@@ -64,9 +67,8 @@ header h3 {
   flex-direction: column;
   background-color: #1b2838;
   min-height: 270px;
-  overflow-x: scroll;
-  overflow-y: hidden;
   justify-content: center;
+  width: 80%;
 }
 ::-webkit-scrollbar {
   width: 20px;
@@ -89,17 +91,21 @@ header h3 {
   background: rgb(71, 69, 69);
 }
 .set_label {
-  font-size: 1rem;
-  padding: 0 0 0 10px;
-  margin: 10px 10px;
+  font-size: 2rem;
+  padding: 10px 0 10px 0px;
+  margin: 10px 0px 10px 0px;
   color: white;
   text-align: center;
+  background-color: cadetblue;
+  font-family: system-ui;
 }
 .set_item {
   display: flex;
   flex-direction: row;
   margin-bottom: 10px;
-  justify-content: center;
+  padding-bottom: 10px;
+  width: 100%;
+  overflow-x: scroll;
 }
 
 .item_ctn {
@@ -222,7 +228,7 @@ header h3 {
   align-items: center;
   border: none;
   background: none;
-  padding: 5px 10px 5px 5px;
+  padding: 5px 0px 5px 5px;
   color: black;
   margin-left: 15px;
   padding-left: 10px;
@@ -277,11 +283,11 @@ header h3 {
 .product-discount-container {
   display: none;
   opacity: 0;
-  /* display: flex; */
+  width: 80%;
   position: relative;
-  justify-content: center;
-  margin: 20px 10px 0 10px;
-  padding: 20px;
+  margin-top: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
   border-radius: 10px;
   overflow: hidden;
   transition: opacity 0.5s ease-in-out;
@@ -310,35 +316,31 @@ header h3 {
   bottom: 0;
   height: 100%;
   width: 100%;
-  filter: blur(2px);
+  /* filter: blur(2px); */
+  object-fit: cover;
 }
 .discount-header-right-ctn{
   display: flex;
+  justify-content: center;
   align-items: center;
   z-index: 2;
-  margin-right: 50px;
-  min-width: 250px;
+  flex: 1;
 }
 .discount-header-left-ctn{
   display: flex;
+  justify-content: center;
   align-items: center;
   z-index: 2;
-  margin-left: 50px;
   min-width: 250px;
+  flex: 1;
 }
 .discount-header{
-  font-size: 3rem;
+  font-size: 2rem;
   color: #fbff89;
   text-shadow: -1px -1px 0 #000,
   1px -1px 0 #000,
   -1px 1px 0 #000,
   1px 1px 0 #000;
-}
-.discount-header-left{
-
-}
-.discount-header-right{
-
 }
 .carousel-control-next:hover,
 .carousel-control-prev:hover{
@@ -430,4 +432,22 @@ header h3 {
 #contact-email h3:last-child{
   margin-left: 5px;
   color: orange;
+}
+
+#product-result{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+#product-discount-result{
+  display: flex;
+  justify-content: center;
+}
+.carousel{
+  position: relative;
+  flex: 1;
+}
+.container-fluid{
+  padding: 0;
 }

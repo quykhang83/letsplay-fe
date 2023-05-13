@@ -52,11 +52,17 @@ header h3 {
   vertical-align: middle;
 }
 .nav_container {
-  background-color: white;
+  background-color: #f8f9fa;
   height: 75px;
+  display: flex;
+  justify-content: center;
 }
 .navbar {
   height: 100%;
+  width: 940px;
+}
+.container-fluid{
+  padding: 0;
 }
 .nav-link {
   margin: 0;

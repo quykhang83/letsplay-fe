@@ -1,4 +1,5 @@
 import { keycloak, authenticateLogin } from './keycloakauth.js';
+import * as common from './common.js';
 
 let isNewProductType = true;
 
@@ -10,6 +11,7 @@ $(async function () {
     if (keycloak.hasRealmRole('manager')) {
     } else {
     }
+    common.loadUserInfoBar();
   } else {
     console.log('Authentication status: ', keycloak.authenticated);
   }
