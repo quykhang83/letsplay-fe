@@ -155,6 +155,7 @@ function loadProductSelection(productTypeName, productTypeId) {
 
     // Encode the input product type name to avoid special characters
     const encodedProductTypeName = encodeURIComponent(productTypeName);
+    document.getElementById("product-type-name-edit-box").placeholder = productTypeName;
 
     var request1 = $.ajax({
       headers: {
@@ -192,7 +193,7 @@ function loadProductSelection(productTypeName, productTypeId) {
       });
       $('#product-selection-result').append(out);
     }
-    // Lod product that is of no type with uncheck mark
+    // Load product that is of no type with uncheck mark
     var data2 = results[results.length - 1];
 
     out = '';
