@@ -155,7 +155,7 @@ function loadProductSelection(productTypeName, productTypeId) {
 
     // Encode the input product type name to avoid special characters
     const encodedProductTypeName = encodeURIComponent(productTypeName);
-    document.getElementById("product-type-name-edit-box").placeholder = productTypeName;
+    document.getElementById("product-type-name-edit-box").value = "";
 
     var request1 = $.ajax({
       headers: {
