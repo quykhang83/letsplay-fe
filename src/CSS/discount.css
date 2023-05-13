@@ -363,6 +363,9 @@ header h3 {
 }
 /* footer  */
 .footer_box {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
   display: flex;
   background-color: #171a21;
   min-height: 50px;

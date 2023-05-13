@@ -81,6 +81,7 @@ async function loadAllDiscounts() {
   discount_html += "<div id='add-discount'><i class='fas fa-plus'></i></div>";
   $('#discount-container').append(discount_html);
   discountProgramClickListeners();
+  addNewDiscountClickListener();
   deleteDiscountClickListener();
 }
 
@@ -189,6 +190,12 @@ function addClickListeners() {
     program_edit_view.style.display = 'none';
     document.getElementById('none-product-warning').style.display = 'none';
   });
+  // Edit discount save button
+  editDiscountSaveBtnClickListener();
+  editDiscountAddBtnClickListener();
+}
+function addNewDiscountClickListener(){
+  const program_edit_view = document.getElementById('edit-discount-container');
   // Add a new discount program btn
   const add_discout_btn = document.getElementById('add-discount');
   add_discout_btn.addEventListener('click', async () => {
@@ -197,9 +204,6 @@ function addClickListeners() {
     document.getElementById('add-discount-save-btn').style.display = 'flex';
     program_edit_view.style.display = 'flex';
   });
-  // Edit discount save button
-  editDiscountSaveBtnClickListener();
-  editDiscountAddBtnClickListener();
 }
 function discountProgramClickListeners() {
   // Discount program

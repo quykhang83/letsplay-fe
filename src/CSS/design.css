@@ -59,6 +59,17 @@ header h3 {
 .navbar{
   height: 100%;
 }
+.nav-link {
+  margin: 0;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+}
+#manage-btn-dropdown {
+  margin: 0;
+  padding: 0;
+}
 /* BODY PART */
 .item-set-container {
   display: flex;
@@ -66,13 +77,14 @@ header h3 {
   align-items: center;
   background-color: #1b2838;
   min-height: 270px;
-  overflow-x: scroll;
-  overflow-y: hidden;
+  width: 100vw;
+  justify-content: flex-start;
 }
 .item-scroll-ctn {
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 94%;
 }
 /* width */
 ::-webkit-scrollbar {
@@ -97,14 +109,17 @@ header h3 {
 }
 .set_label {
   font-size: 1rem;
-  padding: 0 0 0 10px;
-  margin: 10px 10px;
+  margin: 10px 0px 10px 10px;
   color: white;
 }
 .set_item {
   display: flex;
   flex-direction: row;
   margin-bottom: 10px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  padding-bottom: 10px;
+  margin-left: 10px;
 }
 
 .item_ctn {
@@ -121,8 +136,8 @@ header h3 {
   cursor: pointer;
   min-width: 60px;
   max-width: 60px;
-  height: 188px;
-  margin: 35px 5px 10px 10px;
+  height: 193px;
+  margin: 10px 0px 10px 10px;
   background-color: rgb(227, 214, 214);
   border-radius: 10px;
 }
@@ -450,7 +465,6 @@ header h3 {
 .product {
   overflow: hidden;
   border-bottom: black solid 1px;
-  margin-left: 10px;
   margin-right: 10px;
   display: flex;
   flex-direction: row;
@@ -559,3 +573,46 @@ header h3 {
   margin-left: 5px;
   color: orange;
 }
+.product-selection-ctn{
+  height: 70%;
+  overflow-y: scroll;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+#product-selection-result{
+  height: 100%;
+}
+/* User account */
+.dropdown-menu {
+  position: absolute;
+}
+.dropdown-menu li {
+  cursor: pointer;
+}
+.dropdown-toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background: none;
+  padding: 5px 0px 5px 5px;
+  color: black;
+  margin-left: 15px;
+  padding-left: 10px;
+}
+.dropdown-toggle::after {
+  color: black;
+}
+.dropdown-toggle img {
+  width: 48px;
+  border: 2px solid #5e5e5e;
+  border-radius: 5px;
+}
+.dropdown-toggle h3 {
+  padding: 0;
+  margin: 0;
+  background: none;
+  margin-right: 5px;
+  font-size: 1rem;
+}
+/* End of user account */
