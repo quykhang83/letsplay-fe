@@ -64,14 +64,35 @@
                 <li class="nav-item">
                   <a class="nav-link" href="profile.html">PROFILE</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link active" href="#">DESIGN</a>
+                <li class="nav-item" id="manage-btn">
+                  <div class="dropdown">
+                    <button
+                      id="manage-btn-dropdown"
+                      class="btn-secondary dropdown-toggle"
+                      type="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <h3 class="nav-link">MANAGE</h3>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-start">
+                      <li><a class="nav-link dropdown-item" href="design.html">DESIGN</a></li>
+                      <li><a class="nav-link dropdown-item" href="discount.html">DISCOUNT</a></li>
+                    </ul>
+                  </div>
                 </li>
               </ul>
-              <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                <button class="btn btn-outline-success" type="submit">Search</button>
-              </form>
+              <!-- User account -->
+              <div class="dropdown" id="user-info-btn">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <h3 id="user-name"></h3>
+                  <img src="" alt="" id="user-avatar" />
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li><a class="dropdown-item" id="change_pass_btn">Change Password</a></li>
+                  <li><a class="dropdown-item" id="logout_btn">Logout</a></li>
+                </ul>
+              </div>
             </div>
           </div>
         </nav>
