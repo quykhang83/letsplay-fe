@@ -45,16 +45,6 @@ function getUserInfo() {
   });
 }
 
-// function connectSSE() {
-//   console.log("CALLING SSEVENT...");
-//   const evtSource = new EventSource("/ssevent");
-//   evtSource.onmessage = (e) => {
-//     console.log(e.data);
-//     if (e.data === "new request") {
-//       getAllRequests(keycloak.token);
-//     }
-//   };
-// }
 $(() => {
   $("#login_btn").on("click", () => {
     authenticateLogin();

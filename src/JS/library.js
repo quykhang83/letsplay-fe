@@ -138,7 +138,7 @@ async function loadGameList() {
             "<div class='game-info-container'>" +
             '<h3>Capacity: ' +
             data[i].productCapacity +
-            '</h3>' +
+            ' MB</h3>' +
             '</div>' +
             "<div class='game-info-container'>" +
             '<h3>Played Time: 0 hours</h3>' +
