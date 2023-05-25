@@ -54,6 +54,7 @@ $(() => {
   });
   $("#change_pass_btn").on("click", () => {
     keycloak.login({ action: "UPDATE_PASSWORD" });
+    // window.location.replace("http://localhost:8027/realms/ctu/account/password");
   });
 
   var $inputSearch = $("#searchBar");
